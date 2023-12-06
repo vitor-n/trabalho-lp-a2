@@ -1,5 +1,5 @@
 import pygame as pg
-from settings import SCREEN_DIMENSIONS, TYLE_SIZE, FPS
+from settings import SCREEN_DIMENSIONS, TILE_SIZE, FPS
 from player import Player
 from utils import load_image
 from map_ import Map
@@ -61,7 +61,7 @@ class Game:
             ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "2", "2", "2"],
         ]
         self.map = Map(map_layout)
-        self.player = Player(("..", "trabalho-lp-a2", "Sprites", "Jogo_Integrais", "apache_tripleint.png"), (TYLE_SIZE* 9.5, TYLE_SIZE*5.5), self.map.dimensions)
+        self.player = Player(("..", "trabalho-lp-a2", "Sprites", "Jogo_Integrais", "apache_tripleint.png"), (TILE_SIZE* 9.5, TILE_SIZE*5.5), self.map.dimensions)
 
     def run(self):
         camera = Camera((0, 0), self.screen, self.map, self.player)
@@ -77,7 +77,7 @@ class Game:
             camera.update()
             camera.prepare_map_tiles()
             camera.render()
-
+            
 
             pg.display.update()
             self.clock.tick(FPS)
