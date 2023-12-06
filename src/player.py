@@ -46,15 +46,15 @@ class Player(Entity):
     def get_input(self):
         keys = pg.key.get_pressed()
 
-        if keys[pg.K_UP] and not keys[pg.K_DOWN]:
+        if keys[pg.K_w] and not keys[pg.K_s]:
             self.direction.y = -1
-        elif keys[pg.K_DOWN] and not keys[pg.K_UP]:
+        elif keys[pg.K_s] and not keys[pg.K_w]:
             self.direction.y = 1
         else:
             self.direction.y = 0
-        if keys[pg.K_RIGHT] and not keys[pg.K_LEFT]:
+        if keys[pg.K_d] and not keys[pg.K_a]:
             self.direction.x = 1
-        elif keys[pg.K_LEFT] and not keys[pg.K_RIGHT]:
+        elif keys[pg.K_a] and not keys[pg.K_d]:
             self.direction.x = -1
         else:
             self.direction.x = 0
@@ -62,14 +62,14 @@ class Player(Entity):
     def move(self, speed):
         self.direction = self.direction.normalize()
         self.rect.x += self.direction.x * speed
-        if self.rect.x > self.map_size[0]:
-            self.rect.x -= self.map_size[0]
-        elif self.rect.x < 0:
-            self.rect.x += self.map_size[0]
+        #if self.rect.x > self.map_size[0]:
+        #    self.rect.x -= self.map_size[0]
+        #elif self.rect.x < 0:
+        #    self.rect.x += self.map_size[0]
 
         self.rect.y += self.direction.y * speed
-        if self.rect.y > self.map_size[1]:
-            self.rect.y -= self.map_size[1]
-        elif self.rect.y < 0:
-            self.rect.y += self.map_size[1]
+        #if self.rect.y > self.map_size[1]:
+        #    self.rect.y -= self.map_size[1]
+        #elif self.rect.y < 0:
+        #    self.rect.y += self.map_size[1]
         #print(self.rect)
