@@ -2,28 +2,35 @@ import pygame as pg
 from settings import SCREEN_DIMENSIONS, TYLE_SIZE, FPS
 from player import Player
 from utils import load_image
+from map_ import Map
 import sys
 
-class Map:
-    def __init__(self, layout):
-        self.layout = layout
-        self.dimensions = (len(layout[0]) * TYLE_SIZE, len(layout) * TYLE_SIZE)
-        self.create_map_background()
+class Camera:
+    def __init__(self, position, screen, map_, player):
+        self.rect = pg.Rect(
+            player.rect.x - SCREEN_DIMENSIONS[0] / 2,
+            player.rect.y - SCREEN_DIMENSIONS[1] / 2,
+            *SCREEN_DIMENSIONS
+        )
+        self.player = player
+        self.map_ = map_
+        self.map_tiles_to_render = pg.sprite.Group()
+        self.screen = screen
 
-    def create_map_background(self):
-        self.background = pg.Surface(self.dimensions)
-        background_tyles = {
-            "1": "chao3",
-            "2": "chao2",
-            "3": "chao1"
-        }
-        for tyle_identifier, filename in background_tyles.items():
-            background_tyles[tyle_identifier] = load_image(("Sprites", "Provisory", f"{filename}.png"))
-        for row_index, row in enumerate(self.layout):
-            for column_index, element in enumerate(row):
-                self.background.blit(background_tyles[element], (column_index * TYLE_SIZE, row_index * TYLE_SIZE))
+    def prepare_map_tiles(self):
+        self.map_tiles_to_render.empty()
+        for row in self.map_.background:
+            for element in row:
+                if self.rect.colliderect(element.rect):
+                    self.map_tiles_to_render.add(element)
 
+    def render(self):
+        for sprite in self.map_tiles_to_render:
+            self.screen.blit(sprite.image, (sprite.rect.topleft[0] - self.rect.topleft[0], sprite.rect.topleft[1] - self.rect.topleft[1]))
+        self.screen.blit(self.player.image, ((SCREEN_DIMENSIONS[0] / 2) - 32, (SCREEN_DIMENSIONS[1] / 2) - 32))
 
+    def update(self):
+        self.rect.center = self.player.rect.center
 
 class Game:
     def __init__(self):
@@ -54,9 +61,10 @@ class Game:
             ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "2", "2", "2"],
         ]
         self.map = Map(map_layout)
+        self.player = Player(("..", "trabalho-lp-a2", "Sprites", "Jogo_Integrais", "apache_tripleint.png"), (TYLE_SIZE* 9.5, TYLE_SIZE*5.5), self.map.dimensions)
 
     def run(self):
-        player = Player(("..", "trabalho-lp-a2", "Sprites", "Jogo_Integrais", "apache_tripleint.png"), (TYLE_SIZE* 9.5, TYLE_SIZE*5.5), self.map.dimensions)
+        camera = Camera((0, 0), self.screen, self.map, self.player)
         while True:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
@@ -65,34 +73,11 @@ class Game:
 
             self.screen.fill('black')
 
-            player.update()
-            self.screen.blit(self.map.background, (SCREEN_DIMENSIONS[0]/2 - player.rect.x, SCREEN_DIMENSIONS[1]/2 - player.rect.y))
-            if player.rect.x < SCREEN_DIMENSIONS[0]/2 and player.rect.y < SCREEN_DIMENSIONS[1]/2:
-                self.screen.blit(self.map.background, (SCREEN_DIMENSIONS[0]/2 - player.rect.x - self.map.dimensions[0], SCREEN_DIMENSIONS[1]/2 - player.rect.y - self.map.dimensions[1]))
-                self.screen.blit(self.map.background, (SCREEN_DIMENSIONS[0]/2 - player.rect.x - self.map.dimensions[0], SCREEN_DIMENSIONS[1]/2 - player.rect.y))
-                self.screen.blit(self.map.background, (SCREEN_DIMENSIONS[0]/2 - player.rect.x, SCREEN_DIMENSIONS[1]/2 - player.rect.y - self.map.dimensions[1]))
-            elif player.rect.x < SCREEN_DIMENSIONS[0]/2 and player.rect.y > self.map.dimensions[1] - SCREEN_DIMENSIONS[1]/2:
-                self.screen.blit(self.map.background, (SCREEN_DIMENSIONS[0]/2 - player.rect.x - self.map.dimensions[0], SCREEN_DIMENSIONS[1]/2 - player.rect.y + self.map.dimensions[1]))
-                self.screen.blit(self.map.background, (SCREEN_DIMENSIONS[0]/2 - player.rect.x - self.map.dimensions[0], SCREEN_DIMENSIONS[1]/2 - player.rect.y))
-                self.screen.blit(self.map.background, (SCREEN_DIMENSIONS[0]/2 - player.rect.x, SCREEN_DIMENSIONS[1]/2 - player.rect.y + self.map.dimensions[1]))
-            elif player.rect.x > self.map.dimensions[0] - SCREEN_DIMENSIONS[0]/2 and player.rect.y < SCREEN_DIMENSIONS[1]/2:
-                self.screen.blit(self.map.background, (SCREEN_DIMENSIONS[0]/2 - player.rect.x + self.map.dimensions[0], SCREEN_DIMENSIONS[1]/2 - player.rect.y - self.map.dimensions[1]))
-                self.screen.blit(self.map.background, (SCREEN_DIMENSIONS[0]/2 - player.rect.x + self.map.dimensions[0], SCREEN_DIMENSIONS[1]/2 - player.rect.y))
-                self.screen.blit(self.map.background, (SCREEN_DIMENSIONS[0]/2 - player.rect.x, SCREEN_DIMENSIONS[1]/2 - player.rect.y - self.map.dimensions[1]))
-            elif player.rect.x > self.map.dimensions[0] - SCREEN_DIMENSIONS[0]/2 and player.rect.y > self.map.dimensions[1] - SCREEN_DIMENSIONS[1]/2:
-                self.screen.blit(self.map.background, (SCREEN_DIMENSIONS[0]/2 - player.rect.x + self.map.dimensions[0], SCREEN_DIMENSIONS[1]/2 - player.rect.y + self.map.dimensions[1]))
-                self.screen.blit(self.map.background, (SCREEN_DIMENSIONS[0]/2 - player.rect.x + self.map.dimensions[0], SCREEN_DIMENSIONS[1]/2 - player.rect.y))
-                self.screen.blit(self.map.background, (SCREEN_DIMENSIONS[0]/2 - player.rect.x, SCREEN_DIMENSIONS[1]/2 - player.rect.y + self.map.dimensions[1]))
-            elif player.rect.x > self.map.dimensions[0] - SCREEN_DIMENSIONS[0]/2:
-                self.screen.blit(self.map.background, (SCREEN_DIMENSIONS[0]/2 - player.rect.x + self.map.dimensions[0], SCREEN_DIMENSIONS[1]/2 - player.rect.y))
-            elif player.rect.y > self.map.dimensions[1] - SCREEN_DIMENSIONS[1]/2:
-                self.screen.blit(self.map.background, (SCREEN_DIMENSIONS[0]/2 - player.rect.x, SCREEN_DIMENSIONS[1]/2 - player.rect.y + self.map.dimensions[1]))
-            elif player.rect.x < SCREEN_DIMENSIONS[0]/2:
-                self.screen.blit(self.map.background, (SCREEN_DIMENSIONS[0]/2 - player.rect.x - self.map.dimensions[0], SCREEN_DIMENSIONS[1]/2 - player.rect.y))
-            elif player.rect.y < SCREEN_DIMENSIONS[1]/2:
-                self.screen.blit(self.map.background, (SCREEN_DIMENSIONS[0]/2 - player.rect.x, SCREEN_DIMENSIONS[1]/2 - player.rect.y - self.map.dimensions[1]))
+            self.player.update()
+            camera.update()
+            camera.prepare_map_tiles()
+            camera.render()
 
-            self.screen.blit(player.image, (TYLE_SIZE* 9, TYLE_SIZE*5))
 
             pg.display.update()
             self.clock.tick(FPS)

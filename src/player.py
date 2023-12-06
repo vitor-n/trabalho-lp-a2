@@ -5,8 +5,7 @@ class Entity(pg.sprite.Sprite):
     def __init__(self, image_path, initial_position):
         super().__init__()
         self.image = load_image(image_path)
-        self.rect = self.image.get_rect()
-        self.rect.move_ip(*initial_position)
+        self.rect = self.image.get_rect(topleft = initial_position)
         self.direction = pg.math.Vector2()
 
 class Player(Entity):
@@ -49,3 +48,4 @@ class Player(Entity):
             self.rect.y -= self.map_size[1]
         elif self.rect.y < 0:
             self.rect.y += self.map_size[1]
+        print(self.rect)
