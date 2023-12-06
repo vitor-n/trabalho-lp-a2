@@ -6,7 +6,26 @@ from map_ import Map
 import sys
 
 class Camera:
-    def __init__(self, position, screen, map_, player):
+    """
+    Class representing the camera.
+    The objective of this class is to center the process of choosing what is
+    gonna be drawn and what not and calculating where in the screen something
+    should be, based on the world position and the camera position.
+    In this implementation, the camera is always above the player, but that can
+    be changed if needed. Also, selecting what should be drawn can be as easy as
+    using a pygame method to see if rectangles overlap, given the camera has an
+    associated rectangle.
+
+    Parameters
+    ----------
+    screen:
+        The pygame Surface that represents the screen.
+    map_:
+        The map object with tile data.
+    player:
+        A player instance.
+    """
+    def __init__(self, screen, map_, player):
         self.rect = pg.Rect(
             player.rect.x - SCREEN_DIMENSIONS[0] / 2,
             player.rect.y - SCREEN_DIMENSIONS[1] / 2,
@@ -16,6 +35,7 @@ class Camera:
         self.map_ = map_
         self.map_tiles_to_render = pg.sprite.Group()
         self.screen = screen
+
 
     def prepare_map_tiles(self):
         self.map_tiles_to_render.empty()
@@ -64,7 +84,7 @@ class Game:
         self.player = Player(("..", "trabalho-lp-a2", "Sprites", "Jogo_Integrais", "apache_tripleint.png"), (TILE_SIZE* 9.5, TILE_SIZE*5.5), self.map.dimensions)
 
     def run(self):
-        camera = Camera((0, 0), self.screen, self.map, self.player)
+        camera = Camera(self.screen, self.map, self.player)
         while True:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
@@ -77,7 +97,6 @@ class Game:
             camera.update()
             camera.prepare_map_tiles()
             camera.render()
-            
 
             pg.display.update()
             self.clock.tick(FPS)
