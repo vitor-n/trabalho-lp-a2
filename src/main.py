@@ -20,7 +20,7 @@ map = Map(map_layout)
 player = Player(("..", "trabalho-lp-a2", "Sprites", "Player", "player.png"), (0,0), map.dimensions)
 camera = Camera(screen, (0,0), map, player)
 camera = SmoothCamera(SCREEN_DIMENSIONS[0], SCREEN_DIMENSIONS[1], player)
-cursor = Cursor(("..", "trabalho-lp-a2", "Sprites", "cursors", "cursor1.png"), 3, (TILE_SIZE* 9.5, TILE_SIZE*5.5), player)
+cursor = Cursor(("..", "trabalho-lp-a2", "Sprites", "cursors", "cursor1.png"), 3, (TILE_SIZE* 9.5, TILE_SIZE*5.5), player, camera)
 gun = Gun(("..", "trabalho-lp-a2", "Sprites", "weapons", "player_weapons", "math_gun.png"), player, cursor)
 
 while True:
@@ -38,9 +38,9 @@ while True:
     #camera.render()
     cursor.update()
 
-    screen.blit(gun.image, gun.rect)
     screen.blit(cursor.image, cursor.rect)
-    screen.blit(player.image, player.rect)
+    screen.blit(gun.image, (gun.rect.x - camera.rect.x, gun.rect.y - camera.rect.y))
+    screen.blit(player.image, (player.rect.x - camera.rect.x, player.rect.y - camera.rect.y))
 
     pg.display.update()
     clock.tick(FPS)

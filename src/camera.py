@@ -54,12 +54,17 @@ class Camera:
 class SmoothCamera:
     def __init__(self, screen_width, screen_height, target):
         self.rect = pg.Rect(0, 0, screen_width, screen_height)
+        self.rect.center = (0,0)
         self.target = target
         self.smooth_speed = 0.1
 
     def set_target(self, target):
         self.target = target
     
+
+    def render(self):
+        ...
+
     def update(self):
         dx = self.target.rect.centerx - self.rect.centerx
         dy = self.target.rect.centery - self.rect.centery
