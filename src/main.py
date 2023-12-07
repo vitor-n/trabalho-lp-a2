@@ -25,8 +25,8 @@ gun = Gun(("..", "trabalho-lp-a2", "Sprites", "weapons", "player_weapons", "math
 player.set_weapon(gun)
 enemy = Apache((0,10), 2)
 enemy2 = Apache((0,20), 1)
-camera = Camera(screen, map, player, enemy, enemy2)
-camera = SmoothCamera(screen, map, player, enemy, enemy2)
+camera = Camera(screen, map, player)
+camera = SmoothCamera(screen, map, player)
 cursor.set_camera(camera)
 delta_time = 0
 
@@ -40,10 +40,13 @@ while True:
 
     player.update()
     enemy.update(player.rect, delta_time)
-    enemy2.update(player.rect, delta_time)
+    #enemy2.update(player.rect, delta_time)
     camera.update()
     camera.prepare_map_tiles()
-    camera.render()
+    camera.render_tiles()
+    camera.render(player)
+    camera.render(gun)
+    camera.render(enemy)
     cursor.update()
 
     #screen.blit(gun.image, gun.rect)

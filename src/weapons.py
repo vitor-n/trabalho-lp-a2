@@ -25,7 +25,7 @@ class Weapon(pygame.sprite.Sprite):
         self.image = pygame.transform.rotate(self.orig_image, self.cursor.angle_degrees)
 
         self.rect = self.image.get_rect(
-            center = (math.cos(-self.cursor.angle_radians) * 80 + self.entity.rect.centerx,
+            center = (math.cos(-self.cursor.angle_radians) * 65 + self.entity.rect.centerx,
                       math.sin(-self.cursor.angle_radians) * 80 + self.entity.rect.centery
                      )
         )
@@ -52,18 +52,20 @@ class Gun(Weapon):
     def update(self):
         self.rotate()
 
+
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, image_path, position, angle, scale):
         pygame.sprite.Sprite.__init__(self)
+
         self.image = load_image(image_path, scale)
         self.orig_image = self.image
         self.rect = self.image.get_rect()
         self.rect.center = position
+
         noise_angle = (random.random() - 0.5) / 6
         self.dx = math.cos(angle + noise_angle) * 5
         self.dy = math.sin(angle + noise_angle) * 5
-        self.x = x + self.dx
-        self.y = y + self.dy
+
         self.angle = math.degrees(angle) + 90
 
     def update(self):
