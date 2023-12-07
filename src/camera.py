@@ -92,3 +92,14 @@ class SmoothCamera(Camera):
             self.rect.centerx = self.target.rect.centerx
         if not math.copysign(1, new_direction_y) * math.copysign(1, self.direction.y) > 0:
             self.rect.centery = self.target.rect.centery
+
+        # The target shouldnt get away from the camera, so if it does, the camera
+        # gets repositioned so it shows the target
+        if self.rect.right < self.target.rect.right:
+            self.rect.right = self.target.rect.right
+        elif self.rect.left > self.target.rect.left:
+            self.rect.left = self.target.rect.left
+        if self.rect.bottom < self.target.rect.bottom:
+            self.rect.bottom = self.target.rect.bottom
+        elif self.rect.top > self.target.rect.top:
+            self.rect.top = self.target.rect.top

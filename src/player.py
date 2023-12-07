@@ -75,4 +75,3 @@ class Player(Entity):
         #elif self.rect.y < 0:
         #    self.rect.y += self.map_size[1]
         #print(self.rect)
-        print(self.rect)
