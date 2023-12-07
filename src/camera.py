@@ -1,5 +1,5 @@
 import pygame as pg
-from settings import SCREEN_DIMENSIONS
+from settings import SCREEN_DIMENSIONS, TILE_SIZE
 
 class Camera:
     """
@@ -21,7 +21,7 @@ class Camera:
     player:
         A player instance.
     """
-    def __init__(self, screen, position, map_, player):
+    def __init__(self, screen, map_, player, gun):
         self.rect = pg.Rect(
             player.rect.x - SCREEN_DIMENSIONS[0] / 2,
             player.rect.y - SCREEN_DIMENSIONS[1] / 2,
@@ -31,6 +31,7 @@ class Camera:
         self.map_ = map_
         self.map_tiles_to_render = pg.sprite.Group()
         self.screen = screen
+        self.gun = gun
 
 
     def prepare_map_tiles(self):
@@ -42,27 +43,29 @@ class Camera:
 
     def render(self):
         for sprite in self.map_tiles_to_render:
-
             self.screen.blit(sprite.image, (sprite.rect.topleft[0] - self.rect.topleft[0], sprite.rect.topleft[1] - self.rect.topleft[1]))
-
-        self.screen.blit(self.player.image, ((SCREEN_DIMENSIONS[0] / 2) - 32, (SCREEN_DIMENSIONS[1] / 2) - 32))
+        self.screen.blit(self.player.image, (self.player.rect.topleft[0] - self.rect.topleft[0], self.player.rect.topleft[1] - self.rect.topleft[1]))
+        self.screen.blit(self.gun.image, (self.gun.rect.topleft[0] - self.rect.topleft[0], self.gun.rect.topleft[1] - self.rect.topleft[1]))
 
     def update(self):
-        self.rect.center += self.player.direction * 10
+        self.rect.center = self.player.rect.center
 
 
-class SmoothCamera:
-    def __init__(self, screen_width, screen_height, target):
-        self.rect = pg.Rect(0, 0, screen_width, screen_height)
-        self.target = target
-        self.smooth_speed = 0.1
+class SmoothCamera(Camera):
+    def __init__(self, screen, map_, target, gun):
+        super().__init__(screen, map_, target, gun)
+        self.target = self.player
+        self.smooth_speed = 6
+        self.rect.center = (self.player.rect.centerx,self.player.rect.centery)
+        self.direction = pg.math.Vector2()
 
     def set_target(self, target):
         self.target = target
     
     def update(self):
-        dx = self.target.rect.centerx - self.rect.centerx
-        dy = self.target.rect.centery - self.rect.centery
-
-        self.rect.centerx += int(dx * self.smooth_speed)
-        self.rect.centery += int(dy * self.smooth_speed)
+        self.direction.x = self.target.rect.centerx - self.rect.centerx
+        self.direction.y = self.target.rect.centery - self.rect.centery
+        if self.direction.magnitude_squared() != 0:
+            self.direction = self.direction.normalize()
+        self.rect.centerx += int(self.direction.x * self.smooth_speed)
+        self.rect.centery += int(self.direction.y * self.smooth_speed)

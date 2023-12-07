@@ -34,10 +34,11 @@ class Player(Entity):
     map_size:
         The map size. It is used to determine when the player is on the map edge.
     """
-    def __init__(self, image_path, initial_position, map_size):
+    def __init__(self, image_path, initial_position, map_size, gun = None):
         super().__init__(image_path, initial_position)
         self.speed = 10
         self.map_size = map_size
+        self.gun = gun
 
     def update(self):
         self.get_input()
@@ -74,3 +75,4 @@ class Player(Entity):
         #elif self.rect.y < 0:
         #    self.rect.y += self.map_size[1]
         #print(self.rect)
+        print(self.rect)
