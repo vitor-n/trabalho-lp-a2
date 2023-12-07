@@ -13,7 +13,7 @@ class Weapon(pygame.sprite.Sprite):
         self.orig_image = self.image
         self.rect = self.image.get_rect()
         self.rect.center = entity.rect.center
-        
+        self.facing_r = True
 
     def rotate(self):
         
@@ -25,18 +25,16 @@ class Weapon(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=(math.cos(-self.cursor.angle_radians) * 80 + self.entity.rect.centerx,
                                                 math.sin(-self.cursor.angle_radians) * 80 + self.entity.rect.centery))
 
-        #if -angle_d >= 90 or -angle_d <= -90:
-        #    if self.facing_r:
-        #        self.orig_image = pygame.transform.flip(
-        #            self.orig_image, False, True)
-        #        player.image = pygame.transform.flip(player.image, True, False)
-        #        self.facing_r = False
-        #
-        #elif not self.facing_r:
-        #    self.orig_image = pygame.transform.flip(
-        #        self.orig_image, False, True)
-        #    player.image = pygame.transform.flip(player.image, True, False)
-        #    self.facing_r = True
+        if -self.cursor.angle_degrees >= 90 or -self.cursor.angle_degrees <= -90:
+            if self.facing_r:
+                self.orig_image = pygame.transform.flip(self.orig_image, False, True)
+                self.entity.image = pygame.transform.flip(self.entity.image, True, False)
+                self.facing_r = False
+        
+        elif not self.facing_r:
+            self.orig_image = pygame.transform.flip(self.orig_image, False, True)
+            self.entity.image = pygame.transform.flip(self.entity.image, True, False)
+            self.facing_r = True
 
 class Gun(Weapon):
     def __init__(self, image_path, entity, cursor):
