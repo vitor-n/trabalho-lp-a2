@@ -50,7 +50,7 @@ class Camera:
         self.screen.blit(self.gun.image, (self.gun.rect.topleft[0] - self.rect.topleft[0], self.gun.rect.topleft[1] - self.rect.topleft[1]))
 
     def update(self):
-        self.rect.center = self.player.rect.center
+        self.rect.center = self.target.rect.center
 
 
 class SmoothCamera(Camera):
