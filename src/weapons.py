@@ -18,17 +18,13 @@ class Weapon(pygame.sprite.Sprite):
         self.rect.center = entity.rect.center
 
     def rotate(self):
-        
-        """if self.recoil:
-            angle_d += math.cos(5 * self.recoil_timer) * 20
-        """
         self.image = pygame.transform.rotate(self.orig_image, self.cursor.angle_degrees)
 
         self.rect = self.image.get_rect(
             center = (math.cos(-self.cursor.angle_radians) * 65 + self.entity.rect.centerx,
                       math.sin(-self.cursor.angle_radians) * 80 + self.entity.rect.centery
-                     )
-        )
+                    )
+                    )
 
         if -self.cursor.angle_degrees >= 90 or -self.cursor.angle_degrees <= -90:
             if self.facing_r:
@@ -41,40 +37,48 @@ class Weapon(pygame.sprite.Sprite):
             self.entity.image = pygame.transform.flip(self.entity.image, True, False)
             self.facing_r = True
 
+
 class Gun(Weapon):
     def __init__(self, image_path, cursor):
         super().__init__(image_path, cursor)
         self.bullets = 10
+        self.bullet_group = pygame.sprite.Group()
 
     def shoot(self):
-        ...
+        print("Bang!!!\n")
+
+        bullet = Bullet(("..", "trabalho-lp-a2", "Sprites", "bullets", "bullet1.png"), (self.rect.centerx, self.rect.centery), self.cursor.angle_radians)
+        self.bullet_group.add(bullet)
 
     def update(self):
         self.rotate()
+        self.bullet_group.update()
 
 
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self, image_path, position, angle, scale):
+    def __init__(self, image_path, position, angle):
         pygame.sprite.Sprite.__init__(self)
-
-        self.image = load_image(image_path, scale)
+        self.image = load_image(image_path, PX_SCALE)
         self.orig_image = self.image
         self.rect = self.image.get_rect()
         self.rect.center = position
 
         noise_angle = (random.random() - 0.5) / 6
-        self.dx = math.cos(angle + noise_angle) * 5
-        self.dy = math.sin(angle + noise_angle) * 5
+        self.dx = math.cos(-angle + noise_angle) * 1
+        self.dy = math.sin(-angle + noise_angle) * 1
 
         self.angle = math.degrees(angle) + 90
 
+        self.time = 0
+
     def update(self):
+        self.time += 1
         self.image = pygame.transform.rotate(self.orig_image, -self.angle)
         self.rect = self.image.get_rect(center=self.rect.center)
 
-        self.x += self.dx * 2 #+ 1 * math.sin(time/10)
-        self.y += self.dy * 2 #+ 1 * math.cos(time/10)
-        self.rect.center = int(self.x), int(self.y)
+        self.rect.centerx += self.dx * 2 + 0 * math.sin(self.time/10)
+        self.rect.centery += self.dy * 2 + 0 * math.cos(self.time/10)
 
-        #if something:
+        #if self.rect.centerx > 1000 or self.rect.centerx < 0 or self.rect.centery < 0 or self.rect.centery > 1000:
         #    self.kill()
+

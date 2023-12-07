@@ -34,9 +34,10 @@ class Player(Entity):
     map_size:
         The map size. It is used to determine when the player is on the map edge.
     """
+
     def __init__(self, image_path, initial_position, map_size, weapon = None):
         super().__init__(image_path, initial_position)
-        self.speed = 10
+        self.speed = 7
         self.map_size = map_size
         self.weapon = weapon
 
@@ -66,6 +67,9 @@ class Player(Entity):
             self.direction.x = -1
         else:
             self.direction.x = 0
+
+        if pg.mouse.get_pressed()[0]:
+            self.weapon.shoot()
 
     def move(self, speed):
         self.direction = self.direction.normalize()
