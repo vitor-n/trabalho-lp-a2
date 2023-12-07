@@ -4,10 +4,10 @@ import math
 from settings import SCREEN_DIMENSIONS
 
 class Cursor:
-    def __init__(self, image_path, scale, position, player):
+    def __init__(self, image_path, scale, initial_position, player):
         self.player = player
         self.image = load_image(image_path, scale)
-        self.rect = self.image.get_rect(center=position)
+        self.rect = self.image.get_rect(center = initial_position)
         self.angle_radians = 0
         self.angle_degrees = 0
 
@@ -23,5 +23,5 @@ class Cursor:
         self.rect.center = pygame.mouse.get_pos()
         self.angle_radians = math.atan2(player_position_screen_space[1] - self.rect.centery, self.rect.centerx - player_position_screen_space[0])
         self.angle_degrees = math.degrees(self.angle_radians)
-        
+
         

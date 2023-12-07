@@ -22,8 +22,11 @@ class Weapon(pygame.sprite.Sprite):
         """
         self.image = pygame.transform.rotate(self.orig_image, self.cursor.angle_degrees)
 
-        self.rect = self.image.get_rect(center=(math.cos(-self.cursor.angle_radians) * 80 + self.entity.rect.centerx,
-                                                math.sin(-self.cursor.angle_radians) * 80 + self.entity.rect.centery))
+        self.rect = self.image.get_rect(
+            center = (math.cos(-self.cursor.angle_radians) * 80 + self.entity.rect.centerx,
+                      math.sin(-self.cursor.angle_radians) * 80 + self.entity.rect.centery
+                     )
+        )
 
         if -self.cursor.angle_degrees >= 90 or -self.cursor.angle_degrees <= -90:
             if self.facing_r:
