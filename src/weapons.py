@@ -5,15 +5,17 @@ import math
 import random
 
 class Weapon(pygame.sprite.Sprite):
-    def __init__(self, image_path, entity, cursor):
+    def __init__(self, image_path, cursor):
         super().__init__()
         self.cursor = cursor
-        self.entity = entity
         self.image = load_image(image_path, PX_SCALE)
         self.orig_image = self.image
         self.rect = self.image.get_rect()
-        self.rect.center = entity.rect.center
         self.facing_r = True
+
+    def set_entity(self, entity):
+        self.entity = entity
+        self.rect.center = entity.rect.center
 
     def rotate(self):
         
@@ -40,8 +42,8 @@ class Weapon(pygame.sprite.Sprite):
             self.facing_r = True
 
 class Gun(Weapon):
-    def __init__(self, image_path, entity, cursor):
-        super().__init__(image_path, entity, cursor)
+    def __init__(self, image_path, cursor):
+        super().__init__(image_path, cursor)
         self.bullets = 10
 
     def shoot(self):

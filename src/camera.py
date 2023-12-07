@@ -21,7 +21,7 @@ class Camera:
     target:
         An entity to set the camera position.
     """
-    def __init__(self, screen, map_, target, gun):
+    def __init__(self, screen, map_, target):
         self.rect = pg.Rect(
             target.rect.x - SCREEN_DIMENSIONS[0] / 2,
             target.rect.y - SCREEN_DIMENSIONS[1] / 2,
@@ -31,7 +31,6 @@ class Camera:
         self.map_ = map_
         self.map_tiles_to_render = pg.sprite.Group()
         self.screen = screen
-        self.gun = gun
 
     def set_target(self, target):
         self.target = target
@@ -47,7 +46,8 @@ class Camera:
         for sprite in self.map_tiles_to_render:
             self.screen.blit(sprite.image, (sprite.rect.topleft[0] - self.rect.topleft[0], sprite.rect.topleft[1] - self.rect.topleft[1]))
         self.screen.blit(self.target.image, (self.target.rect.topleft[0] - self.rect.topleft[0], self.target.rect.topleft[1] - self.rect.topleft[1]))
-        self.screen.blit(self.gun.image, (self.gun.rect.topleft[0] - self.rect.topleft[0], self.gun.rect.topleft[1] - self.rect.topleft[1]))
+        if self.target.weapon:
+            self.screen.blit(self.target.weapon.image, (self.target.weapon.rect.topleft[0] - self.rect.topleft[0], self.target.weapon.rect.topleft[1] - self.rect.topleft[1]))
 
     def update(self):
         self.rect.center = self.target.rect.center
@@ -67,8 +67,8 @@ class SmoothCamera(Camera):
     target:
         An entity to set the camera position.
     """
-    def __init__(self, screen, map_, target, gun):
-        super().__init__(screen, map_, target, gun)
+    def __init__(self, screen, map_, target):
+        super().__init__(screen, map_, target)
         self.smooth_speed = 6
         self.direction = pg.math.Vector2()
 
