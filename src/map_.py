@@ -1,6 +1,6 @@
 import pygame as pg
 from settings import TILE_SIZE
-from utils import load_image
+from utils import load_tile_image
 
 class BackgroundTile(pg.sprite.Sprite):
     """
@@ -41,7 +41,7 @@ class Map:
             "3": "chao1"
         }
         for tyle_identifier, filename in self.background_tyles.items():
-            self.background_tyles[tyle_identifier] = load_image(("Sprites", "Provisory", f"{filename}.png"))
+            self.background_tyles[tyle_identifier] = load_tile_image(("Sprites", "Provisory", f"{filename}.png"))
 
     def create_map_background(self):
         self.background = list()
