@@ -22,11 +22,7 @@ class Camera:
         An entity to set the camera position.
     """
     def __init__(self, screen, map_, target):
-        self.rect = pg.Rect(
-            target.rect.x - SCREEN_DIMENSIONS[0] / 2,
-            target.rect.y - SCREEN_DIMENSIONS[1] / 2,
-            *SCREEN_DIMENSIONS
-        )
+        self.rect = pg.Rect(0, 0, *SCREEN_DIMENSIONS)
         self.target = target
         self.map_ = map_
         self.map_tiles_to_render = pg.sprite.Group()
@@ -69,37 +65,11 @@ class SmoothCamera(Camera):
     """
     def __init__(self, screen, map_, target):
         super().__init__(screen, map_, target)
-        self.smooth_speed = 6
-        self.direction = pg.math.Vector2()
+        self.smooth_speed = 0.1
 
     def update(self):
-        # Get vector with the direction the camera should go
-        self.direction.x = self.target.rect.centerx - self.rect.centerx
-        self.direction.y = self.target.rect.centery - self.rect.centery
-        if self.direction.magnitude_squared() != 0:
-            self.direction = self.direction.normalize()
+        dx = self.target.rect.centerx - self.rect.centerx
+        dy = self.target.rect.centery - self.rect.centery
 
-        #Move the camera based on that vector and the speed
-        self.rect.centerx += int(self.direction.x * self.smooth_speed)
-        self.rect.centery += int(self.direction.y * self.smooth_speed)
-
-        # If camera moves more than it needs, it may get in a state where it
-        # never really center in the target. To avoid that, set the camera
-        # coordinates to equal the target position if it passes the target
-        new_direction_x = self.target.rect.centerx - self.rect.centerx
-        new_direction_y = self.target.rect.centery - self.rect.centery
-        if not math.copysign(1, new_direction_x) * math.copysign(1, self.direction.x) > 0:
-            self.rect.centerx = self.target.rect.centerx
-        if not math.copysign(1, new_direction_y) * math.copysign(1, self.direction.y) > 0:
-            self.rect.centery = self.target.rect.centery
-
-        # The target shouldnt get away from the camera, so if it does, the camera
-        # gets repositioned so it shows the target
-        if self.rect.right < self.target.rect.right:
-            self.rect.right = self.target.rect.right
-        elif self.rect.left > self.target.rect.left:
-            self.rect.left = self.target.rect.left
-        if self.rect.bottom < self.target.rect.bottom:
-            self.rect.bottom = self.target.rect.bottom
-        elif self.rect.top > self.target.rect.top:
-            self.rect.top = self.target.rect.top
+        self.rect.centerx += int(dx * self.smooth_speed)
+        self.rect.centery += int(dy * self.smooth_speed)
