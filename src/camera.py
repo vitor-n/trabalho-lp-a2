@@ -18,8 +18,8 @@ class Camera:
         The pygame Surface that represents the screen.
     map_:
         The map object with tile data.
-    player:
-        A player instance.
+    target:
+        An entity to set the camera position.
     """
     def __init__(self, screen, map_, target, gun):
         self.rect = pg.Rect(
@@ -54,6 +54,19 @@ class Camera:
 
 
 class SmoothCamera(Camera):
+    """
+    Class representing a camera with smooth movimentation.
+    Instead of being always above the target, this camera moves smoothly to
+    the target direction.
+    Parameters
+    ----------
+    screen:
+        The pygame Surface that represents the screen.
+    map_:
+        The map object with tile data.
+    target:
+        An entity to set the camera position.
+    """
     def __init__(self, screen, map_, target, gun):
         super().__init__(screen, map_, target, gun)
         self.smooth_speed = 6
