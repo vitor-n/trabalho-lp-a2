@@ -21,7 +21,7 @@ class Camera:
     player:
         A player instance.
     """
-    def __init__(self, screen, map_, player):
+    def __init__(self, screen, map_, player, enemy, enemy2): #TODO: Alterar enemy para lista de inimigos
         self.rect = pg.Rect(
             player.rect.x - SCREEN_DIMENSIONS[0] / 2,
             player.rect.y - SCREEN_DIMENSIONS[1] / 2,
@@ -31,6 +31,8 @@ class Camera:
         self.map_ = map_
         self.map_tiles_to_render = pg.sprite.Group()
         self.screen = screen
+        self.enemy = enemy
+        self.enemy2 = enemy2
 
 
     def prepare_map_tiles(self):
@@ -44,6 +46,7 @@ class Camera:
         for sprite in self.map_tiles_to_render:
             self.screen.blit(sprite.image, (sprite.rect.topleft[0] - self.rect.topleft[0], sprite.rect.topleft[1] - self.rect.topleft[1]))
         self.screen.blit(self.player.image, ((SCREEN_DIMENSIONS[0] / 2) - 32, (SCREEN_DIMENSIONS[1] / 2) - 32))
-
+        self.screen.blit(self.enemy.image, (self.enemy.rect.topleft[0] - self.rect.topleft[0], self.enemy.rect.topleft[1] - self.rect.topleft[1]))
+        self.screen.blit(self.enemy2.image, (self.enemy2.rect.topleft[0] - self.rect.topleft[0], self.enemy.rect.topleft[1] - self.rect.topleft[1]))
     def update(self):
         self.rect.center = self.player.rect.center
