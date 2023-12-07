@@ -17,6 +17,7 @@ def load_image(image_path, scale):
     image = pg.transform.scale(image, (image_width * scale, image_height * scale))
     return image
 
+
 def load_map(filepath):
     with open(filepath, 'r') as file:
         map_layout = json.load(file)
