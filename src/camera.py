@@ -21,12 +21,14 @@ class Camera:
     target:
         An entity to set the camera position.
     """
-    def __init__(self, screen, map_, target):
+    def __init__(self, screen, map_, target, enemy, enemy2): #TODO: Alterar enemy para lista de inimigos
         self.rect = pg.Rect(0, 0, *SCREEN_DIMENSIONS)
         self.target = target
         self.map_ = map_
         self.map_tiles_to_render = pg.sprite.Group()
         self.screen = screen
+        self.enemy = enemy
+        self.enemy2 = enemy2
 
     def set_target(self, target):
         self.target = target
@@ -44,7 +46,9 @@ class Camera:
         self.screen.blit(self.target.image, (self.target.rect.topleft[0] - self.rect.topleft[0], self.target.rect.topleft[1] - self.rect.topleft[1]))
         if self.target.weapon:
             self.screen.blit(self.target.weapon.image, (self.target.weapon.rect.topleft[0] - self.rect.topleft[0], self.target.weapon.rect.topleft[1] - self.rect.topleft[1]))
-
+        self.screen.blit(self.enemy.image, (self.enemy.rect.topleft[0] - self.rect.topleft[0], self.enemy.rect.topleft[1] - self.rect.topleft[1]))
+        self.screen.blit(self.enemy2.image, (self.enemy2.rect.topleft[0] - self.rect.topleft[0], self.enemy.rect.topleft[1] - self.rect.topleft[1]))
+        
     def update(self):
         self.rect.center = self.target.rect.center
 
@@ -63,8 +67,8 @@ class SmoothCamera(Camera):
     target:
         An entity to set the camera position.
     """
-    def __init__(self, screen, map_, target):
-        super().__init__(screen, map_, target)
+    def __init__(self, screen, map_, target, enemy, enemy2):
+        super().__init__(screen, map_, target, enemy, enemy2)
         self.smooth_speed = 0.1
 
     def update(self):
