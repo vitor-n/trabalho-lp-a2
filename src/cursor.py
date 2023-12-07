@@ -13,7 +13,7 @@ class Cursor:
 
     def update(self):
         self.rect.center = pygame.mouse.get_pos()
-        self.angle_radians = math.atan2(SCREEN_DIMENSIONS[1]//2 - self.rect.centery, self.rect.centerx-SCREEN_DIMENSIONS[0]//2)
+        self.angle_radians = math.atan2(self.player.rect.centery - self.rect.centery, self.rect.centerx - self.player.rect.centerx)
         self.angle_degrees = math.degrees(self.angle_radians)
         
         

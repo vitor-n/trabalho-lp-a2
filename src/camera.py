@@ -21,7 +21,7 @@ class Camera:
     player:
         A player instance.
     """
-    def __init__(self, screen, map_, player):
+    def __init__(self, screen, position, map_, player):
         self.rect = pg.Rect(
             player.rect.x - SCREEN_DIMENSIONS[0] / 2,
             player.rect.y - SCREEN_DIMENSIONS[1] / 2,
@@ -42,8 +42,27 @@ class Camera:
 
     def render(self):
         for sprite in self.map_tiles_to_render:
+
             self.screen.blit(sprite.image, (sprite.rect.topleft[0] - self.rect.topleft[0], sprite.rect.topleft[1] - self.rect.topleft[1]))
+
         self.screen.blit(self.player.image, ((SCREEN_DIMENSIONS[0] / 2) - 32, (SCREEN_DIMENSIONS[1] / 2) - 32))
 
     def update(self):
-        self.rect.center = self.player.rect.center
+        self.rect.center += self.player.direction * 10
+
+
+class SmoothCamera:
+    def __init__(self, screen_width, screen_height, target):
+        self.rect = pg.Rect(0, 0, screen_width, screen_height)
+        self.target = target
+        self.smooth_speed = 0.1
+
+    def set_target(self, target):
+        self.target = target
+    
+    def update(self):
+        dx = self.target.rect.centerx - self.rect.centerx
+        dy = self.target.rect.centery - self.rect.centery
+
+        self.rect.centerx += int(dx * self.smooth_speed)
+        self.rect.centery += int(dy * self.smooth_speed)

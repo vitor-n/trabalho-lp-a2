@@ -17,7 +17,7 @@ class Entity(pg.sprite.Sprite):
     def __init__(self, image_path, initial_position = (0, 0)):
         super().__init__()
         self.image = load_image(image_path, PX_SCALE)
-        self.rect = self.image.get_rect(topleft = initial_position)
+        self.rect = self.image.get_rect(center = initial_position)
         self.direction = pg.math.Vector2()
 
 class Player(Entity):
