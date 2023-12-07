@@ -17,7 +17,7 @@ class Entity(pg.sprite.Sprite):
     def __init__(self, image_path, initial_position = (0, 0)):
         super().__init__()
         self.image = load_image(image_path, PX_SCALE)
-        self.rect = self.image.get_rect(topleft = initial_position)
+        self.rect = self.image.get_rect(center = initial_position)
         self.direction = pg.math.Vector2()
 
 class Player(Entity):
@@ -34,15 +34,22 @@ class Player(Entity):
     map_size:
         The map size. It is used to determine when the player is on the map edge.
     """
-    def __init__(self, image_path, initial_position, map_size):
+    def __init__(self, image_path, initial_position, map_size, weapon = None):
         super().__init__(image_path, initial_position)
         self.speed = 10
         self.map_size = map_size
+        self.weapon = weapon
+
+    def set_weapon(self, weapon):
+        self.weapon = weapon
+        weapon.set_entity(self)
 
     def update(self):
         self.get_input()
         if self.direction.magnitude_squared() != 0:
            self.move(self.speed)
+        if self.weapon:
+            self.weapon.update()
 
     def get_input(self):
         keys = pg.key.get_pressed()
