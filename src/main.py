@@ -44,16 +44,20 @@ while True:
     camera.update()
     player.update()
     cursor.update()
-    bullet_group.draw(screen)
-    camera.prepare_map_tiles()
-    camera.render_tiles()
-    camera.render(player)
-    camera.render(gun)
-    camera.set_cursor_position(cursor.rect.center)
-    camera.render_group(gun.bullet_group)
+    camera.render_map()
+    camera.render_entity(player)
+    camera.render_sprite_no_offset(cursor)
+    #bullet_group.draw(screen)
+    #camera.prepare_map_tiles()
+    #camera.render_tiles()
+    #camera.render_group(gun.bullet_group)
+    #camera.render(player)
+    #camera.render(gun)
+    #camera.set_cursor_position(cursor.rect.center)
 
 
-    screen.blit(cursor.image, cursor.rect)
+
+    #screen.blit(cursor.image, cursor.rect)
 
     #pg.draw.line(screen, (255, 0, 0), (0, SCREEN_DIMENSIONS[1] // 2), (SCREEN_DIMENSIONS[0], SCREEN_DIMENSIONS[1] // 2), 1)
     #pg.draw.line(screen, (255, 0, 0), (SCREEN_DIMENSIONS[0] // 2, 0), (SCREEN_DIMENSIONS[0] // 2, SCREEN_DIMENSIONS[1]), 1)

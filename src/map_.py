@@ -21,7 +21,7 @@ class BackgroundTile(pg.sprite.Sprite):
 
 class Map:
     """
-    Class representing the map. It contains a grid with the tiles of the map.
+    Class representing a map. It contains a grid with the tiles of the map.
 
     Parameters
     ----------
@@ -29,27 +29,58 @@ class Map:
         An matrix representing the tile placement in the map.
     """
     def __init__(self, layout):
-        self.layout = layout
-        self.dimensions = (len(layout[0]) * TILE_SIZE, len(layout) * TILE_SIZE)
-        self.load_images()
-        self.create_map_background()
+        self._layout = layout
+        self._background = pg.sprite.Group()
+        self._load_images()
+        self._create_map_background()
 
-    def load_images(self):
-        self.background_tyles = {
+    @property
+    def layout(self):
+        """
+        The layout the map needs to follow. Overriding it will automatically
+        update the `background` property.
+        """
+        return self._layout
+
+    @layout.setter
+    def layout(self, layout):
+        self._layout = layout
+        self._create_map_background()
+
+    @property
+    def dimensions(self):
+        """
+        The dimensions, in pixels, of the background. It's important to notice
+        that this isn't the map dimensions in tiles.
+        """
+        return (
+            len(self._layout[0]) * TILE_SIZE,
+            len(self._layout) * TILE_SIZE
+        )
+
+    @property
+    def background(self):
+        """
+        A pygame group containing multiple tiles. The tiles are made based on
+        `layout` and have correct positions.
+        """
+        return self._background
+
+    def _load_images(self):
+        self.background_tiles = {
             "1": "chao3",
             "2": "chao2",
             "3": "chao1"
         }
-        for tyle_identifier, filename in self.background_tyles.items():
-            self.background_tyles[tyle_identifier] = load_tile_image(("Sprites", "Provisory", f"{filename}.png"))
+        for tile_identifier, filename in self.background_tiles.items():
+            self.background_tiles[tile_identifier] = load_tile_image(("Sprites", "Provisory", f"{filename}.png"))
 
-    def create_map_background(self):
-        self.background = list()
-        for row_index, row in enumerate(self.layout):
-            self.background.append(list())
+    def _create_map_background(self):
+        self._background.empty()
+        for row_index, row in enumerate(self._layout):
             for column_index, element in enumerate(row):
-                tyle = BackgroundTile(
-                    self.background_tyles[element],
+                tile = BackgroundTile(
+                    self.background_tiles[element],
                     (column_index * TILE_SIZE, row_index * TILE_SIZE)
                 )
-                self.background[row_index].append(tyle)
+                self._background.add(tile)

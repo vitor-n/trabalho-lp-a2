@@ -23,39 +23,124 @@ class Camera:
     """
     def __init__(self, screen, map_, target):
         self.rect = pg.Rect(0, 0, *SCREEN_DIMENSIONS)
-        self.target = target
-        self.map_ = map_
-        self.map_tiles_to_render = pg.sprite.Group()
+        self._target = target
+        self._map = map_
         self.screen = screen
 
-    def set_target(self, target):
-        self.target = target
+    @property
+    def target(self):
+        """
+        The entity that the camera should follow.
+        """
+        return self._target
 
-    def prepare_map_tiles(self):
-        self.map_tiles_to_render.empty()
-        for row in self.map_.background:
-            for element in row:
-                if self.rect.colliderect(element.rect):
-                    self.map_tiles_to_render.add(element)
+    @target.setter
+    def target(self, target):
+        self._target = target
+        self.rect.topleft = self._target.topleft
 
-    def render_tiles(self):
-        for sprite in self.map_tiles_to_render:
-            self.screen.blit(sprite.image, (sprite.rect.topleft[0] - self.rect.topleft[0], sprite.rect.topleft[1] - self.rect.topleft[1]))
-
-    def render_player(self):
-        self.screen.blit(self.target.image, (self.target.rect.topleft[0] - self.rect.topleft[0], self.target.rect.topleft[1] - self.rect.topleft[1]))
-        if self.target.weapon:
-            self.screen.blit(self.target.weapon.image, (self.target.weapon.rect.topleft[0] - self.rect.topleft[0], self.target.weapon.rect.topleft[1] - self.rect.topleft[1]))
-
-    def render(self, source):
-        self.screen.blit(source.image, (source.rect.topleft[0] - self.rect.topleft[0], source.rect.topleft[1] - self.rect.topleft[1]))
-        
-    def render_group(self, source_group):
-        for item in source_group:
-            self.screen.blit(item.image, (item.rect.topleft[0] - self.rect.topleft[0], item.rect.topleft[1] - self.rect.topleft[1]))
-            
     def update(self):
+        """
+        Updates the camera position. In this implementation, it simply changes
+        the camera position so it's instantly sinced with the target.
+
+        Returns
+        -------
+        None
+        """
         self.rect.center = self.target.rect.center
+
+    def calculate_offset(self, rectangle):
+        """
+        Calculate the screen position of a rectangle, based on camera postion.
+
+    Returns
+        -------
+        Tuple: A tuple with the coordinates of the rectangle's topleft in screen space.
+        """
+        return (rectangle.topleft[0] - self.rect.topleft[0],
+               rectangle.topleft[1] - self.rect.topleft[1])
+
+    def render_sprite(self, sprite):
+        """
+        Render some sprite in the screen, calculating the sprite's position in
+        screen space. If the intention is simply using absolute coordinates,
+        `render_sprite_no_offset` should be used instead.
+
+        Returns
+        -------
+        None
+        """
+        if self.rect.colliderect(sprite.rect):
+            blit_coords = self.calculate_offset(sprite.rect)
+            self.screen.blit(sprite.image, blit_coords)
+
+    def render_sprite_no_offset(self, sprite):
+        """
+        Render some sprite in the screen, without calculating the sprite's
+        position in screen space and withouth verifying if it will actually appear.
+        If the intention is rendering based on camera position, `render_sprite`
+        should be used instead.
+
+        Returns
+        -------
+        None
+        """
+        self.screen.blit(sprite.image, sprite.rect)
+
+    def render_group(self, group):
+        """
+        Render a group of sprites in the screen, calculating each sprite position
+        in screen space. If the intention is simply using absolute coordinates,
+        `render_group_no_offset` should be used instead.
+
+        Returns
+        -------
+        None
+        """
+        render_sprites = pg.sprite.spritecollide(self, group, False)
+        for sprite in render_sprites:
+            blit_coords = self.calculate_offset(sprite.rect)
+            self.screen.blit(sprite.image, blit_coords)
+
+    def render_group_no_offset(self, group):
+        """
+        Render a group of sprites in the screen, without calculating each sprite
+        position in screen space and withouth filtering to render only sprites
+        that appear in the screen. If the intention is rendering based on camera
+        position, `render_group` should be used instead.
+
+        Returns
+        -------
+        None
+        """
+        for sprite in group:
+            self.screen.blit(sprite.image, sprite.rect)
+
+    def render_map(self):
+        """
+        Util function to render the map in the screen.
+
+        Returns
+        -------
+        None
+        """
+        self.render_group(self._map.background)
+
+    def render_entity(self, entity):
+        """
+        Util function to render a entity in the screen. It automatically checks
+        if the entity have a gun, and if the gun has bullets, to render them too.
+
+        Returns
+        -------
+        None
+        """
+        self.render_sprite(entity)
+        if entity.weapon:
+            self.render_sprite(entity.weapon)
+            if hasattr(entity.weapon, "bullet_group"):
+                self.render_group(entity.weapon.bullet_group)
 
 
 class SmoothCamera(Camera):
@@ -81,8 +166,16 @@ class SmoothCamera(Camera):
         self.cursor_pos = cursor_pos
 
     def update(self):
-        dx = self.target.rect.centerx - self.rect.centerx
-        dy = self.target.rect.centery - self.rect.centery
+        """
+        Updates the camera position. In this implementation, it makes the camera
+        moving smooth and also add some offset related to cursor position.
+
+        Returns
+        -------
+        None
+        """
+        dx = self._target.rect.centerx - self.rect.centerx
+        dy = self._target.rect.centery - self.rect.centery
 
         self.rect.centerx += int(dx * self.smooth_speed)
         self.rect.centery += int(dy * self.smooth_speed)
