@@ -42,11 +42,6 @@ class Camera:
         for sprite in self.map_tiles_to_render:
             self.screen.blit(sprite.image, (sprite.rect.topleft[0] - self.rect.topleft[0], sprite.rect.topleft[1] - self.rect.topleft[1]))
 
-    def render_player(self):
-        self.screen.blit(self.target.image, (self.target.rect.topleft[0] - self.rect.topleft[0], self.target.rect.topleft[1] - self.rect.topleft[1]))
-        if self.target.weapon:
-            self.screen.blit(self.target.weapon.image, (self.target.weapon.rect.topleft[0] - self.rect.topleft[0], self.target.weapon.rect.topleft[1] - self.rect.topleft[1]))
-
     def render(self, source):
         self.screen.blit(source.image, (source.rect.topleft[0] - self.rect.topleft[0], source.rect.topleft[1] - self.rect.topleft[1]))
         
@@ -72,7 +67,7 @@ class SmoothCamera(Camera):
     target:
         An entity to set the camera position.
     """
-    def __init__(self, screen, map_, target, cursor_pos):
+    def __init__(self, screen, map_, target, cursor_pos = (0,0)):
         super().__init__(screen, map_, target)
         self.smooth_speed = 0.1
         self.cursor_pos = cursor_pos
@@ -87,5 +82,5 @@ class SmoothCamera(Camera):
         self.rect.centerx += int(dx * self.smooth_speed)
         self.rect.centery += int(dy * self.smooth_speed)
 
-        self.rect.centerx += (self.cursor_pos[0] - SCREEN_DIMENSIONS[0] // 2) // 40
-        self.rect.centery += (self.cursor_pos[1] - SCREEN_DIMENSIONS[1] // 2) // 40
+        self.rect.centerx += (self.cursor_pos[0] - SCREEN_DIMENSIONS[0] // 2) // 35
+        self.rect.centery += (self.cursor_pos[1] - SCREEN_DIMENSIONS[1] // 2) // 35
