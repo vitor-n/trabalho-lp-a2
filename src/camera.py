@@ -136,11 +136,11 @@ class Camera:
         -------
         None
         """
-        self.render_sprite(entity)
         if entity.weapon:
-            self.render_sprite(entity.weapon)
             if hasattr(entity.weapon, "bullet_group"):
                 self.render_group(entity.weapon.bullet_group)
+            self.render_sprite(entity.weapon)
+        self.render_sprite(entity)
 
 
 class SmoothCamera(Camera):

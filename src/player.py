@@ -16,7 +16,7 @@ class Entity(pg.sprite.Sprite):
     """
     def __init__(self, image_path, initial_position = (0, 0)):
         super().__init__()
-        self.image = load_image(image_path, PX_SCALE)
+        self.image = load_image(image_path)
         self.rect = self.image.get_rect(center = initial_position)
         self.direction = pg.math.Vector2()
 
@@ -35,22 +35,21 @@ class Player(Entity):
         The map size. It is used to determine when the player is on the map edge.
     """
 
-    def __init__(self, image_path, initial_position, map_size, weapon = None):
+    def __init__(self, image_path, initial_position, weapon = None):
         super().__init__(image_path, initial_position)
         self.speed = 7
-        self.map_size = map_size
         self.weapon = weapon
+        self.attacking = False
+
+        self.dashing = False
+        self.last_dash = 0
+        self.dash_cooldown = 2000
+        self.dash_duration = 10
+        self.dash_timer = self.dash_duration
 
     def set_weapon(self, weapon):
         self.weapon = weapon
         weapon.set_entity(self)
-
-    def update(self):
-        self.get_input()
-        if self.direction.magnitude_squared() != 0:
-           self.move(self.speed)
-        if self.weapon:
-            self.weapon.update()
 
     def get_input(self):
         keys = pg.key.get_pressed()
@@ -68,20 +67,34 @@ class Player(Entity):
         else:
             self.direction.x = 0
 
+        if keys[pg.K_SPACE] and (pg.time.get_ticks() - self.last_dash) > self.dash_cooldown:
+            self.dashing = True
+            self.last_dash = pg.time.get_ticks()
+
         if pg.mouse.get_pressed()[0]:
-            self.weapon.shoot()
+            self.attacking = True
+        else:
+            self.attacking = False
 
     def move(self, speed):
         self.direction = self.direction.normalize()
         self.rect.x += self.direction.x * speed
-        #if self.rect.x > self.map_size[0]:
-        #    self.rect.x -= self.map_size[0]
-        #elif self.rect.x < 0:
-        #    self.rect.x += self.map_size[0]
-
         self.rect.y += self.direction.y * speed
-        #if self.rect.y > self.map_size[1]:
-        #    self.rect.y -= self.map_size[1]
-        #elif self.rect.y < 0:
-        #    self.rect.y += self.map_size[1]
-        #print(self.rect)
+    
+    def update(self):
+        
+        self.get_input()
+        if self.direction.magnitude_squared() != 0:
+           self.move(self.speed)
+        if self.weapon:
+            self.weapon.update()
+        if self.attacking and self.weapon:
+            self.weapon.shoot()
+
+        if self.dashing:
+            self.speed = 20
+            self.dash_timer -= 1
+            if self.dash_timer <= 0:
+                self.dashing = False
+                self.speed = 7
+                self.dash_timer = self.dash_duration
