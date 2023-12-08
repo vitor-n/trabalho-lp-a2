@@ -30,20 +30,41 @@ class Map:
     """
     def __init__(self, layout):
         self._layout = layout
-        self.dimensions = (len(layout[0]) * TILE_SIZE, len(layout) * TILE_SIZE)
-        self.background = pg.sprite.Group()
+        self._background = pg.sprite.Group()
         self._load_images()
         self._create_map_background()
 
     @property
     def layout(self):
+        """
+        The layout the map needs to follow. Overriding it will automatically
+        update the `background` property.
+        """
         return self._layout
 
     @layout.setter
     def layout(self, layout):
         self._layout = layout
-        self.dimensions = (len(layout[0]) * TILE_SIZE, len(layout) * TILE_SIZE)
         self._create_map_background()
+
+    @property
+    def dimensions(self):
+        """
+        The dimensions, in pixels, of the background. It's important to notice
+        that this isn't the map dimensions in tiles.
+        """
+        return (
+            len(self._layout[0]) * TILE_SIZE,
+            len(self._layout) * TILE_SIZE
+        )
+
+    @property
+    def background(self):
+        """
+        A pygame group containing multiple tiles. The tiles are made based on
+        `layout` and have correct positions.
+        """
+        return self._background
 
     def _load_images(self):
         self.background_tiles = {
@@ -55,11 +76,11 @@ class Map:
             self.background_tiles[tile_identifier] = load_tile_image(("Sprites", "Provisory", f"{filename}.png"))
 
     def _create_map_background(self):
-        self.background.empty()
+        self._background.empty()
         for row_index, row in enumerate(self._layout):
             for column_index, element in enumerate(row):
                 tile = BackgroundTile(
                     self.background_tiles[element],
                     (column_index * TILE_SIZE, row_index * TILE_SIZE)
                 )
-                self.background.add(tile)
+                self._background.add(tile)
