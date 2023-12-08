@@ -130,7 +130,7 @@ class Camera:
     def render_entity(self, entity):
         """
         Util function to render a entity in the screen. It automatically checks
-        if the entity have a gun, and if the gun has bullets.
+        if the entity have a gun, and if the gun has bullets, to render them too.
 
         Returns
         -------
