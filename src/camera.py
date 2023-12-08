@@ -24,13 +24,14 @@ class Camera:
     def __init__(self, screen, map_, target):
         self.rect = pg.Rect(0, 0, *SCREEN_DIMENSIONS)
         self.target = target
-        self._map_ = map_
+        self._map = map_
         self.screen = screen
-        self.map_tiles_to_render = pg.sprite.Group()
 
     def set_target(self, target):
         self.target = target
 
+    def update(self):
+        self.rect.center = self.target.rect.center
 
     def calculate_offset(self, rectangle):
         return (rectangle.topleft[0] - self.rect.topleft[0],
@@ -44,8 +45,8 @@ class Camera:
     def render_sprite_no_offset(self, sprite):
         self.screen.blit(sprite.image, sprite.rect)
 
-    def render_grouṕ(self, group):
-        render_sprites = pg.sprite.spritecollide(self, group)
+    def render_group(self, group):
+        render_sprites = pg.sprite.spritecollide(self, group, False)
         for sprite in render_sprites:
             blit_coords = self.calculate_offset(sprite.rect)
             self.screen.blit(sprite.image, blit_coords)
@@ -54,33 +55,15 @@ class Camera:
         for sprite in group:
             self.screen.blit(sprite.image, sprite.rect)
 
+    def render_map(self):
+        self.render_group(self._map.background)
 
-
-    def prepare_map_tiles(self):
-        self.map_tiles_to_render.empty()
-        for row in self.map_.background:
-            for element in row:
-                if self.rect.colliderect(element.rect):
-                    self.map_tiles_to_render.add(element)
-
-    def render_tiles(self):
-        for sprite in self.map_tiles_to_render:
-            self.screen.blit(sprite.image, (sprite.rect.topleft[0] - self.rect.topleft[0], sprite.rect.topleft[1] - self.rect.topleft[1]))
-
-    def render_player(self):
-        self.screen.blit(self.target.image, (self.target.rect.topleft[0] - self.rect.topleft[0], self.target.rect.topleft[1] - self.rect.topleft[1]))
-        if self.target.weapon:
-            self.screen.blit(self.target.weapon.image, (self.target.weapon.rect.topleft[0] - self.rect.topleft[0], self.target.weapon.rect.topleft[1] - self.rect.topleft[1]))
-
-    def render(self, source):
-        self.screen.blit(source.image, (source.rect.topleft[0] - self.rect.topleft[0], source.rect.topleft[1] - self.rect.topleft[1]))
-        
-    def render_group(self, source_group):
-        for item in source_group:
-            self.screen.blit(item.image, (item.rect.topleft[0] - self.rect.topleft[0], item.rect.topleft[1] - self.rect.topleft[1]))
-            
-    def update(self):
-        self.rect.center = self.target.rect.center
+    def render_entity(self, entity):
+        self.render_sprite(entity)
+        if entity.weapon:
+            self.render_sprite(entity.weapon)
+            if hasattr(entity.weapon, "bullet_group"):
+                self.render_group(entity.weapon.bullet_group)
 
 
 class SmoothCamera(Camera):
