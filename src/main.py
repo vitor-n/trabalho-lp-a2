@@ -52,6 +52,8 @@ while True:
     camera.set_cursor_position(cursor.rect.center)
     camera.render_group(gun.bullet_group)
 
+    player.health.draw(screen, 30, 30, 1000, 30)
+    player.health.decrease(1)
 
     screen.blit(cursor.image, cursor.rect)
 
