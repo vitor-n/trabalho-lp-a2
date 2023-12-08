@@ -39,7 +39,7 @@ while True:
 
     screen.fill('#F6E5CA')
 
-    enemy.update(player.rect, delta_time)
+    #enemy.update(player.rect, delta_time)
     #enemy2.update(player.rect, delta_time)
     #camera.render(enemy)
     camera.update()
@@ -49,12 +49,15 @@ while True:
     camera.prepare_map_tiles()
     camera.render_tiles()
     camera.render(player)
+    camera.render_group(gun.bullet_group)
     camera.render(gun)
-    camera.render(enemy)
 
-    gun.bullet_group.draw(screen)
 
     screen.blit(cursor.image, cursor.rect)
+    
+
+    #pg.draw.line(screen, (255, 0, 0), (0, SCREEN_DIMENSIONS[1] // 2), (SCREEN_DIMENSIONS[0], SCREEN_DIMENSIONS[1] // 2), 1)
+    #pg.draw.line(screen, (255, 0, 0), (SCREEN_DIMENSIONS[0] // 2, 0), (SCREEN_DIMENSIONS[0] // 2, SCREEN_DIMENSIONS[1]), 1)
 
     pg.display.update()
     delta_time = clock.tick(FPS)

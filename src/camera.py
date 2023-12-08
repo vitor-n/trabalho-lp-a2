@@ -50,6 +50,10 @@ class Camera:
     def render(self, source):
         self.screen.blit(source.image, (source.rect.topleft[0] - self.rect.topleft[0], source.rect.topleft[1] - self.rect.topleft[1]))
         
+    def render_group(self, source_group):
+        for item in source_group:
+            self.screen.blit(item.image, (item.rect.topleft[0] - self.rect.topleft[0], item.rect.topleft[1] - self.rect.topleft[1]))
+            
     def update(self):
         self.rect.center = self.target.rect.center
 

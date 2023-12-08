@@ -62,10 +62,9 @@ class Bullet(pygame.sprite.Sprite):
         self.orig_image = self.image
         self.rect = self.image.get_rect()
         self.rect.center = position
-
-        noise_angle = (random.random() - 0.5) / 6
-        self.dx = math.cos(-angle + noise_angle) * 1
-        self.dy = math.sin(-angle + noise_angle) * 1
+        
+        self.dx = math.cos(-angle)
+        self.dy = math.sin(-angle)
 
         self.angle = math.degrees(angle) + 90
 
