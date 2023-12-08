@@ -41,12 +41,12 @@ class Map:
             "2": "chao2",
             "3": "chao1"
         }
-        for tile_identifier, filename in self.background_tyles.items():
+        for tile_identifier, filename in self.background_tiles.items():
             self.background_tiles[tile_identifier] = load_tile_image(("Sprites", "Provisory", f"{filename}.png"))
 
     def create_map_background(self):
         self.background.empty()
-        for row_index, row in enumerate(self.layout):
+        for row_index, row in enumerate(self._layout):
             for column_index, element in enumerate(row):
                 tile = BackgroundTile(
                     self.background_tiles[element],
