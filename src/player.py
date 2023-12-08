@@ -16,7 +16,7 @@ class Entity(pg.sprite.Sprite):
     """
     def __init__(self, image_path, initial_position = (0, 0)):
         super().__init__()
-        self.image = load_image(image_path, PX_SCALE)
+        self.image = load_image(image_path)
         self.rect = self.image.get_rect(center = initial_position)
         self.direction = pg.math.Vector2()
 
@@ -39,17 +39,17 @@ class Player(Entity):
         super().__init__(image_path, initial_position)
         self.speed = 7
         self.weapon = weapon
+        self.attacking = False
+
+        self.dashing = False
+        self.last_dash = 0
+        self.dash_cooldown = 2000
+        self.dash_duration = 10
+        self.dash_timer = self.dash_duration
 
     def set_weapon(self, weapon):
         self.weapon = weapon
         weapon.set_entity(self)
-
-    def update(self):
-        self.get_input()
-        if self.direction.magnitude_squared() != 0:
-           self.move(self.speed)
-        if self.weapon:
-            self.weapon.update()
 
     def get_input(self):
         keys = pg.key.get_pressed()
@@ -67,10 +67,34 @@ class Player(Entity):
         else:
             self.direction.x = 0
 
+        if keys[pg.K_SPACE] and (pg.time.get_ticks() - self.last_dash) > self.dash_cooldown:
+            self.dashing = True
+            self.last_dash = pg.time.get_ticks()
+
         if pg.mouse.get_pressed()[0]:
-            self.weapon.shoot()
+            self.attacking = True
+        else:
+            self.attacking = False
 
     def move(self, speed):
         self.direction = self.direction.normalize()
         self.rect.x += self.direction.x * speed
         self.rect.y += self.direction.y * speed
+    
+    def update(self):
+        
+        self.get_input()
+        if self.direction.magnitude_squared() != 0:
+           self.move(self.speed)
+        if self.weapon:
+            self.weapon.update()
+        if self.attacking and self.weapon:
+            self.weapon.shoot()
+
+        if self.dashing:
+            self.speed = 20
+            self.dash_timer -= 1
+            if self.dash_timer <= 0:
+                self.dashing = False
+                self.speed = 7
+                self.dash_timer = self.dash_duration
