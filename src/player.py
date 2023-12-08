@@ -38,6 +38,7 @@ class Player(Entity):
     def __init__(self, image_path, initial_position, weapon = None):
         super().__init__(image_path, initial_position)
         self.speed = 7
+        
         self.weapon = weapon
         self.attacking = False
 
@@ -86,10 +87,12 @@ class Player(Entity):
         self.get_input()
         if self.direction.magnitude_squared() != 0:
            self.move(self.speed)
+
+        
         if self.weapon:
+            if self.attacking:
+                self.weapon.shoot()
             self.weapon.update()
-        if self.attacking and self.weapon:
-            self.weapon.shoot()
 
         if self.dashing:
             self.speed = 20
