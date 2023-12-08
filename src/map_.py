@@ -31,11 +31,21 @@ class Map:
     def __init__(self, layout):
         self._layout = layout
         self.dimensions = (len(layout[0]) * TILE_SIZE, len(layout) * TILE_SIZE)
-        self.load_images()
         self.background = pg.sprite.Group()
-        self.create_map_background()
+        self._load_images()
+        self._create_map_background()
 
-    def load_images(self):
+    @property
+    def layout(self):
+        return self._layout
+
+    @layout.setter
+    def layout(self, layout):
+        self._layout = layout
+        self.dimensions = (len(layout[0]) * TILE_SIZE, len(layout) * TILE_SIZE)
+        self._create_map_background()
+
+    def _load_images(self):
         self.background_tiles = {
             "1": "chao3",
             "2": "chao2",
@@ -44,7 +54,7 @@ class Map:
         for tile_identifier, filename in self.background_tiles.items():
             self.background_tiles[tile_identifier] = load_tile_image(("Sprites", "Provisory", f"{filename}.png"))
 
-    def create_map_background(self):
+    def _create_map_background(self):
         self.background.empty()
         for row_index, row in enumerate(self._layout):
             for column_index, element in enumerate(row):
