@@ -29,6 +29,7 @@ cursor.set_camera(camera)
 delta_time = 0
 
 bullet_group = pg.sprite.Group()
+player.health.decrease(0)
 
 while True:
     for event in pg.event.get():
@@ -36,7 +37,7 @@ while True:
             pg.quit()
             sys.exit()
 
-    screen.fill('white')
+    screen.fill("#F6E5CA")
 
     #enemy.update(player.rect, delta_time)
     #enemy2.update(player.rect, delta_time)
@@ -52,8 +53,7 @@ while True:
     camera.set_cursor_position(cursor.rect.center)
     camera.render_group(gun.bullet_group)
 
-    player.health.draw(screen, 30, 30, 1000, 30)
-    player.health.decrease(1)
+    player.health.draw(screen, 30, 30)
 
     screen.blit(cursor.image, cursor.rect)
 
