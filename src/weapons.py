@@ -64,22 +64,37 @@ class Bullet(pygame.sprite.Sprite):
         self.dx = math.cos(-angle_radians) * 8
         self.dy = math.sin(-angle_radians) * 8
 
-        self.x = position[0] + self.dx * 4
-        self.y = position[1] + self.dy * 4 
-
+        self.x = position[0] #+ self.dx * 4
+        self.y = position[1] #+ self.dy * 4 
+        self.angle_r = -angle_radians
         self.angle = math.degrees(angle_radians) + 90
         self.image = pygame.transform.rotate(self.orig_image, self.angle)
-        print(self.angle)
+        self.time = 0
+        #print(self.angle)
+
 
     def update(self):
-        self.rect = self.image.get_rect(center=self.rect.center)
+        #self.rect = self.image.get_rect(center=self.rect.center)
 
-        self.x += self.dx
-        self.y += self.dy
+        #self.x += self.dx
+        #self.y += self.dy
 
-        self.rect.centerx = self.x
-        self.rect.centery = self.y
+        #self.rect.centerx = self.x
+        #self.rect.centery = self.y
 
         #if self.rect.centerx > 1000 or self.rect.centerx < 0 or self.rect.centery < 0 or self.rect.centery > 1000:
         #    self.kill()
+
+        self.time += 0.5
+
+        wave_amplitude = -math.sin(self.time) * 10
+
+
+        self.new_x = self.dx * math.cos(self.angle_r) - self.dy * math.sin(self.angle_r) + self.x
+        self.new_y = self.dx * math.sin(self.angle_r) + self.dy * math.cos(self.angle_r) + self.y
+        self.dx += 20
+        self.dy += wave_amplitude
+
+        self.rect.centerx = self.new_x
+        self.rect.centery = self.new_y
 
