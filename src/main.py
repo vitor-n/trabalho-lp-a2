@@ -15,7 +15,6 @@ pg.mouse.set_visible(False)
 clock = pg.time.Clock()
 screen = pg.display.set_mode(SCREEN_DIMENSIONS)
 
-clock = pg.time.Clock()
 map_layout = load_map('../trabalho-lp-a2/maps/map.json')["tiles"]
 map = Map(map_layout)
 player = Player(("..", "trabalho-lp-a2", "Sprites", "Player", "player.png"), (0,0), map.dimensions)
@@ -37,7 +36,7 @@ while True:
             pg.quit()
             sys.exit()
 
-    screen.fill('#F6E5CA')
+    screen.fill('white')
 
     #enemy.update(player.rect, delta_time)
     #enemy2.update(player.rect, delta_time)
@@ -48,10 +47,10 @@ while True:
     bullet_group.draw(screen)
     camera.prepare_map_tiles()
     camera.render_tiles()
-    camera.render_group(gun.bullet_group)
     camera.render(player)
     camera.render(gun)
     camera.set_cursor_position(cursor.rect.center)
+    camera.render_group(gun.bullet_group)
 
 
     screen.blit(cursor.image, cursor.rect)
