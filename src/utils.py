@@ -2,23 +2,32 @@ import pygame as pg
 import math
 import json
 from os.path import join
-from settings import TILE_SIZE
+from settings import TILE_SIZE, PX_SCALE
 
 def load_tile_image(image_path):
+    """
+        Loads an image from a file and scales it to the size of a tile.
+    """
     image = pg.image.load(join(*image_path))
     image = image.convert_alpha()
     image = pg.transform.scale(image, (TILE_SIZE, TILE_SIZE))
     return image
 
-def load_image(image_path, scale):
+def load_image(image_path):
+    """
+        Loads an image from a file and scales it by a factor of scale.
+    """
     image = pg.image.load(join(*image_path))
     image = image.convert_alpha()
     image_height = image.get_height()
     image_width = image.get_width()
-    image = pg.transform.scale(image, (image_width * scale, image_height * scale))
+    image = pg.transform.scale(image, (image_width * PX_SCALE, image_height * PX_SCALE))
     return image
 
 def load_map(filepath):
+    """
+        Loads a map from a json file.
+    """
     with open(filepath, 'r') as file:
         map_layout = json.load(file)
     return map_layout
