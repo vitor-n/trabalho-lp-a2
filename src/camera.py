@@ -24,12 +24,37 @@ class Camera:
     def __init__(self, screen, map_, target):
         self.rect = pg.Rect(0, 0, *SCREEN_DIMENSIONS)
         self.target = target
-        self.map_ = map_
-        self.map_tiles_to_render = pg.sprite.Group()
+        self._map_ = map_
         self.screen = screen
+        self.map_tiles_to_render = pg.sprite.Group()
 
     def set_target(self, target):
         self.target = target
+
+
+    def calculate_offset(self, rectangle):
+        return (rectangle.topleft[0] - self.rect.topleft[0],
+               rectangle.topleft[1] - self.rect.topleft[1])
+
+    def render_sprite(self, sprite):
+        if self.rect.colliderect(sprite.rect):
+            blit_coords = self.calculate_offset(sprite.rect)
+            self.screen.blit(sprite.image, blit_coords)
+
+    def render_sprite_no_offset(self, sprite):
+        self.screen.blit(sprite.image, sprite.rect)
+
+    def render_grouṕ(self, group):
+        render_sprites = pg.sprite.spritecollide(self, group)
+        for sprite in render_sprites:
+            blit_coords = self.calculate_offset(sprite.rect)
+            self.screen.blit(sprite.image, blit_coords)
+
+    def render_group_no_offset(self, group):
+        for sprite in group:
+            self.screen.blit(sprite.image, sprite.rect)
+
+
 
     def prepare_map_tiles(self):
         self.map_tiles_to_render.empty()
