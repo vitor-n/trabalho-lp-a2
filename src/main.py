@@ -53,8 +53,10 @@ while True:
     #camera.render_group(gun.bullet_group)
     #camera.render(player)
     #camera.render(gun)
-    #camera.set_cursor_position(cursor.rect.center)
+    camera.set_cursor_position(cursor.rect.center)
 
+
+    
 
 
     #screen.blit(cursor.image, cursor.rect)

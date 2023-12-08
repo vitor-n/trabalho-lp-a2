@@ -1,7 +1,6 @@
 import pygame
 from utils import load_image
 import math
-from settings import SCREEN_DIMENSIONS
 
 class Cursor:
     def __init__(self, image_path, scale, initial_position, player):
