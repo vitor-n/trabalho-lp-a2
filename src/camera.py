@@ -29,6 +29,9 @@ class Camera:
 
     @property
     def target(self):
+        """
+        The entity that the camera should follow.
+        """
         return self._target
 
     @target.setter
