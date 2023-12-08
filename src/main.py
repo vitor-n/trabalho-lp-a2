@@ -25,7 +25,7 @@ player.set_weapon(gun)
 enemy = Apache((0,10), 2)
 enemy2 = Apache((0,20), 1)
 camera = Camera(screen, map, player)
-camera = SmoothCamera(screen, map, player)
+camera = SmoothCamera(screen, map, player, cursor.rect.center)
 cursor.set_camera(camera)
 delta_time = 0
 
@@ -48,13 +48,13 @@ while True:
     bullet_group.draw(screen)
     camera.prepare_map_tiles()
     camera.render_tiles()
-    camera.render(player)
     camera.render_group(gun.bullet_group)
+    camera.render(player)
     camera.render(gun)
+    camera.set_cursor_position(cursor.rect.center)
 
 
     screen.blit(cursor.image, cursor.rect)
-    
 
     #pg.draw.line(screen, (255, 0, 0), (0, SCREEN_DIMENSIONS[1] // 2), (SCREEN_DIMENSIONS[0], SCREEN_DIMENSIONS[1] // 2), 1)
     #pg.draw.line(screen, (255, 0, 0), (SCREEN_DIMENSIONS[0] // 2, 0), (SCREEN_DIMENSIONS[0] // 2, SCREEN_DIMENSIONS[1]), 1)

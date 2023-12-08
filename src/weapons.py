@@ -45,8 +45,6 @@ class Gun(Weapon):
         self.bullet_group = pygame.sprite.Group()
 
     def shoot(self):
-        print("Bang!!!\n")
-
         bullet = Bullet(("..", "trabalho-lp-a2", "Sprites", "bullets", "bullet1.png"), (self.rect.centerx, self.rect.centery), self.cursor.angle_radians)
         self.bullet_group.add(bullet)
 
@@ -56,27 +54,31 @@ class Gun(Weapon):
 
 
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self, image_path, position, angle):
+    def __init__(self, image_path, position, angle_radians):
         pygame.sprite.Sprite.__init__(self)
         self.image = load_image(image_path, PX_SCALE)
         self.orig_image = self.image
         self.rect = self.image.get_rect()
         self.rect.center = position
         
-        self.dx = math.cos(-angle)
-        self.dy = math.sin(-angle)
+        self.dx = math.cos(-angle_radians) * 8
+        self.dy = math.sin(-angle_radians) * 8
 
-        self.angle = math.degrees(angle) + 90
+        self.x = position[0] + self.dx * 4
+        self.y = position[1] + self.dy * 4 
 
-        self.time = 0
+        self.angle = math.degrees(angle_radians) + 90
+        self.image = pygame.transform.rotate(self.orig_image, self.angle)
+        print(self.angle)
 
     def update(self):
-        self.time += 1
-        self.image = pygame.transform.rotate(self.orig_image, -self.angle)
         self.rect = self.image.get_rect(center=self.rect.center)
 
-        self.rect.centerx += self.dx * 2 + 0 * math.sin(self.time/10)
-        self.rect.centery += self.dy * 2 + 0 * math.cos(self.time/10)
+        self.x += self.dx
+        self.y += self.dy
+
+        self.rect.centerx = self.x
+        self.rect.centery = self.y
 
         #if self.rect.centerx > 1000 or self.rect.centerx < 0 or self.rect.centery < 0 or self.rect.centery > 1000:
         #    self.kill()

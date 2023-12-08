@@ -72,9 +72,13 @@ class SmoothCamera(Camera):
     target:
         An entity to set the camera position.
     """
-    def __init__(self, screen, map_, target):
+    def __init__(self, screen, map_, target, cursor_pos):
         super().__init__(screen, map_, target)
         self.smooth_speed = 0.1
+        self.cursor_pos = cursor_pos
+
+    def set_cursor_position(self, cursor_pos):
+        self.cursor_pos = cursor_pos
 
     def update(self):
         dx = self.target.rect.centerx - self.rect.centerx
@@ -82,3 +86,6 @@ class SmoothCamera(Camera):
 
         self.rect.centerx += int(dx * self.smooth_speed)
         self.rect.centery += int(dy * self.smooth_speed)
+
+        self.rect.centerx += (self.cursor_pos[0] - SCREEN_DIMENSIONS[0] // 2) // 40
+        self.rect.centery += (self.cursor_pos[1] - SCREEN_DIMENSIONS[1] // 2) // 40
