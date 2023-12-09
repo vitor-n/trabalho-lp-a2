@@ -45,7 +45,7 @@ class Menu:
 
     def handle_quit_event(self):
         """
-        Quits the window in case the player wants to quit.
+        Closes the window in case the player presses quit.
         """
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
