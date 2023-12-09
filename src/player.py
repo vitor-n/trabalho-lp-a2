@@ -81,6 +81,12 @@ class Player(Entity):
             self.last_dash = pg.time.get_ticks()
 
         if len(self.inventory) > 1:
+            for mouse_event in pg.event.get():
+                if mouse_event.type == pg.MOUSEWHEEL:
+                    if mouse_event.y > 0:
+                        self.inventory.next_weapon()
+                    elif mouse_event.y < 0:
+                        self.inventory.previous_weapon()
             if not self.weapon.shooting:
                 if keys[pg.K_r]:
                     self.inventory.next_weapon()
