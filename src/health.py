@@ -43,14 +43,13 @@ class PlayerHealth(Health):
         self.bar.set_colorkey((255,0,255))
 
     def update(self):
-        full_hearts = self._current_health // 2
-        half_heart = self._current_health % 2
+        self._full_hearts = int(self._current_health // 2)
+        self._half_heart = int(self._current_health % 2)
 
         self.bar.fill((255,0,255))
-
-        for i in range(full_hearts):
+        for i in range(self._full_hearts):
             self.bar.blit(self._image_full_heart, (i * self._rect.width, 0))
 
-        if half_heart:
-            self.bar.blit(self._image_half_heart, (full_hearts * self._rect.width, 0))
+        if self._half_heart:
+            self.bar.blit(self._image_half_heart, (self._full_hearts * self._rect.width, 0))
         

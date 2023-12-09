@@ -29,7 +29,6 @@ cursor.set_camera(camera)
 delta_time = 0
 
 bullet_group = pg.sprite.Group()
-player.health.decrease(0)
 
 while True:
     for event in pg.event.get():
