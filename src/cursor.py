@@ -1,12 +1,11 @@
 import pygame
 from utils import load_image
 import math
-from settings import SCREEN_DIMENSIONS
 
 class Cursor:
-    def __init__(self, image_path, scale, initial_position, player):
+    def __init__(self, image_path, initial_position, player):
         self.player = player
-        self.image = load_image(image_path, scale)
+        self.image = load_image(image_path)
         self.rect = self.image.get_rect(center = initial_position)
         self.angle_radians = 0
         self.angle_degrees = 0

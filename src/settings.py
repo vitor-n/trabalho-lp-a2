@@ -1,7 +1,13 @@
-TILE_SIZE = 64
+import pygame
+import os
+
+pygame.init()
+
 SCREEN_DIMENSIONS = (1280, 720)
 FPS = 60
 PX_SCALE = 3
+TILE_SIZE = 32 * PX_SCALE
+FONT = pygame.font.Font(os.path.join("Font", "Essential.ttf"), 36)
 
 #Atributos de integrais por ordem crescente de tipo 
 #(valores podem ser modificados, para ajuste de nível e tipo de interação)
