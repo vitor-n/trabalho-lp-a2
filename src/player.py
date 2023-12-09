@@ -1,7 +1,7 @@
 import pygame as pg
 from settings import PX_SCALE
 from utils import load_image
-from healthbar import Health
+from health import Health, PlayerHealth
 
 class Entity(pg.sprite.Sprite):
     """
@@ -38,7 +38,7 @@ class Player(Entity):
 
     def __init__(self, image_path, initial_position, weapon = None):
         super().__init__(image_path, initial_position)
-        self.health = Health(("..", "trabalho-lp-a2", "Sprites", "healthbar", "player_healthbar.png"), 6)
+        self.health = PlayerHealth(6)
         self.speed = 7
         
         self.weapon = weapon
@@ -108,3 +108,5 @@ class Player(Entity):
                 self.dashing = False
                 self.speed = 7
                 self.dash_timer = self.dash_duration
+
+        self.health.update()

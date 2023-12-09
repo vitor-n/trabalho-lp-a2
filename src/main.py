@@ -53,10 +53,8 @@ while True:
     camera.set_cursor_position(cursor.rect.center)
     camera.render_group(gun.bullet_group)
 
-    player.health.draw(screen, 30, 30)
-
     screen.blit(cursor.image, cursor.rect)
-
+    screen.blit(player.health.bar, (30,30))
     #pg.draw.line(screen, (255, 0, 0), (0, SCREEN_DIMENSIONS[1] // 2), (SCREEN_DIMENSIONS[0], SCREEN_DIMENSIONS[1] // 2), 1)
     #pg.draw.line(screen, (255, 0, 0), (SCREEN_DIMENSIONS[0] // 2, 0), (SCREEN_DIMENSIONS[0] // 2, SCREEN_DIMENSIONS[1]), 1)
 
