@@ -38,7 +38,7 @@ class Player(Entity):
 
     def __init__(self, image_path, initial_position, weapon = None):
         super().__init__(image_path, initial_position)
-        self.health = PlayerHealth(6)
+        self.health = PlayerHealth(6, 2)
         self.speed = 7
         
         self.weapon = weapon
@@ -49,7 +49,7 @@ class Player(Entity):
         self.dash_cooldown = 2000
         self.dash_duration = 10
         self.dash_timer = self.dash_duration
-        self.coords = (self.rect.x, self.rect.y)
+        self.coords = (self.rect.centerx, self.rect.centery)
 
     def set_weapon(self, weapon):
         self.weapon = weapon
