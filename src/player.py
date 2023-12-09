@@ -72,6 +72,11 @@ class Player(Entity):
             self.dashing = True
             self.last_dash = pg.time.get_ticks()
 
+        if self.weapon:
+            for event in pg.event.get():
+                if event.type == pg.MOUSEWHEEL:
+                    self.weapon.bullet_type = event.y
+
         if pg.mouse.get_pressed()[0]:
             self.attacking = True
         else:
@@ -85,10 +90,10 @@ class Player(Entity):
     def update(self):
         
         self.get_input()
+
         if self.direction.magnitude_squared() != 0:
            self.move(self.speed)
 
-        
         if self.weapon:
             if self.attacking:
                 self.weapon.shoot()

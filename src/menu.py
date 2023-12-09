@@ -1,7 +1,6 @@
 import pygame 
 from settings import FPS, FONT, SCREEN_DIMENSIONS
 import sys
-import clock
 
 pygame.init()
 

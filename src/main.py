@@ -6,7 +6,7 @@ from utils import load_map
 from map_ import Map
 import sys
 from camera import SmoothCamera
-from weapons import Gun
+from weapons import SineShotgun
 from cursor import Cursor
 from enemies import Apache
 
@@ -20,7 +20,7 @@ map_layout = load_map("maps/map.json")["tiles"]
 map = Map(map_layout)
 player = Player(("Sprites", "Player", "player.png"), (0,0), map.dimensions)
 cursor = Cursor(("Sprites", "cursors", "cursor2.png"), (TILE_SIZE* 9.5, TILE_SIZE*5.5), player)
-gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor)
+gun = SineShotgun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor)
 enemy = Apache((0,10), 2)
 enemy2 = Apache((0,20), 1)
 camera = SmoothCamera(screen, map, player, cursor.rect.center)
