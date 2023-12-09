@@ -33,9 +33,8 @@ class Weapon(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect(
             center = (math.cos(-self.angle_radians) * 65 + self.entity.rect.centerx,
-                      math.sin(-self.angle_radians) * 80 + self.entity.rect.centery
-                    )
-                    )
+                      math.sin(-self.angle_radians) * 80 + self.entity.rect.centery)
+            )
 
         if -self.angle_degrees >= 90 or -self.angle_degrees <= -90:
             if self.facing_r:
@@ -50,13 +49,14 @@ class Weapon(pygame.sprite.Sprite):
 
 
 class Gun(Weapon):
-    def __init__(self, image_path, target_pos):
+    def __init__(self, image_path, target_pos, stats):
         super().__init__(image_path, target_pos)
-        self.move_function = lambda m: 0
-        self.damage = 5
-        self.mag_size = 1
-        self.reload_cooldown = 500
-        self.bullet_speed = 10
+        self.move_function = stats["move_function"]
+        self.damage = stats["damage"]
+        self.mag_size = stats["mag_size"]
+        self.reload_cooldown = stats["reload_cooldown"]
+        self.bullet_speed = stats["bullet_speed"]
+        self.bullet_sprite = stats["bullet_sprite"]
 
         self.bullet_group = pygame.sprite.Group()
 
@@ -68,12 +68,18 @@ class Gun(Weapon):
         self.time_last_reload = 0
         self.time_now = 0
 
-
     def shoot(self):
         if self.mag_count > 0:
             self.shooting = True
             self.mag_count -= 1
-            bullet = Bullet(("Sprites", "bullets", "bullet1.png"), (self.rect.centerx, self.rect.centery), self.angle_radians, self.damage, self.move_function, self.bullet_speed)
+            bullet = Bullet(
+                self.bullet_sprite,
+                (self.rect.centerx, self.rect.centery),
+                self.angle_radians,
+                self.damage,
+                self.move_function,
+                self.bullet_speed
+            )
             self.bullet_group.add(bullet)
             if self.mag_count == 0:
                 self.shooting = False
@@ -100,20 +106,6 @@ class Gun(Weapon):
         self.bullet_group.update()
 
 
-class SineShotgun(Gun):
-    def __init__(self, image_path, target):
-        super().__init__(image_path, target)
-        self.mag_size = 30
-        self.mag_count = self.mag_size
-        self.reload_cooldown = 1000
-        self.bullet_speed = 20
-
-        def move_function(time):
-            return math.cos(time) * 40
-        self.move_function = move_function
-        self.damage = 2
-
-
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, image_path, position, angle_radians, damage, move_function, speed):
         pygame.sprite.Sprite.__init__(self)
@@ -127,16 +119,16 @@ class Bullet(pygame.sprite.Sprite):
         self.x = position[0]
         self.y = position[1]
         self.angle_r = -angle_radians
-        self.angle = math.degrees(angle_radians) + 90
-        self.image = pygame.transform.rotate(self.orig_image, self.angle)
+        self.image = pygame.transform.rotate(
+            self.orig_image,
+            math.degrees(angle_radians) + 90
+        )
         self.travel_time = 0
         self.function = move_function
         self.speed = speed
 
 
     def update(self):
-        def function(gun):
-            return math.sin(gun) * 40
         self.new_x = self.dx * math.cos(self.angle_r) - self.dy * math.sin(self.angle_r) + self.x
         self.new_y = self.dx * math.sin(self.angle_r) + self.dy * math.cos(self.angle_r) + self.y
         self.rect.centerx = self.new_x
