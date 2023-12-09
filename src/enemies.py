@@ -9,10 +9,19 @@ from health import Health
 
 class Enemy(Entity):
 
-    def __init__(self, image_path, target_position, speed, health):
+    def __init__(self, image_path, target_position, speed, health, target = None):
         super().__init__(image_path, self.initial_position(target_position))
         self.speed = speed
         self.health = Health(health, 0)
+        self._target = target
+
+    @property
+    def target(self):
+        return self._target
+
+    @target.setter
+    def target(self, target):
+        self._target = target
 
     def move(self, delta_time):
         self.direction = self.direction.normalize()
@@ -25,14 +34,13 @@ class Enemy(Entity):
         pos = (pos_x, pos_y)
         return pos
      
-    def define_direction(self, player_position):
-        delta_x = player_position.x - self.rect.x
-        delta_y = player_position.y - self.rect.y
-
+    def define_direction(self):
+        delta_x = self.target.rect.x - self.rect.x
+        delta_y = self.target.rect.y - self.rect.y
         self.direction = pg.Vector2(delta_x, delta_y)
     
-    def update(self, player_position, delta_time):
-        self.define_direction(player_position)
+    def update(self, delta_time):
+        self.define_direction()
         if self.direction.magnitude_squared() != 0:
             self.move(delta_time)
 
@@ -95,6 +103,9 @@ class IntegralGang(pg.sprite.Group):
         
         self.create_group(self.types[random.randint(0,3)], single_qtt, double_qtt, triple_qtt, target_position)
     
+    def set_target(self, target):
+        for integral in self:
+            integral.target = target
         
 
 

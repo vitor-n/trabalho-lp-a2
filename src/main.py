@@ -87,7 +87,8 @@ while True:
  
     camera.update()
     player.update((cursor.rect.centerx+camera.rect.topleft[0],cursor.rect.centery+camera.rect.topleft[1]))
-    gang.update(player.rect, delta_time)
+    gang.set_target(player)
+    gang.update(delta_time)
     cursor.update()
     teste.expand(camera.rect)
     camera.render_map()
