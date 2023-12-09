@@ -9,6 +9,8 @@ from camera import SmoothCamera
 from weapons import SineShotgun
 from cursor import Cursor
 from enemies import Apache
+from inventory import Inventory
+from text import Font
 
 pg.init()
 pg.mouse.set_visible(False)
@@ -18,6 +20,7 @@ screen = pg.display.set_mode(SCREEN_DIMENSIONS)
 
 map_layout = load_map("maps/map.json")["tiles"]
 map = Map(map_layout)
+font = Font(("Font", "pixel_font.png"))
 player = Player(("Sprites", "Player", "player.png"), (0,0), map.dimensions)
 cursor = Cursor(("Sprites", "cursors", "cursor2.png"), (TILE_SIZE* 9.5, TILE_SIZE*5.5), player)
 gun = SineShotgun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor)
@@ -30,6 +33,7 @@ delta_time = 0
 
 bullet_group = pg.sprite.Group()
 
+inventory = Inventory()
 while True:
     for event in pg.event.get():
         if event.type == pg.QUIT or pg.key.get_pressed()[K_ESCAPE]:
@@ -52,8 +56,12 @@ while True:
     camera.set_cursor_position(cursor.rect.center)
     camera.render_group(gun.bullet_group)
 
-    screen.blit(cursor.image, cursor.rect)
     screen.blit(player.health.bar, (30,30))
+    screen.blit(inventory.sine_gun, (30,120))
+    screen.blit(cursor.image, cursor.rect)
+
+    font.render(screen, "time: 5:00", (30,90))
+
     #pg.draw.line(screen, (255, 0, 0), (0, SCREEN_DIMENSIONS[1] // 2), (SCREEN_DIMENSIONS[0], SCREEN_DIMENSIONS[1] // 2), 1)
     #pg.draw.line(screen, (255, 0, 0), (SCREEN_DIMENSIONS[0] // 2, 0), (SCREEN_DIMENSIONS[0] // 2, SCREEN_DIMENSIONS[1]), 1)
 

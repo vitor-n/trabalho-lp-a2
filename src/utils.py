@@ -13,7 +13,7 @@ def load_tile_image(image_path):
     image = pg.transform.scale(image, (TILE_SIZE, TILE_SIZE))
     return image
 
-def load_image(image_path):
+def load_image(image_path, scale = PX_SCALE):
     """
         Loads an image from a file and scales it by a factor of scale.
     """
@@ -21,7 +21,7 @@ def load_image(image_path):
     image = image.convert_alpha()
     image_height = image.get_height()
     image_width = image.get_width()
-    image = pg.transform.scale(image, (image_width * PX_SCALE, image_height * PX_SCALE))
+    image = pg.transform.scale(image, (image_width * scale, image_height * scale))
     return image
 
 def load_map(filepath):
@@ -39,3 +39,10 @@ def angle_to(sprite1, sprite2):
     x1, y1 = sprite1.rect.center
     x2, y2 = sprite2.rect.center
     return math.atan2(y1 - y2, x1 - x2)
+
+def image_clip(surface, x, y, x_size, y_size):
+    image_copy = surface.copy()
+    clip = pg.Rect(x, y, x_size, y_size)
+    image_copy.set_clip(clip)
+    image = surface.subsurface(image_copy.get_clip())
+    return image.copy()
