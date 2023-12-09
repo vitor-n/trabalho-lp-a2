@@ -5,29 +5,39 @@ import math
 import random
 
 class Weapon(pygame.sprite.Sprite):
-    def __init__(self, image_path, target):
+    def __init__(self, image_path, target_pos):
         super().__init__()
-        self.target = target
+        self.target_pos = target_pos
         self.image = load_image(image_path)
         self.orig_image = self.image
         self.inventory_image = self.image
         self.rect = self.image.get_rect()
         self.facing_r = True
+        self.angle_radians = 0
+        self.angle_degrees = 0
 
     def set_entity(self, entity):
         self.entity = entity
         self.rect.center = entity.rect.center
 
+    def set_target(self, target_pos):
+        self.target = target_pos
+
+    def get_angles(self):
+        self.angle_radians = math.atan2(self.entity.rect.centery-self.target_pos[1], self.target_pos[0]-self.entity.rect.centerx)
+        self.angle_degrees = math.degrees(self.angle_radians)
+
     def rotate(self):
-        self.image = pygame.transform.rotate(self.orig_image, self.target.angle_degrees)
+        self.get_angles()
+        self.image = pygame.transform.rotate(self.orig_image, self.angle_degrees)
 
         self.rect = self.image.get_rect(
-            center = (math.cos(-self.target.angle_radians) * 65 + self.entity.rect.centerx,
-                      math.sin(-self.target.angle_radians) * 80 + self.entity.rect.centery
+            center = (math.cos(-self.angle_radians) * 65 + self.entity.rect.centerx,
+                      math.sin(-self.angle_radians) * 80 + self.entity.rect.centery
                     )
                     )
 
-        if -self.target.angle_degrees >= 90 or -self.target.angle_degrees <= -90:
+        if -self.angle_degrees >= 90 or -self.angle_degrees <= -90:
             if self.facing_r:
                 self.orig_image = pygame.transform.flip(self.orig_image, False, True)
                 self.entity.image = pygame.transform.flip(self.entity.image, True, False)
@@ -40,14 +50,13 @@ class Weapon(pygame.sprite.Sprite):
 
 
 class Gun(Weapon):
-    def __init__(self, image_path, target):
-        super().__init__(image_path, target)
+    def __init__(self, image_path, target_pos):
+        super().__init__(image_path, target_pos)
         self.move_function = lambda m: 0
         self.damage = 5
         self.mag_size = 1
         self.reload_cooldown = 500
         self.bullet_speed = 10
-
 
         self.bullet_group = pygame.sprite.Group()
 
@@ -64,7 +73,7 @@ class Gun(Weapon):
         if self.mag_count > 0:
             self.shooting = True
             self.mag_count -= 1
-            bullet = Bullet(("Sprites", "bullets", "bullet1.png"), (self.rect.centerx, self.rect.centery), self.target.angle_radians, self.damage, self.move_function, self.bullet_speed)
+            bullet = Bullet(("Sprites", "bullets", "bullet1.png"), (self.rect.centerx, self.rect.centery), self.angle_radians, self.damage, self.move_function, self.bullet_speed)
             self.bullet_group.add(bullet)
             if self.mag_count == 0:
                 self.shooting = False
@@ -137,5 +146,8 @@ class Bullet(pygame.sprite.Sprite):
         self.travel_time += 0.5
         self.dx += self.speed
         self.dy += wave
+
+        if self.travel_time > 100:
+            self.kill()
 
 

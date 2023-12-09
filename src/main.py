@@ -26,7 +26,7 @@ teste = RepeatMap(map_layout)
 font = Font(("Font", "pixel_font_black.png"))
 font2 = Font(("Font", "pixel_font_grey.png"))
 player = Player(("Sprites", "Player", "player.png"), (0,0), Inventory())
-cursor = Cursor(("Sprites", "cursors", "cursor2.png"), (TILE_SIZE* 9.5, TILE_SIZE*5.5), player)
+cursor = Cursor(("Sprites", "cursors", "cursor2.png"), (TILE_SIZE* 9.5, TILE_SIZE*5.5))
 gun = SineShotgun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor)
 other_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor)
 third_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor)
@@ -36,7 +36,6 @@ camera = SmoothCamera(screen, teste, player, cursor.rect.center)
 player.inventory.add_weapon(gun, "sin(x)")
 player.inventory.add_weapon(other_gun, "k")
 player.inventory.add_weapon(third_gun, "j")
-cursor.set_camera(camera)
 delta_time = 0
 curr_time = 0
 last_time = 0
@@ -59,7 +58,7 @@ while True:
         gang.random_group(5, 2, 1, player.rect)
  
     camera.update()
-    player.update()
+    player.update((cursor.rect.centerx+camera.rect.topleft[0],cursor.rect.centery+camera.rect.topleft[1]))
     gang.update(player.rect, delta_time)
     cursor.update()
     teste.expand(camera.rect)
@@ -69,7 +68,14 @@ while True:
     camera.render_group(gang)
     camera.render_sprite_no_offset(cursor)
 
-    #camera.render_group(gun.bullet_group)
+    if pg.sprite.spritecollide(player, gang, False, pg.sprite.collide_rect_ratio(0.7)):
+        player.health - 1
+
+    damaged_enemies = pg.sprite.groupcollide(gang, gun.bullet_group, False, True)
+
+    for enemy in damaged_enemies:
+        enemy.health - 1
+
     camera.set_cursor_position(cursor.rect.center)
     camera.render_group(gun.bullet_group)
 
@@ -81,5 +87,6 @@ while True:
     #pg.draw.line(screen, (255, 0, 0), (0, SCREEN_DIMENSIONS[1] // 2), (SCREEN_DIMENSIONS[0], SCREEN_DIMENSIONS[1] // 2), 1)
     #pg.draw.line(screen, (255, 0, 0), (SCREEN_DIMENSIONS[0] // 2, 0), (SCREEN_DIMENSIONS[0] // 2, SCREEN_DIMENSIONS[1]), 1)
 
+    print(clock.get_fps())
     pg.display.update()
     delta_time = clock.tick(FPS)

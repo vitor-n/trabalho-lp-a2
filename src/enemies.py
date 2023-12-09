@@ -5,13 +5,14 @@ from player import Entity
 import settings as st
 from settings import SCREEN_DIMENSIONS
 import random
+from health import Health
 
 class Enemy(Entity):
 
-    def __init__(self, image_path, target_position, speed, life):
+    def __init__(self, image_path, target_position, speed, health):
         super().__init__(image_path, self.initial_position(target_position))
         self.speed = speed
-        self.life = life
+        self.health = Health(health, 0)
 
     def move(self, delta_time):
         self.direction = self.direction.normalize()
@@ -34,6 +35,9 @@ class Enemy(Entity):
         self.define_direction(player_position)
         if self.direction.magnitude_squared() != 0:
             self.move(delta_time)
+
+        if self.health == 0:
+            self.kill
     
     
 class Apache(Enemy):
