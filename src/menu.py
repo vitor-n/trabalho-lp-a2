@@ -1,7 +1,10 @@
 import pygame 
 from settings import FPS, FONT, SCREEN_DIMENSIONS
 import sys
+<<<<<<< HEAD
 
+=======
+>>>>>>> c6473e24733a4f2e75f572b1af0cd19c429e6d4d
 
 pygame.init()
 

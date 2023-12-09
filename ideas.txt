@@ -1,0 +1,1 @@
+if pg.sprite.spritecollide(player, enemy.bullet_group, True):
