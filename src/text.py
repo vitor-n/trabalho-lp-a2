@@ -7,7 +7,7 @@ class Font():
     def __init__(self, image_path):
         font_image = load_image(image_path)
 
-        self.character_order = "abcdefghijklmnopqrstuvwxyz0123456789,.?!:/\<>"
+        self.character_order = "abcdefghijklmnopqrstuvwxyz0123456789,.?!:/\<>()-="
         
         self.characters = {}
         character_count = 0

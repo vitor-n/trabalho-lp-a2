@@ -52,19 +52,21 @@ while True:
     cursor.update()
     teste.expand(camera.rect)
     camera.render_map()
+    font.render(screen, f"dash using space", (player.rect.centerx-camera.rect.topleft[0]-50, player.rect.top - camera.rect.topleft[1] - 50))
     camera.render_entity(player)
-    camera.render_sprite(enemy)
+    #camera.render_sprite(enemy)
     camera.render_sprite_no_offset(cursor)
 
     #camera.render_group(gun.bullet_group)d
     camera.set_cursor_position(cursor.rect.center)
     camera.render_group(gun.bullet_group)
 
-    screen.blit(player.health.bar, (30,30))
-    screen.blit(inventory.sine_gun, (30,120))
+    screen.blit(player.health.bar, (33,30))
+
+    font.render(screen, "time: 5:00", (33,90))
+    font.render(screen, "sin(x)", (33,120))
     screen.blit(cursor.image, cursor.rect)
 
-    font.render(screen, "time: 5:00", (30,90))
 
     #pg.draw.line(screen, (255, 0, 0), (0, SCREEN_DIMENSIONS[1] // 2), (SCREEN_DIMENSIONS[0], SCREEN_DIMENSIONS[1] // 2), 1)
     #pg.draw.line(screen, (255, 0, 0), (SCREEN_DIMENSIONS[0] // 2, 0), (SCREEN_DIMENSIONS[0] // 2, SCREEN_DIMENSIONS[1]), 1)
