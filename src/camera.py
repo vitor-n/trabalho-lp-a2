@@ -1,6 +1,7 @@
 import pygame as pg
 from settings import SCREEN_DIMENSIONS, TILE_SIZE
 import math
+from text import Font
 
 class Camera:
     """
@@ -26,6 +27,7 @@ class Camera:
         self._target = target
         self._map = map_
         self.screen = screen
+        self.font = Font(("Font", "pixel_font.png"))
 
     @property
     def target(self):
@@ -141,6 +143,12 @@ class Camera:
                 self.render_group(entity.weapon.bullet_group)
             self.render_sprite(entity.weapon)
         self.render_sprite(entity)
+        if entity.inventory:
+            names = entity.inventory.get_current_weapon_names()
+            self.font.render(self.screen, f"{names[0]}   ", (105,120))
+            self.screen.blit(entity.weapon.orig_image, (39, 141))
+            self.font.render(self.screen, f"{names[1]}", (105,150))
+            self.font.render(self.screen, f"{names[2]}   ", (105,180))
 
 
 class SmoothCamera(Camera):

@@ -1,7 +1,7 @@
 from pygame.locals import *
 import pygame as pg
 from settings import SCREEN_DIMENSIONS, TILE_SIZE, FPS, ENEMY_SPAWN_TIME
-from player import Player
+from player import Player, Inventory
 from utils import load_map
 from map_ import Map, RepeatMap
 import sys
@@ -9,7 +9,7 @@ from camera import SmoothCamera
 from weapons import SineShotgun, Gun
 from cursor import Cursor
 from enemies import Apache, Roman, Samurai, Viking, IntegralGang
-from inventory import Inventory
+#from inventory import Inventory
 from text import Font
 
 map_thing = [[str(divmod(50, 4)[1]) for i in range(400)] for i in range(400)]
@@ -24,13 +24,17 @@ map_layout = load_map("maps/map.json")["tiles"]
 map = Map(map_thing)
 teste = RepeatMap(map_layout)
 font = Font(("Font", "pixel_font.png"))
-player = Player(("Sprites", "Player", "player.png"), (0,0), (map.rect.width, map.rect.height))
+player = Player(("Sprites", "Player", "player.png"), (0,0), Inventory())
 cursor = Cursor(("Sprites", "cursors", "cursor2.png"), (TILE_SIZE* 9.5, TILE_SIZE*5.5), player)
 gun = SineShotgun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor)
+other_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor)
+third_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor)
 gang = IntegralGang()
 gang.create_group(Apache, 5, 3, 1, player.coords)
 camera = SmoothCamera(screen, teste, player, cursor.rect.center)
-player.set_weapon(gun)
+player.inventory.add_weapon(gun, "sin(x)")
+player.inventory.add_weapon(other_gun, "k")
+player.inventory.add_weapon(third_gun, "j")
 cursor.set_camera(camera)
 delta_time = 0
 curr_time = 0
@@ -69,9 +73,7 @@ while True:
     camera.render_group(gun.bullet_group)
 
     screen.blit(player.health.bar, (33,30))
-
     font.render(screen, "time: 5:00", (33,90))
-    font.render(screen, "sin(x)", (33,120))
     screen.blit(cursor.image, cursor.rect)
 
 
