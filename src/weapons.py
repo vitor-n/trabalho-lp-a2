@@ -8,7 +8,7 @@ class Weapon(pygame.sprite.Sprite):
     def __init__(self, image_path, target_pos):
         super().__init__()
         self.target_pos = target_pos
-        self.image = load_image(image_path)
+        self.image = load_image(image_path, 3)
         self.orig_image = self.image
         self.inventory_image = self.image
         self.rect = self.image.get_rect()

@@ -79,7 +79,10 @@ class Apache(Enemy):
         life = st.integrals_info['APACHE_HEALTH'][integral_type - 1]
         image_path = st.integrals_info['INTEGRALS_SPRITES'].copy()
         image_path.append(st.integrals_info['APACHE_IMAGE'][integral_type - 1])
-        super().__init__(image_path, target_position, speed, life, target)
+        weapon_path = st.integrals_info["INTEGRALS_WEAPONS"].copy()
+        weapon_path.append(st.integrals_info["APACHE_WEAPONS"][integral_type - 1])
+        weapon = Weapon(weapon_path, target)
+        super().__init__(image_path, target_position, speed, life, target, weapon)
 
 class Roman(Enemy):
     def __init__(self, target_position, integral_type, target):
@@ -87,7 +90,10 @@ class Roman(Enemy):
         life = st.integrals_info['ROMAN_HEALTH'][integral_type - 1]
         image_path = st.integrals_info['INTEGRALS_SPRITES'].copy()
         image_path.append(st.integrals_info['ROMAN_IMAGE'][integral_type - 1])
-        super().__init__(image_path, target_position, speed, life, target)
+        weapon_path = st.integrals_info["INTEGRALS_WEAPONS"].copy()
+        weapon_path.append(st.integrals_info["ROMAN_WEAPONS"][integral_type - 1])
+        weapon = Weapon(weapon_path, target)
+        super().__init__(image_path, target_position, speed, life, target, weapon)
 
 class Samurai(Enemy):
     def __init__(self, target_position, integral_type, target):
@@ -95,7 +101,10 @@ class Samurai(Enemy):
         life = st.integrals_info['SAMURAI_HEALTH'][integral_type - 1]
         image_path = st.integrals_info['INTEGRALS_SPRITES'].copy()
         image_path.append(st.integrals_info['SAMURAI_IMAGE'][integral_type - 1])
-        super().__init__(image_path, target_position, speed, life, target)
+        weapon_path = st.integrals_info["INTEGRALS_WEAPONS"].copy()
+        weapon_path.append(st.integrals_info["SAMURAI_WEAPONS"][integral_type - 1])
+        weapon = Weapon(weapon_path, target)
+        super().__init__(image_path, target_position, speed, life, target, weapon)
 
 class Viking(Enemy): 
     def __init__(self, target_position, integral_type, target):
@@ -103,7 +112,10 @@ class Viking(Enemy):
         life = st.integrals_info['VIKING_HEALTH'][integral_type - 1]
         image_path = st.integrals_info['INTEGRALS_SPRITES'].copy()
         image_path.append(st.integrals_info['VIKING_IMAGE'][integral_type - 1])
-        super().__init__(image_path, target_position, speed, life, target)
+        weapon_path = st.integrals_info["INTEGRALS_WEAPONS"].copy()
+        weapon_path.append(st.integrals_info["VIKING_WEAPONS"][integral_type - 1])
+        weapon = Weapon(weapon_path, target)
+        super().__init__(image_path, target_position, speed, life, target, weapon)
 
 class IntegralGang(pg.sprite.Group):
     def __init__(self, *sprites):
@@ -112,15 +124,12 @@ class IntegralGang(pg.sprite.Group):
 
     def create_group(self, integral_family, single_qtt, double_qtt, triple_qtt, target_position, target = None):
         for num in range(single_qtt):
-            weapon = Weapon(("Sprites", "weapons", "player_weapons", "math_gun.png"), target)
             enemy_s = integral_family((target_position), 1, target)
             self.add(enemy_s)
         for num in range(double_qtt):
-            weapon = Weapon(("Sprites", "weapons", "player_weapons", "math_gun.png"), target)
             enemy_d = integral_family((target_position), 2, target)
             self.add(enemy_d)
         for num in range(triple_qtt):
-            weapon = Weapon(("Sprites", "weapons", "player_weapons", "math_gun.png"), target)
             enemy_t = integral_family((target_position), 3, target)
             self.add(enemy_t)
 
