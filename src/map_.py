@@ -60,7 +60,7 @@ class Map:
         )
 
     @property
-    def rectangle(self):
+    def rect(self):
         """
         A rectangle representing the map boundaries. It's dimensions represent
         the dimensions of the map in pixels, not in tiles.
@@ -110,6 +110,20 @@ class RepeatMap(Map):
         self._right = self.dimensions[0]
 
     def expand(self, rect):
+        """
+        Updates the map, based in a rectangle, so it covers all the space in the
+        rectangle with tiles. The tiles are moved from one border to another,
+        so the number of tiles never change at all.
+
+        Parameters
+        ----------
+        rect:
+            The rectangle to use to move the map
+
+        Returns
+        -------
+            None
+        """
         if rect.right > self._right:
             for x in range(self._left, rect.right - self.dimensions[0], TILE_SIZE):
                 line = (x, self._top, x, self._bottom)
@@ -144,7 +158,7 @@ class RepeatMap(Map):
                 self._bottom -= TILE_SIZE
 
     @property
-    def rectangle(self):
+    def rect(self):
         """
         A rectangle representing the map boundaries. It's dimensions represent
         the dimensions of the map in pixels, not in tiles.
