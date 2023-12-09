@@ -21,7 +21,7 @@ class Weapon(pygame.sprite.Sprite):
         self.rect.center = entity.rect.center
 
     def set_target(self, target_pos):
-        self.target = target_pos
+        self.target_pos = target_pos
 
     def get_angles(self):
         self.angle_radians = math.atan2(self.entity.rect.centery-self.target_pos[1], self.target_pos[0]-self.entity.rect.centerx)
@@ -46,7 +46,6 @@ class Weapon(pygame.sprite.Sprite):
             self.orig_image = pygame.transform.flip(self.orig_image, False, True)
             self.entity.image = pygame.transform.flip(self.entity.image, True, False)
             self.facing_r = True
-
 
 class Gun(Weapon):
     def __init__(self, image_path, target_pos, stats):
@@ -104,7 +103,6 @@ class Gun(Weapon):
             self.reload()
         self.rotate()
         self.bullet_group.update()
-
 
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, image_path, position, angle_radians, damage, move_function, speed):

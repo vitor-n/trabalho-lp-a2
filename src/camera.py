@@ -144,7 +144,7 @@ class Camera:
                 self.render_group(entity.weapon.bullet_group)
             self.render_sprite(entity.weapon)
         self.render_sprite(entity)
-        if entity.inventory:
+        if hasattr(entity, "inventory"):
             names = entity.inventory.get_current_weapon_names()
             self.font_grey.render(self.screen, f"{names[0]}   ", (105,120))
             self.font_black.render(self.screen, f"{names[1]}", (105,150))
