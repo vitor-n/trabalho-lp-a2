@@ -18,7 +18,7 @@ screen = pg.display.set_mode(SCREEN_DIMENSIONS)
 map_layout = load_map("maps/map.json")["tiles"]
 map = Map(map_layout)
 player = Player(("Sprites", "Player", "player.png"), (0,0), map.dimensions)
-cursor = Cursor(("Sprites", "cursors", "cursor1.png"), (TILE_SIZE* 9.5, TILE_SIZE*5.5), player)
+cursor = Cursor(("Sprites", "cursors", "cursor2.png"), (TILE_SIZE* 9.5, TILE_SIZE*5.5), player)
 gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor)
 enemy = Apache((0,10), 2)
 enemy2 = Apache((0,20), 1)
@@ -35,7 +35,7 @@ while True:
             pg.quit()
             sys.exit()
 
-    screen.fill('#f6e5ca')
+    screen.fill("white")
 
     #enemy.update(player.rect, delta_time)
     #enemy2.update(player.rect, delta_time)
