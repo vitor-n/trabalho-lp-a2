@@ -25,11 +25,12 @@ class Enemy(Entity):
         self.image_right = self.image
         image_path[-1].replace(".png", "_left.png")
         self.image_left = load_image(image_path)
-        print(self.image_left)
         self.speed = speed
         self.health = Health(health, 0)
         self._target = target
         self._weapon = weapon
+        if weapon:
+            self._weapon.set_entity(self)
 
     @property
     def target(self):
@@ -67,72 +68,66 @@ class Enemy(Entity):
         if self.weapon:
             self.weapon.set_target(self.target.rect.topleft)
             self.weapon.update()
-            self.weapon.shoot()
 
         if self.health == 0:
             self.kill
     
     
 class Apache(Enemy):
-    def __init__(self, target_position, integral_type, target, weapon):
+    def __init__(self, target_position, integral_type, target):
         speed = st.integrals_info['APACHE_SPEED'][integral_type - 1]
         life = st.integrals_info['APACHE_HEALTH'][integral_type - 1]
         image_path = st.integrals_info['INTEGRALS_SPRITES'].copy()
         image_path.append(st.integrals_info['APACHE_IMAGE'][integral_type - 1])
-        super().__init__(image_path, target_position, speed, life, target, weapon)
-        weapon.set_entity(self)
+        super().__init__(image_path, target_position, speed, life, target)
 
 class Roman(Enemy):
-    def __init__(self, target_position, integral_type, target, weapon):
+    def __init__(self, target_position, integral_type, target):
         speed = st.integrals_info['ROMAN_SPEED'][integral_type - 1]
         life = st.integrals_info['ROMAN_HEALTH'][integral_type - 1]
         image_path = st.integrals_info['INTEGRALS_SPRITES'].copy()
         image_path.append(st.integrals_info['ROMAN_IMAGE'][integral_type - 1])
-        super().__init__(image_path, target_position, speed, life, target, weapon)
-        weapon.set_entity(self)
+        super().__init__(image_path, target_position, speed, life, target)
 
 class Samurai(Enemy):
-    def __init__(self, target_position, integral_type, target, weapon):
+    def __init__(self, target_position, integral_type, target):
         speed = st.integrals_info['SAMURAI_SPEED'][integral_type - 1]
         life = st.integrals_info['SAMURAI_HEALTH'][integral_type - 1]
         image_path = st.integrals_info['INTEGRALS_SPRITES'].copy()
         image_path.append(st.integrals_info['SAMURAI_IMAGE'][integral_type - 1])
-        super().__init__(image_path, target_position, speed, life, target, weapon)
-        weapon.set_entity(self)
+        super().__init__(image_path, target_position, speed, life, target)
 
 class Viking(Enemy): 
-    def __init__(self, target_position, integral_type, target, weapon):
+    def __init__(self, target_position, integral_type, target):
         speed = st.integrals_info['VIKING_SPEED'][integral_type-1]
         life = st.integrals_info['VIKING_HEALTH'][integral_type - 1]
         image_path = st.integrals_info['INTEGRALS_SPRITES'].copy()
         image_path.append(st.integrals_info['VIKING_IMAGE'][integral_type - 1])
-        super().__init__(image_path, target_position, speed, life, target, weapon)
-        weapon.set_entity(self)
+        super().__init__(image_path, target_position, speed, life, target)
 
 class IntegralGang(pg.sprite.Group):
-
     def __init__(self, *sprites):
         super().__init__(*sprites)
         self.types = [Apache, Roman, Samurai, Viking]
 
-    def create_group(self, integral_family, single_qtt, double_qtt, triple_qtt, target_position, target):
+    def create_group(self, integral_family, single_qtt, double_qtt, triple_qtt, target_position, target = None):
         for num in range(single_qtt):
-            weapon = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), target, zero_gun_stats)
-            enemy_s = integral_family((target_position), 1, target, weapon)
+            weapon = Weapon(("Sprites", "weapons", "player_weapons", "math_gun.png"), target)
+            enemy_s = integral_family((target_position), 1, target)
             self.add(enemy_s)
         for num in range(double_qtt):
-            weapon = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), target, zero_gun_stats)
-            enemy_d = integral_family((target_position), 2, target, weapon)
+            weapon = Weapon(("Sprites", "weapons", "player_weapons", "math_gun.png"), target)
+            enemy_d = integral_family((target_position), 2, target)
             self.add(enemy_d)
         for num in range(triple_qtt):
-            weapon = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), target, zero_gun_stats)
-            enemy_t = integral_family((target_position), 3, target, weapon)
+            weapon = Weapon(("Sprites", "weapons", "player_weapons", "math_gun.png"), target)
+            enemy_t = integral_family((target_position), 3, target)
             self.add(enemy_t)
 
-    def random_group(self,single_qtt, double_qtt, triple_qtt, target_position, target):
+    def random_group(self,single_qtt, double_qtt, triple_qtt, target_position, target = None):
         self.create_group(self.types[random.randint(0,3)], single_qtt, double_qtt, triple_qtt, target_position, target)
     
-    def set_target(self, target):
+    def set_target_for_all(self, target):
         for integral in self:
             integral.target = target
         

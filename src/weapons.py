@@ -47,6 +47,9 @@ class Weapon(pygame.sprite.Sprite):
             self.entity.image = pygame.transform.flip(self.entity.image, True, False)
             self.facing_r = True
 
+    def update(self):
+        self.rotate()
+
 class Gun(Weapon):
     def __init__(self, image_path, target_pos, stats):
         super().__init__(image_path, target_pos)
@@ -89,6 +92,7 @@ class Gun(Weapon):
         self.reloading = False
 
     def update(self):
+        super().update()
         self.time_now = pygame.time.get_ticks()
 
         if self.mag_count == 0:
@@ -101,7 +105,6 @@ class Gun(Weapon):
             self.shoot()
         if self.reloading:
             self.reload()
-        self.rotate()
         self.bullet_group.update()
 
 class Bullet(pygame.sprite.Sprite):
