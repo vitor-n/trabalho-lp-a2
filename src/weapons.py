@@ -10,6 +10,7 @@ class Weapon(pygame.sprite.Sprite):
         self.target = target
         self.image = load_image(image_path)
         self.orig_image = self.image
+        self.inventory_image = self.image
         self.rect = self.image.get_rect()
         self.facing_r = True
 
@@ -89,6 +90,7 @@ class Gun(Weapon):
         self.rotate()
         self.bullet_group.update()
 
+
 class SineShotgun(Gun):
     def __init__(self, image_path, target):
         super().__init__(image_path, target)
@@ -101,6 +103,7 @@ class SineShotgun(Gun):
             return math.cos(time) * 40
         self.move_function = move_function
         self.damage = 2
+
 
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, image_path, position, angle_radians, damage, move_function, speed):

@@ -23,7 +23,8 @@ screen = pg.display.set_mode(SCREEN_DIMENSIONS)
 map_layout = load_map("maps/map.json")["tiles"]
 map = Map(map_thing)
 teste = RepeatMap(map_layout)
-font = Font(("Font", "pixel_font.png"))
+font = Font(("Font", "pixel_font_black.png"))
+font2 = Font(("Font", "pixel_font_grey.png"))
 player = Player(("Sprites", "Player", "player.png"), (0,0), Inventory())
 cursor = Cursor(("Sprites", "cursors", "cursor2.png"), (TILE_SIZE* 9.5, TILE_SIZE*5.5), player)
 gun = SineShotgun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor)
@@ -68,7 +69,7 @@ while True:
     camera.render_group(gang)
     camera.render_sprite_no_offset(cursor)
 
-    #camera.render_group(gun.bullet_group)d
+    #camera.render_group(gun.bullet_group)
     camera.set_cursor_position(cursor.rect.center)
     camera.render_group(gun.bullet_group)
 
