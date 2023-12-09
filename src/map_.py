@@ -87,7 +87,10 @@ class Map:
             "4": "tile4",
             "5": "tile5",
             "6": "tile_doodle_1",
-            "7": "tile_doodle_2"
+            "7": "tile_doodle_2",
+            "8": "tile_doodle_3",
+            "9": "tile_doodle_4",
+            "10": "tile_doodle_5"
         }
         for tile_identifier, filename in self.background_tiles.items():
             self.background_tiles[tile_identifier] = load_tile_image(("Sprites", "tiles", f"{filename}.png"))
