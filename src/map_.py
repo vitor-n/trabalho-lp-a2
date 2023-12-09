@@ -74,7 +74,7 @@ class Map:
             "4": "tile4"
         }
         for tile_identifier, filename in self.background_tiles.items():
-            self.background_tiles[tile_identifier] = load_tile_image(("Sprites", "Provisory", f"{filename}.png"))
+            self.background_tiles[tile_identifier] = load_tile_image(("Sprites", "tiles", f"{filename}.png"))
 
     def _create_map_background(self):
         self._background.empty()

@@ -13,7 +13,7 @@ from enemies import Apache
 pg.init()
 pg.mouse.set_visible(False)
 clock = pg.time.Clock()
-pygame.display.set_caption("Guerreiros Integrais")
+pg.display.set_caption("Guerreiros Integrais")
 screen = pg.display.set_mode(SCREEN_DIMENSIONS)
 
 map_layout = load_map("maps/map.json")["tiles"]
