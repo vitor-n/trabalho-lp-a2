@@ -70,10 +70,12 @@ class Viking(Enemy):
 
 class IntegralGang(pg.sprite.Group):
 
+
     def __init__(self, *sprites):
         super().__init__(*sprites)
+        self.types = [Apache, Roman, Samurai, Viking]
 
-    def create_group(self, integral_family ,single_qtt, double_qtt, triple_qtt, target_position):
+    def create_group(self, integral_family,single_qtt, double_qtt, triple_qtt, target_position):
         
         for num in range(single_qtt):
             enemy_s = integral_family((target_position), 1)
@@ -84,6 +86,11 @@ class IntegralGang(pg.sprite.Group):
         for num in range(triple_qtt):
             enemy_t = integral_family((target_position), 3)
             self.add(enemy_t)
+
+    def random_group(self,single_qtt, double_qtt, triple_qtt, target_position):
+        
+        self.create_group(self.types[random.randint(0,3)], single_qtt, double_qtt, triple_qtt, target_position)
+    
         
 
 

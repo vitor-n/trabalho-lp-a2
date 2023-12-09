@@ -51,7 +51,7 @@ while True:
 
     if curr_time - last_time > ENEMY_SPAWN_TIME:
         last_time = curr_time
-        gang.create_group(Samurai, 5, 2, 1, player.rect)
+        gang.random_group(5, 2, 1, player.rect)
  
     camera.update()
     player.update()

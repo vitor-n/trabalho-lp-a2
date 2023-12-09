@@ -1,10 +1,7 @@
 import pygame 
 from settings import FPS, FONT, SCREEN_DIMENSIONS
 import sys
-<<<<<<< HEAD
-
-=======
->>>>>>> c6473e24733a4f2e75f572b1af0cd19c429e6d4d
+import os
 
 pygame.init()
 
@@ -14,12 +11,12 @@ pygame.display.set_caption("Guerreiros Integrais")
 clock = pygame.time.Clock()
 
 # Load game title image
-game_title_image = pygame.image.load(r"Sprites/Menu/title.png")  
+game_title_image = pygame.image.load(os.path.join("Sprites","Menu","title.png")) 
 game_title_rect = game_title_image.get_rect() 
 
 # Load button images
-play_button_image = pygame.image.load(r"Sprites/Menu/play_button.png")  
-config_button_image = pygame.image.load(r"Sprites/Menu/config_button.png")  
+play_button_image = pygame.image.load(os.path.join("Sprites","Menu","play_button.png")) 
+config_button_image = pygame.image.load(os.path.join("Sprites","Menu","config_button.png"))  
 
 config_button_rect = config_button_image.get_rect(topleft=(SCREEN_DIMENSIONS[0] // 2 - config_button_image.get_width() // 2, SCREEN_DIMENSIONS[1] // 2 + 100))
 play_button_rect = play_button_image.get_rect(topleft=(SCREEN_DIMENSIONS[0] // 2 - play_button_image.get_width() // 2, SCREEN_DIMENSIONS[1] // 2 + 10))
