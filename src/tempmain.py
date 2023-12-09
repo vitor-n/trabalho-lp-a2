@@ -23,7 +23,6 @@ while True:
         pygame.quit()
         quit()
 
-
     screen.fill("white")
 
     cursor.update()

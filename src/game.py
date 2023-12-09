@@ -6,10 +6,11 @@ from utils import load_map
 from map_ import Map, RepeatMap
 import sys
 from camera import SmoothCamera
-from weapons import SineShotgun, Gun
+from weapons import Gun
 from cursor import Cursor
 from enemies import Apache, Roman, Samurai, Viking, IntegralGang
 from text import Font
+from settings import ZERO_GUN_STATS, SINE_GUN_STATS, LINE_GUN_STATS
 
 
 class Game:
@@ -23,15 +24,16 @@ class Game:
         self.font2 = Font(("Font", "pixel_font_grey.png"))
         self.player = Player(("Sprites", "Player", "player.png"), (0,0), Inventory())
         self.cursor = Cursor(("Sprites", "cursors", "cursor2.png"), (TILE_SIZE* 9.5, TILE_SIZE*5.5))
-        self.gun = SineShotgun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor)
-        self.other_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor)
-        self.third_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor)
         self.gang = IntegralGang()
         self.camera = SmoothCamera(screen, self.map, self.player, self.cursor.rect.center)
-        self.player.inventory.add_weapon(self.gun, "sin(x)")
-        self.player.inventory.add_weapon(self.other_gun, "k")
-        self.player.inventory.add_weapon(self.third_gun, "j")
         
+        self.zero_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor, ZERO_GUN_STATS)
+        self.sine_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor, SINE_GUN_STATS)
+        self.line_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor, LINE_GUN_STATS)
+        self.player.inventory.add_weapon(self.zero_gun, "0")
+        self.player.inventory.add_weapon(self.sine_gun, "sin(x)")
+        self.player.inventory.add_weapon(self.line_gun, "cx")
+
         self.delta_time = 0
         self.curr_time = 0
         self.__last_enemy_spawn_time = 0
@@ -65,13 +67,10 @@ class Game:
         if pg.sprite.spritecollide(self.player, self.gang, False, pg.sprite.collide_rect_ratio(0.7)):
             self.player.health - 1
 
-        damaged_enemies = pg.sprite.groupcollide(self.gang, self.gun.bullet_group, False, True)
-
-        for enemy in damaged_enemies:
-            enemy.health - 1
-
         self.camera.set_cursor_position(self.cursor.rect.center)
-        self.camera.render_group(self.gun.bullet_group)
+        self.camera.render_group(self.zero_gun.bullet_group)
+        self.camera.render_group(self.sine_gun.bullet_group)
+        self.camera.render_group(self.line_gun.bullet_group)
 
         self.screen.blit(self.player.health.bar, (33,30))
         self.font.render(self.screen, "time: 5:00", (33,90))
