@@ -49,6 +49,7 @@ class Player(Entity):
         self.dash_cooldown = 2000
         self.dash_duration = 10
         self.dash_timer = self.dash_duration
+        self.coords = (self.rect.x, self.rect.y)
 
     def set_weapon(self, weapon):
         self.weapon = weapon

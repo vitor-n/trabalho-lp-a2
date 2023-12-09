@@ -1,6 +1,6 @@
 from pygame.locals import *
 import pygame as pg
-from settings import SCREEN_DIMENSIONS, TILE_SIZE, FPS
+from settings import SCREEN_DIMENSIONS, TILE_SIZE, FPS, ENEMY_SPAWN_TIME
 from player import Player
 from utils import load_map
 from map_ import Map, RepeatMap
@@ -8,7 +8,7 @@ import sys
 from camera import SmoothCamera
 from weapons import SineShotgun
 from cursor import Cursor
-from enemies import Apache
+from enemies import Apache, Roman, Samurai, Viking, IntegralGang
 from inventory import Inventory
 from text import Font
 
@@ -27,17 +27,21 @@ font = Font(("Font", "pixel_font.png"))
 player = Player(("Sprites", "Player", "player.png"), (0,0), (map.rect.width, map.rect.height))
 cursor = Cursor(("Sprites", "cursors", "cursor2.png"), (TILE_SIZE* 9.5, TILE_SIZE*5.5), player)
 gun = SineShotgun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor)
-enemy = Apache((0,10), 2)
-enemy2 = Apache((0,20), 1)
+gang = IntegralGang()
+gang.create_group(Apache, 5, 3, 1, player.coords)
 camera = SmoothCamera(screen, teste, player, cursor.rect.center)
 player.set_weapon(gun)
 cursor.set_camera(camera)
 delta_time = 0
+curr_time = 0
+last_time = 0
 
 bullet_group = pg.sprite.Group()
 
 inventory = Inventory()
 while True:
+    curr_time = pg.time.get_ticks()
+
     for event in pg.event.get():
         if event.type == pg.QUIT or pg.key.get_pressed()[K_ESCAPE]:
             pg.quit()
@@ -45,16 +49,19 @@ while True:
 
     screen.fill("white")
 
-    enemy.update(player.rect, delta_time)
-    enemy2.update(player.rect, delta_time)
+    if curr_time - last_time > ENEMY_SPAWN_TIME:
+        last_time = curr_time
+        gang.random_group(5, 2, 1, player.rect)
+ 
     camera.update()
     player.update()
+    gang.update(player.rect, delta_time)
     cursor.update()
     teste.expand(camera.rect)
     camera.render_map()
     font.render(screen, f"dash using space", (player.rect.centerx-camera.rect.topleft[0]-50, player.rect.top - camera.rect.topleft[1] - 50))
     camera.render_entity(player)
-    #camera.render_sprite(enemy)
+    camera.render_group(gang)
     camera.render_sprite_no_offset(cursor)
 
     #camera.render_group(gun.bullet_group)d
