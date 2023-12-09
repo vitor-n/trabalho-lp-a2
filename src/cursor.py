@@ -61,10 +61,7 @@ class Cursor:
         """
         Updates the position and angle of the cursor based on the player's position and the mouse position.
         """
-        player_position_screen_space = (
-            self._player.rect.center[0] - self._camera.rect.topleft[0],
-            self._player.rect.center[1] - self._camera.rect.topleft[1],
-        )
+        player_position_screen_space = self._camera.calculate_offset(self._player.rect)
 
         self._rect.center = pygame.mouse.get_pos()
         self._angle_radians = math.atan2(

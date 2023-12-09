@@ -6,7 +6,7 @@ from utils import load_map
 from map_ import Map, RepeatMap
 import sys
 from camera import SmoothCamera
-from weapons import SineShotgun
+from weapons import SineShotgun, Gun
 from cursor import Cursor
 from enemies import Apache, Roman, Samurai, Viking, IntegralGang
 from inventory import Inventory
