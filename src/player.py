@@ -36,12 +36,13 @@ class Player(Entity):
         The map size. It is used to determine when the player is on the map edge.
     """
 
-    def __init__(self, image_path, initial_position, weapon = None):
+    def __init__(self, image_path, initial_position, inventory):
         super().__init__(image_path, initial_position)
-        self.health = PlayerHealth(6)
+        self.health = PlayerHealth(6, 2)
         self.speed = 7
         
-        self.weapon = weapon
+        self.inventory = inventory
+        self.inventory.player = self
         self.attacking = False
 
         self.dashing = False
@@ -49,11 +50,15 @@ class Player(Entity):
         self.dash_cooldown = 2000
         self.dash_duration = 10
         self.dash_timer = self.dash_duration
-        self.coords = (self.rect.x, self.rect.y)
+        self.coords = (self.rect.centerx, self.rect.centery)
 
-    def set_weapon(self, weapon):
-        self.weapon = weapon
-        weapon.set_entity(self)
+    #def set_weapon(self, weapon):
+    #    self.weapon = weapon
+    #    weapon.set_entity(self)
+
+    @property
+    def weapon(self):
+        return self.inventory.weapon
 
     def get_input(self):
         keys = pg.key.get_pressed()
@@ -75,10 +80,17 @@ class Player(Entity):
             self.dashing = True
             self.last_dash = pg.time.get_ticks()
 
-        if self.weapon:
-            for event in pg.event.get():
-                if event.type == pg.MOUSEWHEEL:
-                    self.weapon.bullet_type = event.y
+        if len(self.inventory) > 1:
+            if not self.weapon.shooting:
+                if keys[pg.K_r]:
+                    self.inventory.next_weapon()
+                elif keys[pg.K_t]:
+                    self.inventory.previous_weapon
+
+        #if self.weapon:
+        #    for event in pg.event.get():
+        #        if event.type == pg.MOUSEWHEEL:
+        #            self.weapon.bullet_type = event.y
 
         if pg.mouse.get_pressed()[0]:
             self.attacking = True
@@ -90,7 +102,7 @@ class Player(Entity):
         self.rect.x += self.direction.x * speed
         self.rect.y += self.direction.y * speed
     
-    def update(self):
+    def update(self, target_pos):
         
         self.get_input()
 
@@ -98,9 +110,10 @@ class Player(Entity):
            self.move(self.speed)
 
         if self.weapon:
+            self.weapon.target_pos = target_pos
             if self.attacking:
                 self.weapon.shoot()
-            self.weapon.update()
+        self.inventory.update()
 
         if self.dashing:
             self.speed = 20
@@ -111,3 +124,68 @@ class Player(Entity):
                 self.dash_timer = self.dash_duration
 
         self.health.update()
+
+class Inventory:
+    def __init__(self):
+        self._weapons = []
+        self._current_weapon = 0
+        self._player = None
+
+    def __len__(self):
+        return len(self._weapons)
+
+    @property
+    def player(self):
+        return self._player
+
+    @player.setter
+    def player(self, player):
+        self._player = player
+
+    @property
+    def weapon(self):
+        if len(self._weapons):
+            return self._weapons[self._current_weapon]["weapon"]
+
+    def add_weapon(self, weapon, name):
+        for existing_weapon in self._weapons:
+            if existing_weapon["weapon"] == weapon:
+                break
+        else:
+            self._weapons.append(
+                {"weapon": weapon,
+                 "name": name}
+            )
+            weapon.set_entity(self.player)
+
+    def remove_weapon(self, weapon):
+        for existing_weapon in self._weapons.copy():
+            if existing_weapon["weapon"] == weapon:
+                self._weapons.remove(existing_weapon)
+
+
+    def next_weapon(self):
+        self._current_weapon += 1
+        if self._current_weapon == len(self._weapons):
+            self._current_weapon = 0
+
+    def previous_weapon(self):
+        self._current_weapon -= 1
+        if self._current_weapon == -1:
+            self._current_weapon = len(self._weapons) - 1
+
+    def update(self):
+        for weapon in self._weapons:
+            if hasattr(weapon["weapon"], "bullet_group") and weapon["weapon"] != self.weapon:
+                weapon["weapon"].bullet_group.update()
+        if self.weapon:
+            self.weapon.update()
+
+    def get_current_weapon_names(self):
+        previous = self._weapons[self._current_weapon - 1]["name"]
+        current = self._weapons[self._current_weapon]["name"]
+        if self._current_weapon == len(self._weapons) - 1:
+            next_ = self._weapons[0]["name"]
+        else:
+            next_ = self._weapons[self._current_weapon + 1]["name"]
+        return previous, current, next_
