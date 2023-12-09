@@ -50,6 +50,27 @@ class Weapon(pygame.sprite.Sprite):
     def update(self):
         self.rotate()
 
+class EnemyWeapon(Weapon):
+    def rotate(self):
+        self.get_angles()
+        self.image = pygame.transform.rotate(self.orig_image, self.angle_degrees)
+
+        self.rect = self.image.get_rect(
+            center = (math.cos(-self.angle_radians) * 50 + self.entity.rect.centerx,
+                      math.sin(-self.angle_radians) * 60 + self.entity.rect.centery)
+            )
+
+        if -self.angle_degrees >= 90 or -self.angle_degrees <= -90:
+            if self.facing_r:
+                self.orig_image = pygame.transform.flip(self.orig_image, False, True)
+                self.entity.image = self.entity.image_right
+                self.facing_r = False
+
+        elif not self.facing_r:
+            self.orig_image = pygame.transform.flip(self.orig_image, False, True)
+            self.entity.image = self.entity.image_left
+            self.facing_r = True
+
 class Gun(Weapon):
     def __init__(self, image_path, target_pos, stats):
         super().__init__(image_path, target_pos)

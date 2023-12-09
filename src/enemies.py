@@ -6,7 +6,7 @@ import settings as st
 from settings import SCREEN_DIMENSIONS
 import random
 from health import Health
-from weapons import Weapon, Gun
+from weapons import EnemyWeapon
 from utils import load_image
 
 zero_gun_stats = {
@@ -22,9 +22,9 @@ class Enemy(Entity):
 
     def __init__(self, image_path, target_position, speed, health, target = None, weapon = None):
         super().__init__(image_path, self.initial_position(target_position))
-        self.image_right = self.image
-        image_path[-1].replace(".png", "_left.png")
-        self.image_left = load_image(image_path)
+        self.image_left = self.image
+        image_path[-1] = image_path[-1].replace(".png", "_left.png")
+        self.image_right = load_image(image_path)
         self.speed = speed
         self.health = Health(health, 0)
         self._target = target
@@ -77,44 +77,56 @@ class Apache(Enemy):
     def __init__(self, target_position, integral_type, target):
         speed = st.integrals_info['APACHE_SPEED'][integral_type - 1]
         life = st.integrals_info['APACHE_HEALTH'][integral_type - 1]
+
         image_path = st.integrals_info['INTEGRALS_SPRITES'].copy()
         image_path.append(st.integrals_info['APACHE_IMAGE'][integral_type - 1])
+
         weapon_path = st.integrals_info["INTEGRALS_WEAPONS"].copy()
         weapon_path.append(st.integrals_info["APACHE_WEAPONS"][integral_type - 1])
-        weapon = Weapon(weapon_path, target)
+        weapon = EnemyWeapon(weapon_path, target)
+
         super().__init__(image_path, target_position, speed, life, target, weapon)
 
 class Roman(Enemy):
     def __init__(self, target_position, integral_type, target):
         speed = st.integrals_info['ROMAN_SPEED'][integral_type - 1]
         life = st.integrals_info['ROMAN_HEALTH'][integral_type - 1]
+
         image_path = st.integrals_info['INTEGRALS_SPRITES'].copy()
         image_path.append(st.integrals_info['ROMAN_IMAGE'][integral_type - 1])
+
         weapon_path = st.integrals_info["INTEGRALS_WEAPONS"].copy()
         weapon_path.append(st.integrals_info["ROMAN_WEAPONS"][integral_type - 1])
-        weapon = Weapon(weapon_path, target)
+        weapon = EnemyWeapon(weapon_path, target)
+
         super().__init__(image_path, target_position, speed, life, target, weapon)
 
 class Samurai(Enemy):
     def __init__(self, target_position, integral_type, target):
         speed = st.integrals_info['SAMURAI_SPEED'][integral_type - 1]
         life = st.integrals_info['SAMURAI_HEALTH'][integral_type - 1]
+
         image_path = st.integrals_info['INTEGRALS_SPRITES'].copy()
         image_path.append(st.integrals_info['SAMURAI_IMAGE'][integral_type - 1])
+
         weapon_path = st.integrals_info["INTEGRALS_WEAPONS"].copy()
         weapon_path.append(st.integrals_info["SAMURAI_WEAPONS"][integral_type - 1])
-        weapon = Weapon(weapon_path, target)
+        weapon = EnemyWeapon(weapon_path, target)
+
         super().__init__(image_path, target_position, speed, life, target, weapon)
 
 class Viking(Enemy): 
     def __init__(self, target_position, integral_type, target):
         speed = st.integrals_info['VIKING_SPEED'][integral_type-1]
         life = st.integrals_info['VIKING_HEALTH'][integral_type - 1]
+
         image_path = st.integrals_info['INTEGRALS_SPRITES'].copy()
         image_path.append(st.integrals_info['VIKING_IMAGE'][integral_type - 1])
+
         weapon_path = st.integrals_info["INTEGRALS_WEAPONS"].copy()
         weapon_path.append(st.integrals_info["VIKING_WEAPONS"][integral_type - 1])
-        weapon = Weapon(weapon_path, target)
+        weapon = EnemyWeapon(weapon_path, target)
+
         super().__init__(image_path, target_position, speed, life, target, weapon)
 
 class IntegralGang(pg.sprite.Group):
