@@ -19,19 +19,19 @@ while True:
 
     click = False
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            quit()
-        if event.type == pygame.MOUSEBUTTONUP:
-            if event.button == 1:
-                click = True
+    if pygame.event.get(pygame.QUIT):
+        pygame.quit()
+        quit()
+
 
     screen.fill("white")
 
     cursor.update()
 
     if menu.on_menu:
+        for event in pygame.event.get(pygame.MOUSEBUTTONUP):
+            if event.button == 1:
+                click = True
         menu.update(click)
     else:
         game.run()
