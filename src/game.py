@@ -56,7 +56,7 @@ class Game:
         elif self._dificulty is GameDificulty.HARD:
             initial_player_health = 4
             SINE_GUN_STATS["reload_cooldown"] = 4000
-        self._player = Player(("Sprites", "Player", "player.png"), (0,0), Inventory(), 6)
+        self._player = Player(("Sprites", "Player", "player.png"), (0,0), Inventory(), initial_player_health)
         self._cursor = Cursor(("Sprites", "cursors", "cursor2.png"), (TILE_SIZE* 9.5, TILE_SIZE*5.5))
 
         self._gang = IntegralGang()
@@ -156,9 +156,9 @@ class Game:
             self._screen.fill("black")
             self._font3.render(self._screen, "GAME OVER!", (63, SCREEN_DIMENSIONS[1]//2-30))
             self._font3.render(self._screen, f"voce sobreviveu por: {self._survival_time} segundos", (63, SCREEN_DIMENSIONS[1]//2+30))
-            self._font3.render(self._screen, f"voltando ao menu em {10-(self._time_now//1000-self._survival_time)} segundos", (63, SCREEN_DIMENSIONS[1]//2+90))
+            self._font3.render(self._screen, f"voltando ao menu em {10-((self._time_now-self.menu_time)//1000-self._survival_time)} segundos", (63, SCREEN_DIMENSIONS[1]//2+90))
             
-            if (self._time_now//1000-self._survival_time) > 10:
+            if ((self._time_now - self.menu_time)//1000-self._survival_time) > 10:
                 self.on_game = False
         else:
             self._survival_time = (self._time_now-self.menu_time)//1000

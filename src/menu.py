@@ -4,7 +4,7 @@ utility functions to handle buttons and their events.
 """
 from settings import FONT, SCREEN_DIMENSIONS
 from utils import load_image, draw_text
-from game import GameDificulty
+from .game import GameDificulty
 
 import pygame
 

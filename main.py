@@ -40,14 +40,15 @@ while True:
         for event in pygame.event.get(pygame.MOUSEBUTTONUP):
             if event.button == 1:
                 click = True
+        print(menu.selected_difficulty)
         menu.update(click)
         if not menu.on_menu:
+            game = Game(screen, menu.selected_difficulty)
             game.on_game = True
             game.menu_time = pygame.time.get_ticks()
     if game.on_game:
         game.run(delta_time)
         if not game.on_game:
-            print(game.menu_time)
             game = Game(screen, menu.selected_difficulty)
             menu.on_menu = True
             menu.on_titlescreen = True
