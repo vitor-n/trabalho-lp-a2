@@ -20,6 +20,7 @@ class Weapon(pygame.sprite.Sprite):
         super().__init__()
         self._target_pos = target_pos
         self.image = load_image(image_path, 3)
+        self.image_left = pygame.transform.flip(self.image, False, True)
         self.orig_image = self.image
         self.inventory_image = self.image
         self.rect = self.image.get_rect()
@@ -39,6 +40,9 @@ class Weapon(pygame.sprite.Sprite):
     def entity(self, entity):
         self._entity = entity
         self.rect.center = self._entity.rect.center
+
+        self.entity_image_rigth = self._entity.image
+        self.entity_image_left = pygame.transform.flip(self._entity.image, True, False)
 
     def update_target_position(self, target_pos: tuple):
         """
@@ -60,8 +64,6 @@ class Weapon(pygame.sprite.Sprite):
         self.angle_degrees = math.degrees(self.angle_radians)
 
     def _rotate(self):
-        self._get_angles()
-        self.image = pygame.transform.rotate(self.orig_image, self.angle_degrees)
 
         self.rect = self.image.get_rect(
             center = (math.cos(-self.angle_radians) * 65 + self.entity.rect.centerx,
@@ -69,14 +71,13 @@ class Weapon(pygame.sprite.Sprite):
             )
 
         if -self.angle_degrees >= 90 or -self.angle_degrees <= -90:
-            if self.facing_r:
-                self.orig_image = pygame.transform.flip(self.orig_image, False, True)
-                self.entity.image = pygame.transform.flip(self.entity.image, True, False)
-                self.facing_r = False
+            self.image = pygame.transform.rotate(self.image_left, self.angle_degrees)
+            self.entity.image = self.entity_image_left
+            self.facing_r = False
         
-        elif not self.facing_r:
-            self.orig_image = pygame.transform.flip(self.orig_image, False, True)
-            self.entity.image = pygame.transform.flip(self.entity.image, True, False)
+        else:
+            self.image = pygame.transform.rotate(self.orig_image, self.angle_degrees)
+            self.entity.image = self.entity_image_rigth
             self.facing_r = True
 
     def update(self):
@@ -88,6 +89,7 @@ class Weapon(pygame.sprite.Sprite):
         -------
         None
         """
+        self._get_angles()
         self._rotate()
 
 class EnemyWeapon(Weapon):
@@ -103,7 +105,6 @@ class EnemyWeapon(Weapon):
         The initial position to target.
     """
     def _rotate(self):
-        self._get_angles()
         self.image = pygame.transform.rotate(self.orig_image, self.angle_degrees)
 
         self.rect = self.image.get_rect(
