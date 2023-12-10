@@ -20,6 +20,8 @@ integrals you can, lasting as long as possible without dying. You can move the
 player with the **WASD keys**, shoot with the **right mouse button** and change
 guns using the **mouse scroll**.
 
+![A screenshot showing the game.](https://raw.githubusercontent.com/vito0182/trabalho-lp-a2/main/gameplay_screenshot.png)
+
 The game genre chosen by the group was a top-down shooter, decided after voting.
 This game uses concepts like maps, a player, enemy, weapons, guns, etc., and all
 of these are represented as classes in the code. There is also a game loop,
