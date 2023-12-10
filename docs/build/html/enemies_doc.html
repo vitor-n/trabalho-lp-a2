@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Module enemies.py &#8212; Guerreiros Integrais 2023 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=8c5eb3c6" />
+    <script src="_static/documentation_options.js?v=a4664895"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Module game.py" href="game_doc.html" />
+    <link rel="prev" title="Module cursor.py" href="cursor_doc.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-enemies-py">
+<span id="enemies-doc"></span><h1>Module enemies.py<a class="headerlink" href="#module-enemies-py" title="Link to this heading">¶</a></h1>
+<p id="module-src.enemies">This module implements everything related to enemies. It provides a class
+representing any enemy and classes representing each kind of enemy/integral.
+There is also a class representing a whole group of enemies, that turns the
+process of spawning new enemies more simple.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.enemies.Apache">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.enemies.</span></span><span class="sig-name descname"><span class="pre">Apache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integral_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.enemies.Apache" title="Link to this definition">¶</a></dt>
+<dd><p>Class that creates an object representing an apache warrior integral.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target_position</strong> (<em>tuple</em>) – A tuple indicating the position of the player or another target.</p></li>
+<li><p><strong>integral_type</strong> (<em>int</em>) – Integer to indicate a single, double or triple integral.</p></li>
+<li><p><strong>target</strong> – The target for the integral to follow.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.enemies.Enemy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.enemies.</span></span><span class="sig-name descname"><span class="pre">Enemy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">health</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weapon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.enemies.Enemy" title="Link to this definition">¶</a></dt>
+<dd><p>Class with methods for a generic enemy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_path</strong> (<em>tuple</em>) – A tuple containing the directory name leading to the entity image.</p></li>
+<li><p><strong>target_position</strong> (<em>tuple</em>) – A tuple indicating the position of the player or another target.</p></li>
+<li><p><strong>speed</strong> (<em>int</em>) – The speed of the enemy.</p></li>
+<li><p><strong>health</strong> (<em>int</em>) – The maximum health of the enemy.</p></li>
+<li><p><strong>target</strong> (<a class="reference internal" href="player_doc.html#src.player.Entity" title="src.player.Entity"><em>Entity</em></a>) – A target the enemy may follow.</p></li>
+<li><p><strong>weapon</strong> (<a class="reference internal" href="weapons_doc.html#src.weapons.EnemyWeapon" title="src.weapons.EnemyWeapon"><em>EnemyWeapon</em></a>) – A weapon the enemy may hold.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.enemies.Enemy.define_direction">
+<span class="sig-name descname"><span class="pre">define_direction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player_position</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.enemies.Enemy.define_direction" title="Link to this definition">¶</a></dt>
+<dd><p>Creates a tuple that holds the displacement beetween player and an enemy
+and its magnetude.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>player_position</strong> – A tuple indicating the position of the player.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple holding values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.enemies.Enemy.initial_position">
+<span class="sig-name descname"><span class="pre">initial_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_position</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.enemies.Enemy.initial_position" title="Link to this definition">¶</a></dt>
+<dd><p>Creates a random position to spawn an enemy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>target_position</strong> – A tuple indicating the position of the player or another target.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the random position.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.enemies.Enemy.move">
+<span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delta_time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.enemies.Enemy.move" title="Link to this definition">¶</a></dt>
+<dd><p>Function to move the enemy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>delta_time</strong> – Time between frames. Used for calculating displacement.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.enemies.Enemy.remove_overlapping">
+<span class="sig-name descname"><span class="pre">remove_overlapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">integral_gang</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.enemies.Enemy.remove_overlapping" title="Link to this definition">¶</a></dt>
+<dd><p>Make enemies reppel themselves to minimize the overlapping.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>integral_gang</strong> (<a class="reference internal" href="#src.enemies.IntegralGang" title="src.enemies.IntegralGang"><em>IntegralGang</em></a>) – Object of type IntegralGang. Represents a group of warrior integrals of the same kind.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.enemies.Enemy.target">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">target</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="player_doc.html#src.player.Entity" title="src.player.Entity"><span class="pre">Entity</span></a></em><a class="headerlink" href="#src.enemies.Enemy.target" title="Link to this definition">¶</a></dt>
+<dd><p>The target the enemy is following.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.enemies.Enemy.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delta_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integral_gang</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.enemies.Enemy.update" title="Link to this definition">¶</a></dt>
+<dd><p>Method that updates the enemy movements inside the loop game.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>delta_time</strong> (<em>float</em>) – Time between frames.</p></li>
+<li><p><strong>integral_gang</strong> (<a class="reference internal" href="#src.enemies.IntegralGang" title="src.enemies.IntegralGang"><em>IntegralGang</em></a>) – Object of type IntegralGang. Represents a group of warrior integrals of the same kind.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.enemies.Enemy.weapon">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">weapon</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="weapons_doc.html#src.weapons.EnemyWeapon" title="src.weapons.EnemyWeapon"><span class="pre">EnemyWeapon</span></a></em><a class="headerlink" href="#src.enemies.Enemy.weapon" title="Link to this definition">¶</a></dt>
+<dd><p>The weapon being held by the enemy.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.enemies.IntegralGang">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.enemies.</span></span><span class="sig-name descname"><span class="pre">IntegralGang</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">sprites</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.enemies.IntegralGang" title="Link to this definition">¶</a></dt>
+<dd><p>Class representing a group of integrals to be spawned on the loop game.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>*sprites</strong> (<em>pg.sprite.Sprite</em>) – The group of enemies to create a gang or to be added to an existing one.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.enemies.IntegralGang.create_group">
+<span class="sig-name descname"><span class="pre">create_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">integral_family</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">single_qtt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">double_qtt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">triple_qtt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.enemies.IntegralGang.create_group" title="Link to this definition">¶</a></dt>
+<dd><p>Creates a group of integrals of a choosen warrior type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>integral_family</strong> (<a class="reference internal" href="#src.enemies.Enemy" title="src.enemies.Enemy"><em>Enemy</em></a>) – The class name of the warrior type.</p></li>
+<li><p><strong>single_qtt</strong> (<em>int</em>) – Number of single integrals of the choosen type to be added.</p></li>
+<li><p><strong>double_qtt</strong> (<em>int</em>) – Number of double integrals of the choosen type to be added.</p></li>
+<li><p><strong>triple_qtt</strong> (<em>int</em>) – Number of triple integrals of the choosen type to be added.</p></li>
+<li><p><strong>target_position</strong> (<em>tuple</em>) – A tuple indicating the position of the player or another target.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.enemies.IntegralGang.random_group">
+<span class="sig-name descname"><span class="pre">random_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">single_qtt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">double_qtt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">triple_qtt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.enemies.IntegralGang.random_group" title="Link to this definition">¶</a></dt>
+<dd><p>Creates a group of a random warrior type. Similar to create_group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>single_qtt</strong> (<em>int</em>) – Number of single integrals of the choosen type to be added.</p></li>
+<li><p><strong>double_qtt</strong> (<em>int</em>) – Number of double integrals of the choosen type to be added.</p></li>
+<li><p><strong>triple_qtt</strong> (<em>int</em>) – Number of triple integrals of the choosen type to be added.</p></li>
+<li><p><strong>target_position</strong> (<em>tuple</em>) – A tuple indicating the position of the player or another target.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.enemies.IntegralGang.set_target_for_all">
+<span class="sig-name descname"><span class="pre">set_target_for_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.enemies.IntegralGang.set_target_for_all" title="Link to this definition">¶</a></dt>
+<dd><p>Sets a target to all the integrals in the gang.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>target</strong> (<a class="reference internal" href="player_doc.html#src.player.Entity" title="src.player.Entity"><em>Entity</em></a>) – The target for the intregrals to follow.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.enemies.Roman">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.enemies.</span></span><span class="sig-name descname"><span class="pre">Roman</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integral_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.enemies.Roman" title="Link to this definition">¶</a></dt>
+<dd><p>Class that creates an object representing a roman warrior integral.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target_position</strong> (<em>tuple</em>) – A tuple indicating the position of the player or another target.</p></li>
+<li><p><strong>integral_type</strong> (<em>int</em>) – Integer to indicate a single, double or triple integral.</p></li>
+<li><p><strong>target</strong> – The target for the integral to follow.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.enemies.Samurai">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.enemies.</span></span><span class="sig-name descname"><span class="pre">Samurai</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integral_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.enemies.Samurai" title="Link to this definition">¶</a></dt>
+<dd><p>Class that creates an object representing a samurai warrior integral.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target_position</strong> (<em>tuple</em>) – A tuple indicating the position of the player or another target.</p></li>
+<li><p><strong>integral_type</strong> (<em>int</em>) – Integer to indicate a single, double or triple integral.</p></li>
+<li><p><strong>target</strong> – The target for the integral to follow.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.enemies.Viking">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.enemies.</span></span><span class="sig-name descname"><span class="pre">Viking</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integral_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.enemies.Viking" title="Link to this definition">¶</a></dt>
+<dd><p>Class that creates an object representing a viking warrior integral.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target_position</strong> (<em>tuple</em>) – A tuple indicating the position of the player or another target.</p></li>
+<li><p><strong>integral_type</strong> (<em>int</em>) – Integer to indicate a single, double or triple integral.</p></li>
+<li><p><strong>target</strong> – The target for the integral to follow.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="camera_doc.html">Module camera.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cursor_doc.html">Module cursor.py</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Module enemies.py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#src.enemies.Apache"><code class="docutils literal notranslate"><span class="pre">Apache</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.enemies.Enemy"><code class="docutils literal notranslate"><span class="pre">Enemy</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.enemies.Enemy.define_direction"><code class="docutils literal notranslate"><span class="pre">Enemy.define_direction()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.enemies.Enemy.initial_position"><code class="docutils literal notranslate"><span class="pre">Enemy.initial_position()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.enemies.Enemy.move"><code class="docutils literal notranslate"><span class="pre">Enemy.move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.enemies.Enemy.remove_overlapping"><code class="docutils literal notranslate"><span class="pre">Enemy.remove_overlapping()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.enemies.Enemy.target"><code class="docutils literal notranslate"><span class="pre">Enemy.target</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.enemies.Enemy.update"><code class="docutils literal notranslate"><span class="pre">Enemy.update()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.enemies.Enemy.weapon"><code class="docutils literal notranslate"><span class="pre">Enemy.weapon</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#src.enemies.IntegralGang"><code class="docutils literal notranslate"><span class="pre">IntegralGang</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.enemies.IntegralGang.create_group"><code class="docutils literal notranslate"><span class="pre">IntegralGang.create_group()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.enemies.IntegralGang.random_group"><code class="docutils literal notranslate"><span class="pre">IntegralGang.random_group()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.enemies.IntegralGang.set_target_for_all"><code class="docutils literal notranslate"><span class="pre">IntegralGang.set_target_for_all()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#src.enemies.Roman"><code class="docutils literal notranslate"><span class="pre">Roman</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.enemies.Samurai"><code class="docutils literal notranslate"><span class="pre">Samurai</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.enemies.Viking"><code class="docutils literal notranslate"><span class="pre">Viking</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="game_doc.html">Module game.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="health_doc.html">Module health.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="map_doc.html">Module map_.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menu_doc.html">Module menu.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="player_doc.html">Module player.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="text_doc.html">Module text.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils_doc.html">Module utils.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="weapons_doc.html">Module weapons.py</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/enemies_doc.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Anne Cardoso, Larissa Lemos, Pedro Tokar, Vitor Nascimento.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/enemies_doc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

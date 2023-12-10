@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Module menu.py &#8212; Guerreiros Integrais 2023 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=8c5eb3c6" />
+    <script src="_static/documentation_options.js?v=a4664895"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Module player.py" href="player_doc.html" />
+    <link rel="prev" title="Module map_.py" href="map_doc.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-menu-py">
+<span id="menu-doc"></span><h1>Module menu.py<a class="headerlink" href="#module-menu-py" title="Link to this heading">¶</a></h1>
+<p id="module-src.menu">This module contains the class that abstrain a menu. This class have a lot of
+utility functions to handle buttons and their events.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.menu.Menu">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.menu.</span></span><span class="sig-name descname"><span class="pre">Menu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">screen</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.menu.Menu" title="Link to this definition">¶</a></dt>
+<dd><p>Contains functions that create the menu and handle user interaction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>screen</strong> (<em>pygame.display</em>) – Screen shown to the player</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.menu.Menu.config_menu">
+<span class="sig-name descname"><span class="pre">config_menu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">click</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.menu.Menu.config_menu" title="Link to this definition">¶</a></dt>
+<dd><p>Renders text prompts for selecting difficulty levels and handle user user interaction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>click</strong> (<em>bool</em>) – Indicates whether a mouse click event occurred.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.menu.Menu.handle_config_menu_events">
+<span class="sig-name descname"><span class="pre">handle_config_menu_events</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">click</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.menu.Menu.handle_config_menu_events" title="Link to this definition">¶</a></dt>
+<dd><p>Process user input during the configuration menu phase.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>click</strong> (<em>bool</em>) – Indicates whether a mouse click event occurred.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.menu.Menu.handle_quit_event">
+<span class="sig-name descname"><span class="pre">handle_quit_event</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.menu.Menu.handle_quit_event" title="Link to this definition">¶</a></dt>
+<dd><p>Closes the window in case the player presses quit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.menu.Menu.handle_titlescreen_events">
+<span class="sig-name descname"><span class="pre">handle_titlescreen_events</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">click</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.menu.Menu.handle_titlescreen_events" title="Link to this definition">¶</a></dt>
+<dd><p>Process user input during the title screen phase.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>click</strong> (<em>bool</em>) – Indicates whether a mouse click event occurred.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.menu.Menu.titlescreen">
+<span class="sig-name descname"><span class="pre">titlescreen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">click</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.menu.Menu.titlescreen" title="Link to this definition">¶</a></dt>
+<dd><p>Display the title screen elements and handle user interaction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>click</strong> (<em>bool</em>) – Indicates whether a mouse click event occurred.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.menu.Menu.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">click</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.menu.Menu.update" title="Link to this definition">¶</a></dt>
+<dd><p>Update the game state based on the current screen phase.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>click</strong> (<em>Optional</em><em>(</em><em>bool</em><em>)</em>) – Indicates whether a mouse click event occurred. Defaults to False.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="camera_doc.html">Module camera.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cursor_doc.html">Module cursor.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="enemies_doc.html">Module enemies.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="game_doc.html">Module game.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="health_doc.html">Module health.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="map_doc.html">Module map_.py</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Module menu.py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#src.menu.Menu"><code class="docutils literal notranslate"><span class="pre">Menu</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.menu.Menu.config_menu"><code class="docutils literal notranslate"><span class="pre">Menu.config_menu()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.menu.Menu.handle_config_menu_events"><code class="docutils literal notranslate"><span class="pre">Menu.handle_config_menu_events()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.menu.Menu.handle_quit_event"><code class="docutils literal notranslate"><span class="pre">Menu.handle_quit_event()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.menu.Menu.handle_titlescreen_events"><code class="docutils literal notranslate"><span class="pre">Menu.handle_titlescreen_events()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.menu.Menu.titlescreen"><code class="docutils literal notranslate"><span class="pre">Menu.titlescreen()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.menu.Menu.update"><code class="docutils literal notranslate"><span class="pre">Menu.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="player_doc.html">Module player.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="text_doc.html">Module text.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils_doc.html">Module utils.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="weapons_doc.html">Module weapons.py</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/menu_doc.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Anne Cardoso, Larissa Lemos, Pedro Tokar, Vitor Nascimento.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/menu_doc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

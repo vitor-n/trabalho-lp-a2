@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Module weapons.py &#8212; Guerreiros Integrais 2023 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=8c5eb3c6" />
+    <script src="_static/documentation_options.js?v=a4664895"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Module utils.py" href="utils_doc.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-weapons-py">
+<span id="weapons-doc"></span><h1>Module weapons.py<a class="headerlink" href="#module-weapons-py" title="Link to this heading">¶</a></h1>
+<p id="module-src.weapons">This module implements all sort of things related to weapons. There are simple
+weapons, guns and bullets. There are variations of them for enemys, but the main
+idea remains the same for all the clases.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.weapons.Bullet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.weapons.</span></span><span class="sig-name descname"><span class="pre">Bullet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle_radians</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">damage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">move_function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.weapons.Bullet" title="Link to this definition">¶</a></dt>
+<dd><p>Class representing a bullet. The class is the same for enemies and the
+player. The bullets needs some parameters, including the trajectory function,
+to determine damages and such. What should be used to diferentiate from
+where the bullet comes from is the group it is contained.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_path</strong> (<em>tuple</em>) – The path to the bullet image.</p></li>
+<li><p><strong>position</strong> (<em>tuple</em>) – The initial position of the bullet.</p></li>
+<li><p><strong>angle_radians</strong> (<em>float</em>) – The angle that the bullet is being shoot.</p></li>
+<li><p><strong>damage</strong> (<em>int</em>) – The damage the bullet should.</p></li>
+<li><p><strong>move_function</strong> (<em>function</em>) – A function to determine the bullet trajectory. This function should take
+one variable (the time elapsed since the bullet was shoot) and should
+return only a float or int.</p></li>
+<li><p><strong>speed</strong> (<em>int</em>) – The speed of the bullet</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.weapons.Bullet.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.weapons.Bullet.update" title="Link to this definition">¶</a></dt>
+<dd><p>Updates the bullet. This will make it go futher, acordingly to the
+trajectory function passed. This ins’t made for being called alone, but
+to be called when the bullet group is being updated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.weapons.EnemyGun">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.weapons.</span></span><span class="sig-name descname"><span class="pre">EnemyGun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stats</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.weapons.EnemyGun" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.weapons.EnemyWeapon">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.weapons.</span></span><span class="sig-name descname"><span class="pre">EnemyWeapon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_pos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.weapons.EnemyWeapon" title="Link to this definition">¶</a></dt>
+<dd><p>Class representing an enemy’s weapon. It changes the rotation implementation
+so it doesn’t flip the enemy’s image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_path</strong> (<em>tuple</em>) – The path leading to the weapon image</p></li>
+<li><p><strong>target_pos</strong> – The initial position to target.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.weapons.Gun">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.weapons.</span></span><span class="sig-name descname"><span class="pre">Gun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stats</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.weapons.Gun" title="Link to this definition">¶</a></dt>
+<dd><p>Class representing a gun. A gun implements the same thing as weapons, with
+the addition of the capability of shooting. All the gun peculiaritys, like
+bullet damage and speed, are set with the dict <cite>stats</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_path</strong> (<em>tuple</em>) – The path leading to the weapon image</p></li>
+<li><p><strong>target_pos</strong> (<em>tuple</em>) – The initial position to target.</p></li>
+<li><p><strong>stats</strong> (<em>dict</em>) – A dicitionary containing the gun stats.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.weapons.Gun.shoot">
+<span class="sig-name descname"><span class="pre">shoot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.weapons.Gun.shoot" title="Link to this definition">¶</a></dt>
+<dd><p>Make the gun shoot. This will create bullets and store them in the
+<cite>bullet_group</cite>. If the gun is in cooldown, it’ll do nothing. If a shoot
+is still occuring, it’ll do nothing too.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.weapons.Gun.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.weapons.Gun.update" title="Link to this definition">¶</a></dt>
+<dd><p>Updates the weapon. Besides rotating the weapon, this method also will
+call tue update method to the gun active bullets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.weapons.Weapon">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.weapons.</span></span><span class="sig-name descname"><span class="pre">Weapon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_pos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.weapons.Weapon" title="Link to this definition">¶</a></dt>
+<dd><p>Class representing a generic weapon in the game. This class is responsible
+for implementing the weapon rotation based on the target position.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_path</strong> (<em>tuple</em>) – The path leading to the weapon image</p></li>
+<li><p><strong>target_pos</strong> (<em>tuple</em>) – The initial position to target.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="src.weapons.Weapon.entity">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">entity</span></span><a class="headerlink" href="#src.weapons.Weapon.entity" title="Link to this definition">¶</a></dt>
+<dd><p>The entity associated with the weapon. The weapon will orbit this entity.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.weapons.Weapon.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.weapons.Weapon.update" title="Link to this definition">¶</a></dt>
+<dd><p>Updates the weapon. In this basic weapon, it just rotates it acordingly
+to the target.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.weapons.Weapon.update_target_position">
+<span class="sig-name descname"><span class="pre">update_target_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_pos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.weapons.Weapon.update_target_position" title="Link to this definition">¶</a></dt>
+<dd><p>Updates the position that the weapon should target.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>target_pos</strong> – The new position to target.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="camera_doc.html">Module camera.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cursor_doc.html">Module cursor.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="enemies_doc.html">Module enemies.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="game_doc.html">Module game.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="health_doc.html">Module health.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="map_doc.html">Module map_.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menu_doc.html">Module menu.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="player_doc.html">Module player.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="text_doc.html">Module text.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils_doc.html">Module utils.py</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Module weapons.py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#src.weapons.Bullet"><code class="docutils literal notranslate"><span class="pre">Bullet</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.weapons.Bullet.update"><code class="docutils literal notranslate"><span class="pre">Bullet.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#src.weapons.EnemyGun"><code class="docutils literal notranslate"><span class="pre">EnemyGun</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.weapons.EnemyWeapon"><code class="docutils literal notranslate"><span class="pre">EnemyWeapon</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.weapons.Gun"><code class="docutils literal notranslate"><span class="pre">Gun</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.weapons.Gun.shoot"><code class="docutils literal notranslate"><span class="pre">Gun.shoot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.weapons.Gun.update"><code class="docutils literal notranslate"><span class="pre">Gun.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#src.weapons.Weapon"><code class="docutils literal notranslate"><span class="pre">Weapon</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.weapons.Weapon.entity"><code class="docutils literal notranslate"><span class="pre">Weapon.entity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.weapons.Weapon.update"><code class="docutils literal notranslate"><span class="pre">Weapon.update()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.weapons.Weapon.update_target_position"><code class="docutils literal notranslate"><span class="pre">Weapon.update_target_position()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/weapons_doc.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Anne Cardoso, Larissa Lemos, Pedro Tokar, Vitor Nascimento.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/weapons_doc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

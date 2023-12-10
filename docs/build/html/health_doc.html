@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Module health.py &#8212; Guerreiros Integrais 2023 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=8c5eb3c6" />
+    <script src="_static/documentation_options.js?v=a4664895"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Module map_.py" href="map_doc.html" />
+    <link rel="prev" title="Module game.py" href="game_doc.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-health-py">
+<span id="health-doc"></span><h1>Module health.py<a class="headerlink" href="#module-health-py" title="Link to this heading">¶</a></h1>
+<p id="module-src.health">This module provides classes made to store entitys health. This is useful for
+padronizing the way some entity, be an enemy or be a player, takes damage. It
+also helps putting the player health in the screen.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.health.Health">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.health.</span></span><span class="sig-name descname"><span class="pre">Health</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_health</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">immunity_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.health.Health" title="Link to this definition">¶</a></dt>
+<dd><p>Class that represents the health of an entity.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.health.Health.decrease">
+<span class="sig-name descname"><span class="pre">decrease</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.health.Health.decrease" title="Link to this definition">¶</a></dt>
+<dd><p>Decreases the current health by the specified amount, taking into account immunity time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>amount</strong> (<em>int</em><em> or </em><em>float</em>) – The amount to decrease the health by.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.health.Health.get_health">
+<span class="sig-name descname"><span class="pre">get_health</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.health.Health.get_health" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the current health value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current health value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.health.Health.increase">
+<span class="sig-name descname"><span class="pre">increase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.health.Health.increase" title="Link to this definition">¶</a></dt>
+<dd><p>Increases the current health by the specified amount.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>amount</strong> (<em>int</em><em> or </em><em>float</em>) – The amount to decrease the health by.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.health.PlayerHealth">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.health.</span></span><span class="sig-name descname"><span class="pre">PlayerHealth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_health</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">immunity_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.health.PlayerHealth" title="Link to this definition">¶</a></dt>
+<dd><p>Class that represents the health of the player.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.health.PlayerHealth.decrease">
+<span class="sig-name descname"><span class="pre">decrease</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.health.PlayerHealth.decrease" title="Link to this definition">¶</a></dt>
+<dd><p>Decreases the player’s health by the specified amount.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>amount</strong> (<em>int</em><em>)</em>) – The amount to decrease the health by.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.health.PlayerHealth.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.health.PlayerHealth.update" title="Link to this definition">¶</a></dt>
+<dd><p>Updates the health bar based on the current health.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="camera_doc.html">Module camera.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cursor_doc.html">Module cursor.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="enemies_doc.html">Module enemies.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="game_doc.html">Module game.py</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Module health.py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#src.health.Health"><code class="docutils literal notranslate"><span class="pre">Health</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.health.Health.decrease"><code class="docutils literal notranslate"><span class="pre">Health.decrease()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.health.Health.get_health"><code class="docutils literal notranslate"><span class="pre">Health.get_health()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.health.Health.increase"><code class="docutils literal notranslate"><span class="pre">Health.increase()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#src.health.PlayerHealth"><code class="docutils literal notranslate"><span class="pre">PlayerHealth</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.health.PlayerHealth.decrease"><code class="docutils literal notranslate"><span class="pre">PlayerHealth.decrease()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.health.PlayerHealth.update"><code class="docutils literal notranslate"><span class="pre">PlayerHealth.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="map_doc.html">Module map_.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menu_doc.html">Module menu.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="player_doc.html">Module player.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="text_doc.html">Module text.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils_doc.html">Module utils.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="weapons_doc.html">Module weapons.py</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/health_doc.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Anne Cardoso, Larissa Lemos, Pedro Tokar, Vitor Nascimento.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/health_doc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

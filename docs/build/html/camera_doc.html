@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Module camera.py &#8212; Guerreiros Integrais 2023 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=8c5eb3c6" />
+    <script src="_static/documentation_options.js?v=a4664895"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Module cursor.py" href="cursor_doc.html" />
+    <link rel="prev" title="Guerreiros Integrais" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-camera-py">
+<span id="camera-doc"></span><h1>Module camera.py<a class="headerlink" href="#module-camera-py" title="Link to this heading">¶</a></h1>
+<p id="module-src.camera">Module that implements all the camera related stuff. The clases here are supposed
+to be used when having necessity of bliting something in the screen. They turn
+possible to blit things when their rects are in global position and not in screen
+position, since the camera does the conversion. What differentiate the two cameras
+is their update function.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.camera.Camera">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.camera.</span></span><span class="sig-name descname"><span class="pre">Camera</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">screen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">map_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.camera.Camera" title="Link to this definition">¶</a></dt>
+<dd><p>Class representing a basic camera.
+The objective of this class is to center the process of choosing what is
+gonna be drawn and what not and calculating where in the screen something
+should be, based on the world position and the camera position.
+In this implementation, the camera is always above the target. Selecting
+what should be drawn can be as easy as using a pygame method to see if
+rectangles overlap, given the camera has an associated rectangle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>screen</strong> – The pygame Surface that represents the screen.</p></li>
+<li><p><strong>map</strong> – The map object with tile data.</p></li>
+<li><p><strong>target</strong> – An entity to set the camera position.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.camera.Camera.calculate_offset">
+<span class="sig-name descname"><span class="pre">calculate_offset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rectangle</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.camera.Camera.calculate_offset" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate the screen position of a rectangle, based on camera postion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Tuple</strong></p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple with the coordinates of the rectangle’s topleft in screen space.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.camera.Camera.render_entity">
+<span class="sig-name descname"><span class="pre">render_entity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entity</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.camera.Camera.render_entity" title="Link to this definition">¶</a></dt>
+<dd><p>Util function to render a entity in the screen. It automatically checks
+if the entity have a gun, and if the gun has bullets, to render them too.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.camera.Camera.render_group">
+<span class="sig-name descname"><span class="pre">render_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.camera.Camera.render_group" title="Link to this definition">¶</a></dt>
+<dd><p>Render a group of sprites in the screen, calculating each sprite position
+in screen space. If the intention is simply using absolute coordinates,
+<cite>render_group_no_offset</cite> should be used instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.camera.Camera.render_group_no_offset">
+<span class="sig-name descname"><span class="pre">render_group_no_offset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.camera.Camera.render_group_no_offset" title="Link to this definition">¶</a></dt>
+<dd><p>Render a group of sprites in the screen, without calculating each sprite
+position in screen space and withouth filtering to render only sprites
+that appear in the screen. If the intention is rendering based on camera
+position, <cite>render_group</cite> should be used instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.camera.Camera.render_map">
+<span class="sig-name descname"><span class="pre">render_map</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.camera.Camera.render_map" title="Link to this definition">¶</a></dt>
+<dd><p>Util function to render the map in the screen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.camera.Camera.render_sprite">
+<span class="sig-name descname"><span class="pre">render_sprite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sprite</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.camera.Camera.render_sprite" title="Link to this definition">¶</a></dt>
+<dd><p>Render some sprite in the screen, calculating the sprite’s position in
+screen space. If the intention is simply using absolute coordinates,
+<cite>render_sprite_no_offset</cite> should be used instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.camera.Camera.render_sprite_no_offset">
+<span class="sig-name descname"><span class="pre">render_sprite_no_offset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sprite</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.camera.Camera.render_sprite_no_offset" title="Link to this definition">¶</a></dt>
+<dd><p>Render some sprite in the screen, without calculating the sprite’s
+position in screen space and withouth verifying if it will actually appear.
+If the intention is rendering based on camera position, <cite>render_sprite</cite>
+should be used instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.camera.Camera.target">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">target</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="player_doc.html#src.player.Entity" title="src.player.Entity"><span class="pre">Entity</span></a></em><a class="headerlink" href="#src.camera.Camera.target" title="Link to this definition">¶</a></dt>
+<dd><p>The entity that the camera should follow.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.camera.Camera.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.camera.Camera.update" title="Link to this definition">¶</a></dt>
+<dd><p>Updates the camera position. In this implementation, it simply changes
+the camera position so it’s instantly sinced with the target.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.camera.SmoothCamera">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.camera.</span></span><span class="sig-name descname"><span class="pre">SmoothCamera</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">screen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">map_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cursor_pos</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.camera.SmoothCamera" title="Link to this definition">¶</a></dt>
+<dd><p>Class representing a camera with smooth movimentation.
+Instead of being always above the target, this camera moves smoothly to
+the target direction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>screen</strong> – The pygame Surface that represents the screen.</p></li>
+<li><p><strong>map</strong> – The map object with tile data.</p></li>
+<li><p><strong>target</strong> – An entity to set the camera position.</p></li>
+<li><p><strong>cursor_pos</strong> – The position of the cursor to follow.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.camera.SmoothCamera.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.camera.SmoothCamera.update" title="Link to this definition">¶</a></dt>
+<dd><p>Updates the camera position. In this implementation, it makes the camera
+moving smooth and also add some offset related to cursor position.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Module camera.py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#src.camera.Camera"><code class="docutils literal notranslate"><span class="pre">Camera</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.camera.Camera.calculate_offset"><code class="docutils literal notranslate"><span class="pre">Camera.calculate_offset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.camera.Camera.render_entity"><code class="docutils literal notranslate"><span class="pre">Camera.render_entity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.camera.Camera.render_group"><code class="docutils literal notranslate"><span class="pre">Camera.render_group()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.camera.Camera.render_group_no_offset"><code class="docutils literal notranslate"><span class="pre">Camera.render_group_no_offset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.camera.Camera.render_map"><code class="docutils literal notranslate"><span class="pre">Camera.render_map()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.camera.Camera.render_sprite"><code class="docutils literal notranslate"><span class="pre">Camera.render_sprite()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.camera.Camera.render_sprite_no_offset"><code class="docutils literal notranslate"><span class="pre">Camera.render_sprite_no_offset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.camera.Camera.target"><code class="docutils literal notranslate"><span class="pre">Camera.target</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.camera.Camera.update"><code class="docutils literal notranslate"><span class="pre">Camera.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#src.camera.SmoothCamera"><code class="docutils literal notranslate"><span class="pre">SmoothCamera</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.camera.SmoothCamera.update"><code class="docutils literal notranslate"><span class="pre">SmoothCamera.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cursor_doc.html">Module cursor.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="enemies_doc.html">Module enemies.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="game_doc.html">Module game.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="health_doc.html">Module health.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="map_doc.html">Module map_.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menu_doc.html">Module menu.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="player_doc.html">Module player.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="text_doc.html">Module text.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils_doc.html">Module utils.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="weapons_doc.html">Module weapons.py</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/camera_doc.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Anne Cardoso, Larissa Lemos, Pedro Tokar, Vitor Nascimento.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/camera_doc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
