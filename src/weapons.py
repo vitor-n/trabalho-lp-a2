@@ -159,12 +159,20 @@ class Gun(Weapon):
     def shoot(self):
         """
         Make the gun shoot. This will create bullets and store them in the
-        `bullet_group`. If the gun is in cooldown, it'll do nothing.
+        `bullet_group`. If the gun is in cooldown, it'll do nothing. If a shoot
+        is still occuring, it'll do nothing too.
 
         Returns
         -------
         None
         """
+        if self.shooting:
+            pass
+        else:
+            self.shooting = True
+            self._shoot()
+
+    def _shoot(self):
         if self.mag_count > 0:
             self.shooting = True
             self.mag_count -= 1
@@ -204,7 +212,7 @@ class Gun(Weapon):
         if self.reloading:
             self._reload()
         if self.shooting:
-            self.shoot()
+            self._shoot()
         self.bullet_group.update()
 
 class EnemyGun(EnemyWeapon, Gun):
