@@ -42,14 +42,14 @@ library abstracts a lot of things involving creating windows and drawing in them
 
 To install it, you can run on your terminal, from the project root:
 
-```shell {"id":"01HH9N9BC3FX76SVKDJJVRCT45"}
+```shell
 $ pip install - r requirements.txt
 ```
 
 After that, you have all the necessary things to run the game. So, to do it, run:
 
-```sh {"id":"01HH9N9BC3FX76SVKDJK44J0C7"}
-$ python src/main.py
+```shell
+$ python main.py
 ```
 
 ## Documentation
