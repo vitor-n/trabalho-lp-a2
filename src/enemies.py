@@ -249,7 +249,7 @@ class IntegralGang(pg.sprite.Group):
 
         self.types = [Apache, Roman, Samurai, Viking]
 
-    def create_group(self, integral_family,single_qtt, double_qtt, triple_qtt, target_position, target = None):
+    def create_group(self, integral_family, single_qtt, double_qtt, triple_qtt, target_position, target = None):
         """
         Creates a group of integrals of a choosen warrior type.
 
@@ -258,7 +258,7 @@ class IntegralGang(pg.sprite.Group):
         integral_family : The class name of the warrior type.
 
         single_qtt : Number of single integrals of the choosen type to be added.
-        _
+        
         double_qtt : Number of double integrals of the choosen type to be added.
 
         triple_qtt : Number of triple integrals of the choosen type to be added.

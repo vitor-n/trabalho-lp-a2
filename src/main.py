@@ -59,13 +59,12 @@ zero_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor,
 sine_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor, sine_gun_stats)
 line_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor, line_gun_stats)
 gang = IntegralGang()
-gang.create_group(Apache, 5, 3, 1, player.coords, player)
 camera = SmoothCamera(screen, teste, player, cursor.rect.center)
 player.inventory.add_weapon(zero_gun, "0")
 player.inventory.add_weapon(sine_gun, "sin(x)")
 player.inventory.add_weapon(line_gun, "cx")
 delta_time = 0
-curr_time = 0
+curr_time = 7
 last_time = 0
 
 bullet_group = pg.sprite.Group()
@@ -80,6 +79,7 @@ while True:
             sys.exit()
 
     screen.fill("white")
+
 
     if curr_time - last_time > ENEMY_SPAWN_TIME:
         last_time = curr_time
