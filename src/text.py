@@ -14,7 +14,7 @@ class Font:
         A tuple with the path to the font image file.
     """
     def __init__(self, image_path: str):
-        self.character_order = "abcdefghijklmnopqrstuvwxyz0123456789,.?!:/\<>()-="
+        self.character_order = "abcdefghijklmnopqrstuvwxyz0123456789,.?!:/\<>()-=^@"
         self.characters = {}
         
         font_image = load_image(image_path)
