@@ -19,9 +19,8 @@ TILE_SIZE = 32 * PX_SCALE
 FONT = pygame.font.Font(os.path.join("font", "essential.ttf"), 36)
 ENEMY_SPAWN_TIME = 10*(1000)
 
-with open(os.path.join("enemies", "integraldata.json"), 'r') as doc:
-    integrals_info = json.load(doc)
-
+with open(os.path.join("enemies", "integraldata.json"), 'r') as integral_config:
+    integrals_info = json.load(integral_config)
 
 HIT_SOUND = pygame.mixer.Sound(os.path.join("sounds", "hit.wav"))
 HIT_SOUND.set_volume(0.7)
@@ -29,8 +28,8 @@ HIT_SOUND.set_volume(0.7)
 DASH_SOUND = pygame.mixer.Sound(os.path.join("sounds", "dash.wav"))
 DASH_SOUND.set_volume(1)
 
-SHOOT_SOUND = pygame.mixer.Sound(os.path.join("sounds", "dash.wav"))
-SHOOT_SOUND.set_volume(1)
+SHOOT_SOUND = pygame.mixer.Sound(os.path.join("sounds", "shoot.wav"))
+SHOOT_SOUND.set_volume(0.1)
 
 ZERO_GUN_STATS = {
     "move_function": lambda m: 0,

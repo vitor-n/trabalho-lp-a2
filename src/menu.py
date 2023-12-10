@@ -127,7 +127,6 @@ class Menu:
         -------
         None
         """
-        self.screen.fill("black")
         self.screen.blit(self.game_title_image, self.game_title_rect)
         self.screen.blit(self.play_button_image, self.play_button_rect)
         self.screen.blit(self.config_button_image, self.config_button_rect)
