@@ -59,7 +59,7 @@ zero_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor,
 sine_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor, sine_gun_stats)
 line_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor, line_gun_stats)
 gang = IntegralGang()
-gang.create_group(Apache, 5, 3, 1, player.coords)
+gang.create_group(Apache, 5, 3, 1, player.coords, player)
 camera = SmoothCamera(screen, teste, player, cursor.rect.center)
 player.inventory.add_weapon(zero_gun, "0")
 player.inventory.add_weapon(sine_gun, "sin(x)")
@@ -83,21 +83,29 @@ while True:
 
     if curr_time - last_time > ENEMY_SPAWN_TIME:
         last_time = curr_time
-        gang.random_group(5, 2, 1, player.rect)
+        gang.random_group(5, 2, 1, player.rect, player)
  
     camera.update()
     player.update((cursor.rect.centerx+camera.rect.topleft[0],cursor.rect.centery+camera.rect.topleft[1]))
-    gang.update(player.rect, delta_time, gang)
+    gang.update(delta_time, gang)
     cursor.update()
     teste.expand(camera.rect)
     camera.render_map()
     font.render(screen, f"dash using space", (player.rect.centerx-camera.rect.topleft[0]-50, player.rect.top - camera.rect.topleft[1] - 50))
     camera.render_entity(player)
-    camera.render_group(gang)
+    for integral in gang:
+        camera.render_entity(integral)
     camera.render_sprite_no_offset(cursor)
 
-    if pg.sprite.spritecollide(player, gang, False, pg.sprite.collide_rect_ratio(0.7)):
-        player.health - 1
+    for enemy in gang:
+        if enemy.weapon:
+            if enemy.weapon.rect.colliderect(player.rect):
+                player.health - 1
+            elif enemy.rect.colliderect(player.rect):
+                player.health - 1
+            if hasattr(enemy.weapon, "bullet_group"):
+                if pg.sprite.spritecollide(player, enemy.weapon.bullet_group, True):
+                    player.health - 1
 
     damaged_enemies = pg.sprite.groupcollide(gang, sine_gun.bullet_group, False, True)
 
@@ -114,6 +122,5 @@ while True:
     #pg.draw.line(screen, (255, 0, 0), (0, SCREEN_DIMENSIONS[1] // 2), (SCREEN_DIMENSIONS[0], SCREEN_DIMENSIONS[1] // 2), 1)
     #pg.draw.line(screen, (255, 0, 0), (SCREEN_DIMENSIONS[0] // 2, 0), (SCREEN_DIMENSIONS[0] // 2, SCREEN_DIMENSIONS[1]), 1)
 
-    print(clock.get_fps())
     pg.display.update()
     delta_time = clock.tick(FPS)

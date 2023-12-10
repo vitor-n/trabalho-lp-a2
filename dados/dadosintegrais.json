@@ -1,9 +1,11 @@
 {
     "INTEGRALS_SPRITES": [
-        "..",
-        "trabalho-lp-a2",
         "Sprites",
         "Jogo_Integrais"
+    ],
+    "INTEGRALS_WEAPONS": [
+        "Sprites",
+        "Jogo_Armas"
     ],
     "APACHE_SPEED": [
         0.2,
@@ -20,6 +22,34 @@
         "apache_doubleint.png",
         "apache_tripleint.png"
     ],
+    "APACHE_WEAPONS": [
+        "apache_1_arco.png",
+        "apache_2_revolver.png",
+        "apache_3_revolver.png"
+    ],
+    "APACHE_GUNS": [
+        {
+            "damage": 1,
+            "mag_size": 1,
+            "reload_cooldown": 1000,
+            "bullet_speed": 10,
+            "bullet_sprite": ["Sprites", "bullets", "bullet1.png"]
+        },
+        {
+            "damage": 1,
+            "mag_size": 2,
+            "reload_cooldown": 1000,
+            "bullet_speed": 15,
+            "bullet_sprite": ["Sprites", "bullets", "bullet1.png"]
+        },
+        {
+            "damage": 1,
+            "mag_size": 1,
+            "reload_cooldown": 2000,
+            "bullet_speed": 30,
+            "bullet_sprite": ["Sprites", "bullets", "bullet1.png"]
+        }
+    ],
     "ROMAN_SPEED": [
         0.2,
         0.1,
@@ -34,6 +64,11 @@
         "roman_singleint.png",
         "roman_doubleint.png",
         "roman_tripleint.png"
+    ],
+    "ROMAN_WEAPONS": [
+        "roman_1_espada.png",
+        "roman_2_lanca.png",
+        "roman_3_espada.png"
     ],
     "SAMURAI_SPEED": [
         0.2,
@@ -50,6 +85,18 @@
         "samurai_doubleint.png",
         "samurai_tripleint.png"
     ],
+    "SAMURAI_WEAPONS": [
+        "samurai_1_katana.png",
+        "samurai_2_wakizashi.png",
+        "samurai_3_lanca.png"
+    ],
+    "SAMURAI_LANCE": {
+        "damage": 1,
+        "mag_size": 1,
+        "reload_cooldown": 2000,
+        "bullet_speed": 20,
+        "bullet_sprite": ["Sprites", "Jogo_Armas", "samurai_3_lanca.png"]
+    },
     "VIKING_SPEED": [
         0.2,
         0.1,
@@ -64,5 +111,10 @@
         "viking_singleint.png",
         "viking_doubleint.png",
         "viking_tripleint.png"
+    ],
+    "VIKING_WEAPONS": [
+        "viking_1_machado.png",
+        "viking_2_machado.png",
+        "viking_3_espada.png"
     ]
 }
