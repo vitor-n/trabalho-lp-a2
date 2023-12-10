@@ -33,21 +33,21 @@
             "mag_size": 1,
             "reload_cooldown": 1000,
             "bullet_speed": 10,
-            "bullet_sprite": ["Sprites", "bullets", "bullet1.png"]
+            "bullet_sprite": ["Sprites", "bullets", "arrow_enemy2.png"]
         },
         {
             "damage": 1,
             "mag_size": 2,
             "reload_cooldown": 1000,
             "bullet_speed": 15,
-            "bullet_sprite": ["Sprites", "bullets", "bullet1.png"]
+            "bullet_sprite": ["Sprites", "bullets", "bullet_enemy1.png"]
         },
         {
             "damage": 1,
             "mag_size": 1,
             "reload_cooldown": 2000,
             "bullet_speed": 30,
-            "bullet_sprite": ["Sprites", "bullets", "bullet1.png"]
+            "bullet_sprite": ["Sprites", "bullets", "bullet_enemy1.png"]
         }
     ],
     "ROMAN_SPEED": [

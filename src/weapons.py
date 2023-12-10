@@ -146,7 +146,7 @@ class Bullet(pygame.sprite.Sprite):
         self.angle_r = -angle_radians
         self.image = pygame.transform.rotate(
             self.orig_image,
-            math.degrees(angle_radians) + 90
+            math.degrees(angle_radians)
         )
         self.travel_time = 0
         self.function = move_function

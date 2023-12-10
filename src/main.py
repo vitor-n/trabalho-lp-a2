@@ -107,7 +107,7 @@ while True:
                 if pg.sprite.spritecollide(player, enemy.weapon.bullet_group, True):
                     player.health - 1
 
-    damaged_enemies = pg.sprite.groupcollide(gang, sine_gun.bullet_group, False, True)
+    damaged_enemies = pg.sprite.groupcollide(gang, player.weapon.bullet_group, False, True)
 
     for enemy in damaged_enemies:
         enemy.health - 1
