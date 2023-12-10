@@ -97,8 +97,15 @@ while True:
         camera.render_entity(integral)
     camera.render_sprite_no_offset(cursor)
 
-    if pg.sprite.spritecollide(player, gang, False, pg.sprite.collide_rect_ratio(0.7)):
-        player.health - 1
+    for enemy in gang:
+        if enemy.weapon:
+            if enemy.weapon.rect.colliderect(player.rect):
+                player.health - 1
+            elif enemy.rect.colliderect(player.rect):
+                player.health - 1
+            if hasattr(enemy.weapon, "bullet_group"):
+                if pg.sprite.spritecollide(player, enemy.weapon.bullet_group, True):
+                    player.health - 1
 
     damaged_enemies = pg.sprite.groupcollide(gang, sine_gun.bullet_group, False, True)
 

@@ -62,8 +62,15 @@ class Game:
         self.camera.render_group(self.gang)
         self.camera.render_sprite_no_offset(self.cursor)
 
-        if pg.sprite.spritecollide(self.player, self.gang, False, pg.sprite.collide_rect_ratio(0.7)):
-            self.player.health - 1
+        for enemy in self.gang:
+            if enemy.weapon:
+                if enemy.weapon.rect.colliderect(self.player):
+                    self.player.health - 1
+                if hasattr(enemy.weapon, "bullet_group"):
+                    if pg.sprite.spritecollide(self.player, enemy.weapon.bullet_group, True):
+                        self.player.health - 1
+        #if pg.sprite.spritecollide(self.player, self.gang, False, pg.sprite.collide_rect_ratio(0.7)):
+        #    self.player.health - 1
 
         damaged_enemies = pg.sprite.groupcollide(self.gang, self.gun.bullet_group, False, True)
 
