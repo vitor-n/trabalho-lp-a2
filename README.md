@@ -29,7 +29,21 @@ responsible for accounting the endless events that can occur each frame, like
 a gun being shot and a player taking damage.
 
 ## Running
- #NEED TO SEE THAT
+In order to run the game, you need to have [Python](https://www.python.org/)
+installed (version 3.9 or higher) in your system. How to install python differs
+greatly from operational system to operational system. Once you have installed
+python, you also need the [pygame](https://www.pygame.org/news) library. The
+library abstracts a lot of things involving creating windows and drawing in them.
+
+To install it, you can run on your terminal, from the project root:
+```shell
+$ pip install - r requiriments.txt
+```
+
+After that, you have all the necessary things to run the game. So, to do it, run:
+```
+$ python src/main.py
+```
 
 ## Documentation
  ##NEED TO SEE THAT
