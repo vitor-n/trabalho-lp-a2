@@ -128,6 +128,9 @@ class Gun(Weapon):
             self.reload()
         self.bullet_group.update()
 
+class EnemyGun(EnemyWeapon, Gun):
+    pass
+
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, image_path, position, angle_radians, damage, move_function, speed):
         pygame.sprite.Sprite.__init__(self)

@@ -6,17 +6,8 @@ import settings as st
 from settings import SCREEN_DIMENSIONS
 import random
 from health import Health
-from weapons import EnemyWeapon
+from weapons import EnemyWeapon, EnemyGun
 from utils import load_image
-
-zero_gun_stats = {
-    "move_function": lambda m: 0,
-    "damage": 10,
-    "mag_size": 1,
-    "reload_cooldown": 3000,
-    "bullet_speed": 10,
-    "bullet_sprite": ("Sprites", "bullets", "bullet1.png")
-}
 
 class Enemy(Entity):
 
@@ -68,6 +59,8 @@ class Enemy(Entity):
         if self.weapon:
             self.weapon.set_target(self.target.rect.topleft)
             self.weapon.update()
+            if type(self.weapon) == EnemyGun:
+                self.weapon.shoot()
 
         if self.health == 0:
             self.kill
@@ -83,7 +76,9 @@ class Apache(Enemy):
 
         weapon_path = st.integrals_info["INTEGRALS_WEAPONS"].copy()
         weapon_path.append(st.integrals_info["APACHE_WEAPONS"][integral_type - 1])
-        weapon = EnemyWeapon(weapon_path, target)
+        weapon_stats = st.integrals_info["APACHE_GUNS"][integral_type - 1]
+        weapon_stats["move_function"] = lambda m: 0
+        weapon = EnemyGun(weapon_path, target, weapon_stats)
 
         super().__init__(image_path, target_position, speed, life, target, weapon)
 
@@ -111,7 +106,12 @@ class Samurai(Enemy):
 
         weapon_path = st.integrals_info["INTEGRALS_WEAPONS"].copy()
         weapon_path.append(st.integrals_info["SAMURAI_WEAPONS"][integral_type - 1])
-        weapon = EnemyWeapon(weapon_path, target)
+        if integral_type == 3:
+            weapon_stats = st.integrals_info["SAMURAI_LANCE"]
+            weapon_stats["move_function"] = lambda m: 0
+            weapon = EnemyGun(weapon_path, target, weapon_stats)
+        else:
+            weapon = EnemyWeapon(weapon_path, target)
 
         super().__init__(image_path, target_position, speed, life, target, weapon)
 
