@@ -1,5 +1,5 @@
 import pygame
-from settings import SHOOT_SOUND
+from settings import PX_SCALE, SHOOT_SOUND
 from utils import load_image
 import math
 from types import FunctionType
@@ -167,9 +167,7 @@ class Gun(Weapon):
         -------
         None
         """
-        if self.shooting:
-            pass
-        else:
+        if not self.shooting:
             self.shooting = True
             self._shoot()
 
@@ -189,6 +187,7 @@ class Gun(Weapon):
             if self.mag_count == 0:
                 self.shooting = False
                 self.time_empty_mag = self.time_now
+            SHOOT_SOUND.play()
 
     def _reload(self):
         self.mag_count = self.mag_size

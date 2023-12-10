@@ -96,7 +96,6 @@ while True:
 
     screen.fill("white")
 
-
     if curr_time - last_time > ENEMY_SPAWN_TIME:
         last_time = curr_time
         gang.random_group(5, 2, 1, player.rect, player)
