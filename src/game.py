@@ -53,10 +53,11 @@ class Game:
         if curr_time - self.__last_enemy_spawn_time > ENEMY_SPAWN_TIME:
             self.__last_enemy_spawn_time = curr_time
             self.gang.random_group(5, 2, 1, self.player.rect)
+            self.gang.set_target_for_all(self.player)
  
         self.camera.update()
         self.player.update((self.cursor.rect.centerx+self.camera.rect.topleft[0],self.cursor.rect.centery+self.camera.rect.topleft[1]))
-        self.gang.update(self.player.rect, self.delta_time)
+        self.gang.update(self.delta_time, self.gang)
         self.cursor.update()
         self.map.expand(self.camera.rect)
         self.camera.render_map()
