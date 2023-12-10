@@ -17,6 +17,9 @@ Guerreiros Integrais
    health_doc
    map_doc
    menu_doc
+   player_doc
+   text_doc
+   utils_doc
 
 by Anne Cardoso, Larissa Lemos, Pedro Tokar and Vitor Nascimento.
 

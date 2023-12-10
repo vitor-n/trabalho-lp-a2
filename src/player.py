@@ -1,5 +1,5 @@
 import pygame as pg
-from settings import PX_SCALE, DASH_SOUND
+from settings import DASH_SOUND
 from utils import load_image
 from health import PlayerHealth
 from weapons import Weapon
