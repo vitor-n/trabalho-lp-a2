@@ -45,18 +45,19 @@ class Game:
         return self.__on_game
 
     def update(self):
-        
-
         curr_time = pg.time.get_ticks()
+
         if curr_time - self.__last_enemy_spawn_time > ENEMY_SPAWN_TIME:
             self.__last_enemy_spawn_time = curr_time
             self.gang.random_group(5, 2, 1, self.player.rect)
             self.gang.set_target_for_all(self.player)
  
         self.camera.update()
-        self.player.update((self.cursor.rect.centerx+self.camera.rect.topleft[0],self.cursor.rect.centery+self.camera.rect.topleft[1]))
-        self.gang.update(self._delta_time, self.gang)
         self.cursor.update()
+        self.player.update((self.cursor.rect.centerx+self.camera.rect.topleft[0],self.cursor.rect.centery+self.camera.rect.topleft[1]))
+        self.cursor.update()
+
+        self.gang.update(self._delta_time, self.gang)
         self.map.expand(self.camera.rect)
         self.camera.render_map()
         self.camera.render_entity(self.player)
@@ -80,7 +81,7 @@ class Game:
         self.camera.set_cursor_position(self.cursor.rect.center)
 
         self.screen.blit(self.player.health.bar, (33,30))
-        self.font.render(self.screen, "time: 5:00", (33,90))
+        self.font.render(self.screen, f"sobreviveu: {curr_time//1000}s", (33,90))
         self.screen.blit(self.cursor.image, self.cursor.rect)
 
     def damage_handler_enemy(self, weapons):

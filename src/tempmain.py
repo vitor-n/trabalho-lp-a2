@@ -8,14 +8,14 @@ from settings import HIT_SOUND
 pygame.init()
 pygame.font.init()
 pygame.mixer.init()
-pygame.mixer.music.set_volume(0.1)
+pygame.mixer.music.set_volume(0)
 pygame.mixer.music.load("sounds/ironmain.mp3")
 pygame.mixer.music.play(-1)
 
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode(SCREEN_DIMENSIONS)
 pygame.display.set_caption("Guerreiros Integrais")
-pygame.mouse.set_visible(True)
+pygame.mouse.set_visible(False)
 
 menu = Menu(screen)
 game = Game(screen)
