@@ -1,9 +1,9 @@
+import pygame
 from settings import SCREEN_DIMENSIONS
 from menu import Menu
 from game import Game
 from cursor import Cursor
-
-import pygame
+from settings import HIT_SOUND
 
 pygame.init()
 pygame.font.init()
@@ -39,14 +39,17 @@ while True:
             if event.button == 1:
                 click = True
         menu.update(click)
-    elif not game.on_game:
-        game.on_game = True
-        game.menu_time = pygame.time.get_ticks()
-    
+        if not menu.on_menu:
+            game.on_game = True
+            game.menu_time = pygame.time.get_ticks()
     if game.on_game:
         game.run(delta_time)
-
-
+        if not game.on_game:
+            game = Game(screen)
+            menu.on_menu = True
+            menu.on_titlescreen = True
+            menu.on_config_menu = False
+    
     screen.blit(cursor.image, cursor.rect)
 
     pygame.display.update()
