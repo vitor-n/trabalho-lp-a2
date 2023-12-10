@@ -10,6 +10,9 @@ Guerreiros Integrais
    :maxdepth: 0
    :caption: Contents:
 
+   camera_doc
+   cursor_doc
+
 by Anne Cardoso, Larissa Lemos, Pedro Tokar and Vitor Nascimento.
 
 Indices and tables
