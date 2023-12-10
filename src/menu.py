@@ -1,3 +1,7 @@
+"""
+This module contains the class that abstrain a menu. This class have a lot of
+utility functions to handle buttons and their events.
+"""
 from settings import FONT, SCREEN_DIMENSIONS
 from utils import load_image, draw_text
 

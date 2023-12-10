@@ -1,6 +1,10 @@
-import pygame
-from settings import PX_SCALE, SHOOT_SOUND
+"""
+This module implements all sort of things related to weapons. There are simple
+weapons, guns and bullets. There are variations of them for enemys, but the main
+idea remains the same for all the clases.
+"""
 from utils import load_image
+from settings import SHOOT_SOUND
 
 import pygame
 

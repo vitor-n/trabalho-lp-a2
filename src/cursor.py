@@ -1,3 +1,8 @@
+"""
+This module have a class representing a cursor. The cursor have some usefull
+properties that are used when aiming to something, when centering the camera
+and so on.
+"""
 from utils import load_image
 
 import pygame as pg

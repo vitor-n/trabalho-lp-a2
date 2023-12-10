@@ -1,3 +1,7 @@
+"""
+This module have functions that doesn't fit in any class, but are used along
+all the code. They easen processes like loading images.
+"""
 from settings import TILE_SIZE, PX_SCALE
 
 import pygame as pg

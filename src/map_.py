@@ -1,3 +1,9 @@
+"""
+This module is responsible for defining classes to represent the map. The two
+types of maps are made with tiles, that are also implemented here. The file
+containing the map data is located inside map folder, and to declare a map a list
+of lists is used.
+"""
 from settings import TILE_SIZE
 from utils import load_tile_image
 

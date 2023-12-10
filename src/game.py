@@ -1,6 +1,6 @@
 from pygame.locals import *
 import pygame as pg
-from settings import SCREEN_DIMENSIONS, TILE_SIZE, FPS, ENEMY_SPAWN_TIME
+from settings import SCREEN_DIMENSIONS, TILE_SIZE, FPS, ENEMY_SPAWN_TIME, SHOOT_SOUND
 from player import Player, Inventory
 from utils import load_map
 from map_ import Map, RepeatMap

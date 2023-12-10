@@ -1,3 +1,9 @@
+"""
+This module contains things related to the player itself. The input processing
+is done inside the player class, that moves and acts acording to the keys pressed.
+There is also a implementation of an inventory to hold the player guns. Since
+only the player have acess to an inventory, this class is located here.
+"""
 from settings import DASH_SOUND
 from utils import load_image
 from health import PlayerHealth
