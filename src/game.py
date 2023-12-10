@@ -134,7 +134,7 @@ class Game:
     def _render_hud(self):
         self._screen.blit(self._player.health.bar, (33,30))
         self._font.render(self._screen, f"sobreviveu: {self._survival_time}s", (33,90))
-        self._font.render(self._screen, self._dificulty.value[0], (1150, 33))
+        self._font.render(self._screen, self._dificulty.value, (1150, 33))
 
     def run(self, delta_time):
         """
