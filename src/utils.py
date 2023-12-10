@@ -41,13 +41,54 @@ def angle_to(sprite1, sprite2):
     return math.atan2(y1 - y2, x1 - x2)
 
 def image_clip(surface, x, y, x_size, y_size):
+    """
+    Returns a clipped image from a surface.
+    
+    Parameters
+    ----------
+
+    surface: pygame.Surface
+        The surface to be clipped.
+    x: int
+        The x coordinate of the top left corner of the clipped image.
+    y: int
+        The y coordinate of the top left corner of the clipped image.
+    x_size: int
+        The width of the clipped image.
+    y_size: int
+        The height of the clipped image.
+
+    Returns
+    -------
+
+    image: pygame.Surface
+        The clipped image.
+    """
     image_copy = surface.copy()
     clip = pg.Rect(x, y, x_size, y_size)
     image_copy.set_clip(clip)
     image = surface.subsurface(image_copy.get_clip())
     return image.copy()
 
-def draw_text(text, font, color, surface, x, y):
+def draw_text(text:str, font:pg.font.Font, color:tuple, surface:pg.Surface, x:int, y:int):
+    """
+    Draws text on a surface.
+
+    Parameters
+    ----------
+    text: str
+        The text to be drawn.
+    font: pygame.font.Font
+        The font to be used.
+    color: tuple
+        The color of the text.
+    surface: pygame.Surface
+        The surface where the text will be drawn.
+    x: int
+        The x coordinate of the center of the text.
+    y: int
+        The y coordinate of the center of the text.
+    """
     text_obj = font.render(text, True, color)
     text_rect = text_obj.get_rect()
     text_rect.center = (x, y)
