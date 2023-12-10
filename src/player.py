@@ -1,7 +1,7 @@
 import pygame as pg
 from utils import load_image
 from health import PlayerHealth
-from weapon import Weapon
+from weapons import Weapon
 
 class Entity(pg.sprite.Sprite):
     """
@@ -79,7 +79,7 @@ class Player(Entity):
            self._move(self.speed)
 
         if self.weapon:
-            self.weapon.target_pos = target_pos
+            self.weapon.update_target_position(target_pos)
             if self.attacking:
                 self.weapon.shoot()
         self.inventory.update()
@@ -195,9 +195,9 @@ class Inventory:
                 {"weapon": weapon,
                  "name": name}
             )
-            weapon.set_entity(self.player)
+            weapon.entity = self.player
 
-    def remove_weapon(self, weapon):
+    def remove_weapon(self, weapon: Weapon):
         """
         Removes a weapon from the inventory. If it isn't added, does nothing.
 
