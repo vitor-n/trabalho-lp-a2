@@ -159,7 +159,7 @@ returns None. To change weapon, use <cite>next_weapon</cite> and <cite>previous_
 
 <dl class="py class">
 <dt class="sig sig-object py" id="src.player.Player">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.player.</span></span><span class="sig-name descname"><span class="pre">Player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inventory</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.player.Player" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.player.</span></span><span class="sig-name descname"><span class="pre">Player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inventory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">health</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.player.Player" title="Link to this definition">¶</a></dt>
 <dd><p>Class representing the player. It implements some functions that are used
 to move the player based on keyboard inputs.</p>
 <dl class="field-list simple">
@@ -168,6 +168,7 @@ to move the player based on keyboard inputs.</p>
 <li><p><strong>image_path</strong> (<em>tuple</em>) – A tuple containing the directory names leading to the player image.</p></li>
 <li><p><strong>initial_position</strong> (<em>tuple</em>) – The position where the entity should be when created. Defaults to (0, 0).</p></li>
 <li><p><strong>inventory</strong> (<a class="reference internal" href="#src.player.Inventory" title="src.player.Inventory"><em>Inventory</em></a>) – A inventory to hold the player guns.</p></li>
+<li><p><strong>health</strong> (<em>int</em>) – An integer representing how much health the player begins with.</p></li>
 </ul>
 </dd>
 </dl>

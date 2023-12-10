@@ -37,7 +37,7 @@
 a running instance of the game, aswell as implementing the game loop.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="src.game.Game">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.game.</span></span><span class="sig-name descname"><span class="pre">Game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">screen</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.game.Game" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.game.</span></span><span class="sig-name descname"><span class="pre">Game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">screen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">game_dificulty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">GameDificulty.EASY</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.game.Game" title="Link to this definition">¶</a></dt>
 <dd><p>Class represents a running instance of a game. Every time the game should run,
 a instance of that class must be created. It holds a lot of instances from
 other objects, aswell as the game loop.</p>
@@ -63,6 +63,12 @@ update.</p>
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="src.game.GameDificulty">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.game.</span></span><span class="sig-name descname"><span class="pre">GameDificulty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.game.GameDificulty" title="Link to this definition">¶</a></dt>
+<dd><p>Enum representing the possible game dificulties.</p>
+</dd></dl>
+
 </section>
 
 
@@ -83,6 +89,7 @@ update.</p>
 <li class="toctree-l3"><a class="reference internal" href="#src.game.Game.run"><code class="docutils literal notranslate"><span class="pre">Game.run()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#src.game.GameDificulty"><code class="docutils literal notranslate"><span class="pre">GameDificulty</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="health_doc.html">Module health.py</a></li>
