@@ -1,6 +1,6 @@
 from pygame.locals import *
 import pygame as pg
-from settings import SCREEN_DIMENSIONS, TILE_SIZE, FPS, ENEMY_SPAWN_TIME
+from settings import SCREEN_DIMENSIONS, TILE_SIZE, FPS, ENEMY_SPAWN_TIME, SHOOT_SOUND
 from player import Player, Inventory
 from utils import load_map
 from map_ import Map, RepeatMap
@@ -31,15 +31,15 @@ class Game:
         self._gang = IntegralGang()
         self._camera = SmoothCamera(screen, self._map, self._player, self._cursor.rect.center)
         
-        self.zero_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor, ZERO_GUN_STATS)
-        self.sine_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor, SINE_GUN_STATS)
-        self.line_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor, LINE_GUN_STATS)
-        self.quadratic_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor, QUADRATIC_GUN_STATS)
+        self.zero_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self._cursor, ZERO_GUN_STATS)
+        self.sine_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self._cursor, SINE_GUN_STATS)
+        self.line_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self._cursor, LINE_GUN_STATS)
+        self.quadratic_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self._cursor, QUADRATIC_GUN_STATS)
 
-        self.player.inventory.add_weapon(self.zero_gun, "0")
-        self.player.inventory.add_weapon(self.sine_gun, "sin(x)")
-        self.player.inventory.add_weapon(self.line_gun, "cx")
-        self.player.inventory.add_weapon(self.quadratic_gun, "x@")
+        self._player.inventory.add_weapon(self.zero_gun, "0")
+        self._player.inventory.add_weapon(self.sine_gun, "sin(x)")
+        self._player.inventory.add_weapon(self.line_gun, "cx")
+        self._player.inventory.add_weapon(self.quadratic_gun, "x@")
 
         self._delta_time = 0
         self._time_now = 0
