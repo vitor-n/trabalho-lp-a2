@@ -23,8 +23,8 @@ class GameDificulty(Enum):
     """
     Enum representing the possible game dificulties.
     """
-    EASY = "Easy",
-    MEDIUM = "Medium",
+    EASY = "Easy"
+    MEDIUM = "Medium"
     HARD = "Hard"
 
 class Game:
