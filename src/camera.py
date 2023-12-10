@@ -27,8 +27,8 @@ class Camera:
         self._target = target
         self._map = map_
         self.screen = screen
-        self.font_black = Font(("Font", "pixel_font_black.png"))
-        self.font_grey = Font(("Font", "pixel_font_grey.png"))
+        self.font_black = Font(("font", "pixel_font_black.png"))
+        self.font_grey = Font(("font", "pixel_font_grey.png"))
 
     @property
     def target(self):
