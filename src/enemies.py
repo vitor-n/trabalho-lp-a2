@@ -67,10 +67,14 @@ class Enemy(Entity):
         -------
         Tuple containing the random position.
         """
-        pos_x = random.randint(target_position[0] - SCREEN_DIMENSIONS[0]/2, target_position[0] + SCREEN_DIMENSIONS[0]/2)
-        pos_y = random.randint(target_position[1] - SCREEN_DIMENSIONS[1]/2, target_position[1] + SCREEN_DIMENSIONS[1]/2)
-        pos = (pos_x, pos_y)
-        return pos
+        pos_x = random.randint(-SCREEN_DIMENSIONS[0]/2, SCREEN_DIMENSIONS[0]/2)
+        pos_y = random.randint(-SCREEN_DIMENSIONS[1]/2, SCREEN_DIMENSIONS[1]/2)
+        pos1 = (target_position[0] - SCREEN_DIMENSIONS[0]/2, target_position[1] + pos_y)
+        pos2 = (target_position[0] + SCREEN_DIMENSIONS[0]/2, target_position[1] + pos_y)
+        pos3 = (target_position[0] + pos_x, target_position[1] - SCREEN_DIMENSIONS[1]/2)
+        pos4 = (target_position[0] + pos_x, target_position[1] + SCREEN_DIMENSIONS[1]/2)
+        return random.choice([pos1,pos2, pos3, pos4])
+        
      
     def define_direction(self, player_position):
         """
@@ -282,7 +286,7 @@ class IntegralGang(pg.sprite.Group):
         integral_family : The class name of the warrior type.
 
         single_qtt : Number of single integrals of the choosen type to be added.
-        _
+        
         double_qtt : Number of double integrals of the choosen type to be added.
 
         triple_qtt : Number of triple integrals of the choosen type to be added.

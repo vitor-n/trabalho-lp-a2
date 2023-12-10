@@ -20,16 +20,16 @@ class Game:
 
         map_layout = load_map("maps/map.json")["tiles"]
         self.map = RepeatMap(map_layout)
-        self.font = Font(("Font", "pixel_font_black.png"))
-        self.font2 = Font(("Font", "pixel_font_grey.png"))
+        self.font = Font(("font", "pixel_font_black.png"))
+        self.font2 = Font(("font", "pixel_font_grey.png"))
         self.player = Player(("Sprites", "Player", "player.png"), (0,0), Inventory())
         self.cursor = Cursor(("Sprites", "cursors", "cursor2.png"), (TILE_SIZE* 9.5, TILE_SIZE*5.5))
         self.gang = IntegralGang()
         self.camera = SmoothCamera(screen, self.map, self.player, self.cursor.rect.center)
         
-        self.zero_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor.rect.center, ZERO_GUN_STATS)
-        self.sine_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor.rect.center, SINE_GUN_STATS)
-        self.line_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor.rect.center, LINE_GUN_STATS)
+        self.zero_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor, ZERO_GUN_STATS)
+        self.sine_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor, SINE_GUN_STATS)
+        self.line_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor, LINE_GUN_STATS)
         self.player.inventory.add_weapon(self.zero_gun, "0")
         self.player.inventory.add_weapon(self.sine_gun, "sin(x)")
         self.player.inventory.add_weapon(self.line_gun, "cx")
