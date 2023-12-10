@@ -33,7 +33,37 @@
             
   <section id="module-game-py">
 <span id="game-doc"></span><h1>Module game.py<a class="headerlink" href="#module-game-py" title="Link to this heading">¶</a></h1>
-<span class="target" id="module-src.game"></span></section>
+<p id="module-src.game">This module contains the game class. This class is responsible for representing
+a running instance of the game, aswell as implementing the game loop.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.game.Game">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.game.</span></span><span class="sig-name descname"><span class="pre">Game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">screen</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.game.Game" title="Link to this definition">¶</a></dt>
+<dd><p>Class represents a running instance of a game. Every time the game should run,
+a instance of that class must be created. It holds a lot of instances from
+other objects, aswell as the game loop.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>screen</strong> (<em>pg.Surface</em>) – The screen the game should run on.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.game.Game.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delta_time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.game.Game.run" title="Link to this definition">¶</a></dt>
+<dd><p>Run the game.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>delta_time</strong> (<em>float</em>) – A variable that will hold the difference of time between every frame
+update.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 
 
           </div>
@@ -48,7 +78,13 @@
 <li class="toctree-l1"><a class="reference internal" href="camera_doc.html">Module camera.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cursor_doc.html">Module cursor.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="enemies_doc.html">Module enemies.py</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Module game.py</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Module game.py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#src.game.Game"><code class="docutils literal notranslate"><span class="pre">Game</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.game.Game.run"><code class="docutils literal notranslate"><span class="pre">Game.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="health_doc.html">Module health.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="map_doc.html">Module map_.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="menu_doc.html">Module menu.py</a></li>

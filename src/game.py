@@ -1,20 +1,34 @@
-from pygame.locals import *
-import pygame as pg
-from settings import SCREEN_DIMENSIONS, TILE_SIZE, FPS, ENEMY_SPAWN_TIME, SHOOT_SOUND
+"""
+This module contains the game class. This class is responsible for representing
+a running instance of the game, aswell as implementing the game loop.
+"""
+from settings import SCREEN_DIMENSIONS, TILE_SIZE, ENEMY_SPAWN_TIME
+from settings import ZERO_GUN_STATS, SINE_GUN_STATS, LINE_GUN_STATS, QUADRATIC_GUN_STATS
 from player import Player, Inventory
 from utils import load_map
-from map_ import Map, RepeatMap
-import sys
+from map_ import RepeatMap
 from camera import SmoothCamera
 from weapons import Gun
 from cursor import Cursor
-from enemies import Apache, Roman, Samurai, Viking, IntegralGang
+from enemies import IntegralGang
 from text import Font
-from settings import ZERO_GUN_STATS, SINE_GUN_STATS, LINE_GUN_STATS, QUADRATIC_GUN_STATS
+
+import pygame as pg
+from pygame.locals import *
+
 from random import randint
 
-
 class Game:
+    """
+    Class represents a running instance of a game. Every time the game should run,
+    a instance of that class must be created. It holds a lot of instances from
+    other objects, aswell as the game loop.
+
+    Parameters
+    ----------
+    screen: pg.Surface
+        The screen the game should run on.
+    """
     def __init__(self, screen) -> None:
 
         self._screen = screen
@@ -101,6 +115,19 @@ class Game:
         self._font.render(self._screen, f"sobreviveu: {self._survival_time}s", (33,90))
 
     def run(self, delta_time):
+        """
+        Run the game.
+
+        Parameters
+        ----------
+        delta_time: float
+            A variable that will hold the difference of time between every frame
+            update.
+
+        Returns
+        -------
+        None
+        """
         self._time_now = pg.time.get_ticks()
         
         if self._player.health == 0:
