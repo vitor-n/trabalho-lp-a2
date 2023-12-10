@@ -1,13 +1,24 @@
 import pygame
-from settings import PX_SCALE
+from settings import PX_SCALE, SHOOT_SOUND
 from utils import load_image
 import math
-import random
+from types import FunctionType
 
 class Weapon(pygame.sprite.Sprite):
-    def __init__(self, image_path, target_pos):
+    """
+    Class representing a generic weapon in the game. This class is responsible
+    for implementing the weapon rotation based on the target position.
+
+    Parameters
+    ----------
+    image_path: tuple
+        The path leading to the weapon image
+    target_pos: tuple
+        The initial position to target.
+    """
+    def __init__(self, image_path: tuple, target_pos: tuple):
         super().__init__()
-        self.target_pos = target_pos
+        self._target_pos = target_pos
         self.image = load_image(image_path, 3)
         self.orig_image = self.image
         self.inventory_image = self.image
@@ -15,20 +26,41 @@ class Weapon(pygame.sprite.Sprite):
         self.facing_r = True
         self.angle_radians = 0
         self.angle_degrees = 0
+        self._entity = None
 
-    def set_entity(self, entity):
-        self.entity = entity
-        self.rect.center = entity.rect.center
+    @property
+    def entity(self):
+        """
+        The entity associated with the weapon. The weapon will orbit this entity.
+        """
+        return self._entity
 
-    def set_target(self, target_pos):
-        self.target_pos = target_pos
+    @entity.setter
+    def entity(self, entity):
+        self._entity = entity
+        self.rect.center = self._entity.rect.center
 
-    def get_angles(self):
-        self.angle_radians = math.atan2(self.entity.rect.centery-self.target_pos[1], self.target_pos[0]-self.entity.rect.centerx)
+    def update_target_position(self, target_pos: tuple):
+        """
+        Updates the position that the weapon should target.
+
+        Parameters
+        ----------
+        target_pos:
+            The new position to target.
+
+        Returns
+        -------
+        None
+        """
+        self._target_pos = target_pos
+
+    def _get_angles(self):
+        self.angle_radians = math.atan2(self.entity.rect.centery-self._target_pos[1], self._target_pos[0]-self.entity.rect.centerx)
         self.angle_degrees = math.degrees(self.angle_radians)
 
-    def rotate(self):
-        self.get_angles()
+    def _rotate(self):
+        self._get_angles()
         self.image = pygame.transform.rotate(self.orig_image, self.angle_degrees)
 
         self.rect = self.image.get_rect(
@@ -48,11 +80,30 @@ class Weapon(pygame.sprite.Sprite):
             self.facing_r = True
 
     def update(self):
-        self.rotate()
+        """
+        Updates the weapon. In this basic weapon, it just rotates it acordingly
+        to the target.
+
+        Returns
+        -------
+        None
+        """
+        self._rotate()
 
 class EnemyWeapon(Weapon):
-    def rotate(self):
-        self.get_angles()
+    """
+    Class representing an enemy's weapon. It changes the rotation implementation
+    so it doesn't flip the enemy's image.
+
+    Parameters
+    ----------
+    image_path: tuple
+        The path leading to the weapon image
+    target_pos:
+        The initial position to target.
+    """
+    def _rotate(self):
+        self._get_angles()
         self.image = pygame.transform.rotate(self.orig_image, self.angle_degrees)
 
         self.rect = self.image.get_rect(
@@ -72,6 +123,20 @@ class EnemyWeapon(Weapon):
             self.facing_r = True
 
 class Gun(Weapon):
+    """
+    Class representing a gun. A gun implements the same thing as weapons, with
+    the addition of the capability of shooting. All the gun peculiaritys, like
+    bullet damage and speed, are set with the dict `stats`.
+
+    Parameters
+    ----------
+    image_path: tuple
+        The path leading to the weapon image
+    target_pos: tuple
+        The initial position to target.
+    stats: dict
+        A dicitionary containing the gun stats.
+    """
     def __init__(self, image_path, target_pos, stats):
         super().__init__(image_path, target_pos)
         self.move_function = stats["move_function"]
@@ -92,6 +157,14 @@ class Gun(Weapon):
         self.time_now = 0
 
     def shoot(self):
+        """
+        Make the gun shoot. This will create bullets and store them in the
+        `bullet_group`. If the gun is in cooldown, it'll do nothing.
+
+        Returns
+        -------
+        None
+        """
         if self.mag_count > 0:
             self.shooting = True
             self.mag_count -= 1
@@ -108,11 +181,19 @@ class Gun(Weapon):
                 self.shooting = False
                 self.time_empty_mag = self.time_now
 
-    def reload(self):
+    def _reload(self):
         self.mag_count = self.mag_size
         self.reloading = False
 
     def update(self):
+        """
+        Updates the weapon. Besides rotating the weapon, this method also will
+        call tue update method to the gun active bullets.
+
+        Returns
+        -------
+        None
+        """
         super().update()
         self.time_now = pygame.time.get_ticks()
 
@@ -121,18 +202,39 @@ class Gun(Weapon):
                 self.reloading = True
 
         if self.reloading:
-            self.reload()
+            self._reload()
         if self.shooting:
             self.shoot()
-        if self.reloading:
-            self.reload()
         self.bullet_group.update()
 
 class EnemyGun(EnemyWeapon, Gun):
     pass
 
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self, image_path, position, angle_radians, damage, move_function, speed):
+    """
+    Class representing a bullet. The class is the same for enemies and the
+    player. The bullets needs some parameters, including the trajectory function,
+    to determine damages and such. What should be used to diferentiate from
+    where the bullet comes from is the group it is contained.
+
+    Parameters
+    ----------
+    image_path: tuple
+        The path to the bullet image.
+    position: tuple
+        The initial position of the bullet.
+    angle_radians: float
+        The angle that the bullet is being shoot.
+    damage: int
+        The damage the bullet should.
+    move_function: function
+        A function to determine the bullet trajectory. This function should take
+        one variable (the time elapsed since the bullet was shoot) and should
+        return only a float or int.
+    speed: int
+        The speed of the bullet
+    """
+    def __init__(self, image_path: tuple, position: tuple, angle_radians: float, damage: int, move_function: FunctionType, speed: int):
         pygame.sprite.Sprite.__init__(self)
         self.image = load_image(image_path)
         self.orig_image = self.image
@@ -152,8 +254,16 @@ class Bullet(pygame.sprite.Sprite):
         self.function = move_function
         self.speed = speed
 
-
     def update(self):
+        """
+        Updates the bullet. This will make it go futher, acordingly to the
+        trajectory function passed. This ins't made for being called alone, but
+        to be called when the bullet group is being updated.
+
+        Returns
+        -------
+        None
+        """
         self.new_x = self.dx * math.cos(self.angle_r) - self.dy * math.sin(self.angle_r) + self.x
         self.new_y = self.dx * math.sin(self.angle_r) + self.dy * math.cos(self.angle_r) + self.y
         self.rect.centerx = self.new_x
@@ -166,5 +276,3 @@ class Bullet(pygame.sprite.Sprite):
 
         if self.travel_time > 100:
             self.kill()
-
-

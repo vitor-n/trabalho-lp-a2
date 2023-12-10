@@ -1,4 +1,5 @@
 import pygame as pg
+from settings import PX_SCALE, DASH_SOUND
 from utils import load_image
 from health import PlayerHealth
 from weapons import Weapon
@@ -79,7 +80,7 @@ class Player(Entity):
            self._move(self.speed)
 
         if self.weapon:
-            self.weapon.target_pos = target_pos
+            self.weapon.update_target_position(target_pos)
             if self.attacking:
                 self.weapon.shoot()
         self.inventory.update()
@@ -113,18 +114,19 @@ class Player(Entity):
         if keys[pg.K_SPACE] and (pg.time.get_ticks() - self.last_dash) > self.dash_cooldown:
             self.dashing = True
             self.last_dash = pg.time.get_ticks()
+            DASH_SOUND.play()
 
         if len(self.inventory) > 1:
             for mouse_event in pg.event.get(pg.MOUSEWHEEL):
-                if mouse_event.y > 0:
-                    self.inventory.next_weapon()
-                elif mouse_event.y < 0:
+                if not self.weapon.shooting:
+                    if mouse_event.y > 0:
+                        self.inventory.next_weapon()
+                    elif mouse_event.y < 0:
                         self.inventory.previous_weapon()
-            if not self.weapon.shooting:
-                if keys[pg.K_r]:
-                    self.inventory.next_weapon()
-                elif keys[pg.K_t]:
-                    self.inventory.previous_weapon
+                    if keys[pg.K_r]:
+                        self.inventory.next_weapon()
+                    elif keys[pg.K_t]:
+                        self.inventory.previous_weapon
 
 
         if pg.mouse.get_pressed()[0]:
@@ -195,9 +197,9 @@ class Inventory:
                 {"weapon": weapon,
                  "name": name}
             )
-            weapon.set_entity(self.player)
+            weapon.entity = self.player
 
-    def remove_weapon(self, weapon):
+    def remove_weapon(self, weapon: Weapon):
         """
         Removes a weapon from the inventory. If it isn't added, does nothing.
 

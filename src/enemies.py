@@ -31,7 +31,7 @@ class Enemy(Entity):
         self._target = target
         self._weapon = weapon
         if weapon:
-            self._weapon.set_entity(self)
+            self._weapon.entity = self
 
     @property
     def target(self):
@@ -114,7 +114,7 @@ class Enemy(Entity):
             self.move(delta_time)
 
         if self.weapon:
-            self.weapon.set_target(self.target.rect.topleft)
+            self.weapon.update_target_position(self.target.rect.center)
             self.weapon.update()
             if type(self.weapon) == EnemyGun:
                 self.weapon.shoot()

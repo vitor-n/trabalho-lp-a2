@@ -1,20 +1,21 @@
 import pygame as pg
 from utils import load_image
+from settings import HIT_SOUND
 
 class Health:
     def __init__(self, max_health, immunity_time=0):
         self._max_health = max_health
         self._current_health = max_health
-        self.__immunity_time = immunity_time
-        self.__last_hit = 0
+        self._immunity_time = immunity_time
+        self._last_hit = 0
 
     def decrease(self, amount):
         time_now = pg.time.get_ticks() / 1000
-        if (time_now - self.__last_hit) > self.__immunity_time:
+        if (time_now - self._last_hit) > self._immunity_time:
             self._current_health -= amount
             if self._current_health < 0:
                 self._current_health = 0
-            self.__last_hit = time_now
+            self._last_hit = time_now
 
     def increase(self, amount):
         self._current_health += amount
@@ -46,6 +47,16 @@ class PlayerHealth(Health):
         
         self.bar = pg.Surface((self._rect.width * (self._full_hearts + self._half_hearts), self._rect.height))
         self.bar.set_colorkey((255,0,255))
+
+    def decrease(self, amount):
+        time_now = pg.time.get_ticks() / 1000
+        if (time_now - self._last_hit) > self._immunity_time:
+            self._current_health -= amount
+            if self._current_health < 0:
+                self._current_health = 0
+            self._last_hit = time_now
+            HIT_SOUND.play()
+            
 
     def update(self):
         self._full_hearts = int(self._current_health // 2)

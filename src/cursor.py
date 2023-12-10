@@ -40,6 +40,10 @@ class Cursor:
 
     def update(self):
         """
-        Updates the position of the cursor
+        Updates the position of the cursor, using the mouse position
+
+        Returns
+        -------
+        None
         """
         self._rect.center = pygame.mouse.get_pos()

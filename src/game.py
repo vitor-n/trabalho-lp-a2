@@ -20,8 +20,8 @@ class Game:
 
         map_layout = load_map("maps/map.json")["tiles"]
         self.map = RepeatMap(map_layout)
-        self.font = Font(("Font", "pixel_font_black.png"))
-        self.font2 = Font(("Font", "pixel_font_grey.png"))
+        self.font = Font(("font", "pixel_font_black.png"))
+        self.font2 = Font(("font", "pixel_font_grey.png"))
         self.player = Player(("Sprites", "Player", "player.png"), (0,0), Inventory())
         self.cursor = Cursor(("Sprites", "cursors", "cursor2.png"), (TILE_SIZE* 9.5, TILE_SIZE*5.5))
         self.gang = IntegralGang()
