@@ -1,6 +1,4 @@
-from typing import Iterable, Union
 import pygame as pg
-from pygame.sprite import AbstractGroup
 from player import Entity
 import settings as st
 from settings import SCREEN_DIMENSIONS
@@ -14,7 +12,7 @@ class Enemy(Entity):
         self.life = life
 
     def move(self, delta_time):
-        self.direction = self.direction.normalize()
+        self.direction.normalize_ip()
         self.rect.x += self.direction.x * self.speed * delta_time
         self.rect.y += self.direction.y * self.speed * delta_time
     
@@ -28,14 +26,26 @@ class Enemy(Entity):
         delta_x = player_position.x - self.rect.x
         delta_y = player_position.y - self.rect.y
 
-        self.direction = pg.Vector2(delta_x, delta_y)
+        delta_pos = pg.Vector2(delta_x, delta_y)
+        mag = delta_pos.magnitude_squared()
+        if mag != 0:
+            delta_pos.normalize_ip()
+        return (delta_pos, mag)
     
-    def update(self, player_position, delta_time):
-        self.define_direction(player_position)
+    def update(self, player_position, delta_time, integral_gang):
+        (self.direction, _) = self.define_direction(player_position)
+        self.remove_overlapping(integral_gang)
         if self.direction.magnitude_squared() != 0:
             self.move(delta_time)
     
-    
+    def remove_overlapping(self, integral_gang): #list containing all Sprites in a Group that intersect with another Sprite
+        collide_list = pg.sprite.spritecollide(self, integral_gang, dokill = False)
+        for sprite in collide_list:
+            if sprite == self:
+                continue
+            (delta_pos, mag) = self.define_direction(sprite.rect)
+            self.direction -= delta_pos * 2
+        
 class Apache(Enemy):
     def __init__(self, target_position, integral_type):
         speed = st.integrals_info['APACHE_SPEED'][integral_type - 1]
@@ -91,6 +101,6 @@ class IntegralGang(pg.sprite.Group):
         
         self.create_group(self.types[random.randint(0,3)], single_qtt, double_qtt, triple_qtt, target_position)
     
-        
+  
 
 
