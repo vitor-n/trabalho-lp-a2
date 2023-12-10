@@ -59,7 +59,6 @@ zero_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor,
 sine_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor, sine_gun_stats)
 line_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor, line_gun_stats)
 gang = IntegralGang()
-gang.create_group(Apache, 5, 3, 1, player.coords, player)
 camera = SmoothCamera(screen, teste, player, cursor.rect.center)
 player.inventory.add_weapon(zero_gun, "0")
 player.inventory.add_weapon(sine_gun, "sin(x)")
@@ -97,16 +96,6 @@ while True:
         camera.render_entity(integral)
     camera.render_sprite_no_offset(cursor)
 
-    for enemy in gang:
-        if enemy.weapon:
-            if enemy.weapon.rect.colliderect(player.rect):
-                player.health - 1
-            elif enemy.rect.colliderect(player.rect):
-                player.health - 1
-            if hasattr(enemy.weapon, "bullet_group"):
-                if pg.sprite.spritecollide(player, enemy.weapon.bullet_group, True):
-                    player.health - 1
-
     damaged_enemies = pg.sprite.groupcollide(gang, player.weapon.bullet_group, False, True)
 
     for enemy in damaged_enemies:
@@ -117,7 +106,6 @@ while True:
     screen.blit(player.health.bar, (33,30))
     font.render(screen, "time: 5:00", (33,90))
     screen.blit(cursor.image, cursor.rect)
-
 
     #pg.draw.line(screen, (255, 0, 0), (0, SCREEN_DIMENSIONS[1] // 2), (SCREEN_DIMENSIONS[0], SCREEN_DIMENSIONS[1] // 2), 1)
     #pg.draw.line(screen, (255, 0, 0), (SCREEN_DIMENSIONS[0] // 2, 0), (SCREEN_DIMENSIONS[0] // 2, SCREEN_DIMENSIONS[1]), 1)

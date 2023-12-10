@@ -40,11 +40,11 @@ while True:
                 click = True
         menu.update(click)
     else:
-        game.run()
+        game.run(delta_time)
 
     screen.blit(cursor.image, cursor.rect)
 
     pygame.display.update()
-    clock.tick(60)
+    delta_time = clock.tick(60)
     
 

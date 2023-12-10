@@ -139,17 +139,20 @@ class Camera:
         -------
         None
         """
-        if entity.weapon:
-            if hasattr(entity.weapon, "bullet_group"):
-                self.render_group(entity.weapon.bullet_group)
-            self.render_sprite(entity.weapon)
-        self.render_sprite(entity)
+        
         if hasattr(entity, "inventory"):
             names = entity.inventory.get_current_weapon_names()
             self.font_grey.render(self.screen, f"{names[0]}   ", (105,120))
             self.font_black.render(self.screen, f"{names[1]}", (105,150))
             self.font_grey.render(self.screen, f"{names[2]}   ", (105,180))
             self.screen.blit(entity.weapon.inventory_image, (30, 141))
+            
+        if entity.weapon:
+            if hasattr(entity.weapon, "bullet_group"):
+                self.render_group(entity.weapon.bullet_group)
+            self.render_sprite(entity.weapon)
+        self.render_sprite(entity)
+        
 
 
 class SmoothCamera(Camera):

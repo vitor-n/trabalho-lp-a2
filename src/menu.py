@@ -35,14 +35,8 @@ class Menu:
         self.on_config_menu = False
         self.titlescreen_choice = None
 
-        self.__on_menu = True
-        
-
-    @property
-    def on_menu(self):
-        return self.__on_menu
+        self.on_menu = True
     
-
     def handle_quit_event(self):
         """
         Closes the window in case the player presses quit.
@@ -68,7 +62,7 @@ class Menu:
                 self.titlescreen_choice = "play"
                 self.on_titlescreen = False
                 self.on_config_menu = False
-                self.__on_menu = False
+                self.on_menu = False
             #Else if click on "config" button, go to configurations
             elif self.config_button_rect.collidepoint(mouse_pos):
                 self.titlescreen_choice = "config"
