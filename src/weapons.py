@@ -1,4 +1,5 @@
 import pygame
+from settings import PX_SCALE, SHOOT_SOUND
 from utils import load_image
 import math
 from types import FunctionType
