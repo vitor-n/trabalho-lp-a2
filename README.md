@@ -1,5 +1,7 @@
 # Guerreiros Integrais
 
+![A screenshot showing the game title](https://raw.githubusercontent.com/vito0182/trabalho-lp-a2/main/titlescreen_screenshot.png)
+
 Made by Anne Cardoso, Larissa Lemos, Pedro Tokar and Vitor Nascimento.
 
 ## Introduction

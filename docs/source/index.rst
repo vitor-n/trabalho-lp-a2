@@ -23,6 +23,9 @@ Guerreiros Integrais
    utils_doc
    weapons_doc
 
+
+.. image:: ../../titlescreen_screenshot.png
+
 by Anne Cardoso, Larissa Lemos, Pedro Tokar and Vitor Nascimento.
 
 Introduction
