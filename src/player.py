@@ -1,7 +1,7 @@
 import pygame as pg
 from utils import load_image
 from health import PlayerHealth
-from weapon import Weapon
+from weapons import Weapon
 
 class Entity(pg.sprite.Sprite):
     """
