@@ -14,7 +14,7 @@ TILE_SIZE = 32 * PX_SCALE
 FONT = pygame.font.Font(os.path.join("font", "essential.ttf"), 36)
 ENEMY_SPAWN_TIME = 10*(1000)
 
-with open(os.path.join("dados", "dadosintegrais.json"), 'r') as doc:
+with open(os.path.join("enemies", "integraldata.json"), 'r') as doc:
     integrals_info = json.load(doc)
 
 
