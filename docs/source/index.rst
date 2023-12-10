@@ -20,6 +20,7 @@ Guerreiros Integrais
    player_doc
    text_doc
    utils_doc
+   weapons_doc
 
 by Anne Cardoso, Larissa Lemos, Pedro Tokar and Vitor Nascimento.
 
