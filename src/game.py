@@ -27,9 +27,9 @@ class Game:
         self.gang = IntegralGang()
         self.camera = SmoothCamera(screen, self.map, self.player, self.cursor.rect.center)
         
-        self.zero_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor.rect.center, ZERO_GUN_STATS)
-        self.sine_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor.rect.center, SINE_GUN_STATS)
-        self.line_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor.rect.center, LINE_GUN_STATS)
+        self.zero_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor, ZERO_GUN_STATS)
+        self.sine_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor, SINE_GUN_STATS)
+        self.line_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor, LINE_GUN_STATS)
         self.player.inventory.add_weapon(self.zero_gun, "0")
         self.player.inventory.add_weapon(self.sine_gun, "sin(x)")
         self.player.inventory.add_weapon(self.line_gun, "cx")
