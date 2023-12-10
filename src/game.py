@@ -53,10 +53,11 @@ class Game:
         if curr_time - self.__last_enemy_spawn_time > ENEMY_SPAWN_TIME:
             self.__last_enemy_spawn_time = curr_time
             self.gang.random_group(5, 2, 1, self.player.rect)
+            self.gang.set_target_for_all(self.player)
  
         self.camera.update()
         self.player.update((self.cursor.rect.centerx+self.camera.rect.topleft[0],self.cursor.rect.centery+self.camera.rect.topleft[1]))
-        self.gang.update(self.player.rect, self.delta_time)
+        self.gang.update(self.delta_time, self.gang)
         self.cursor.update()
         self.map.expand(self.camera.rect)
         self.camera.render_map()
@@ -64,8 +65,15 @@ class Game:
         self.camera.render_group(self.gang)
         self.camera.render_sprite_no_offset(self.cursor)
 
-        if pg.sprite.spritecollide(self.player, self.gang, False, pg.sprite.collide_rect_ratio(0.7)):
-            self.player.health - 1
+        for enemy in self.gang:
+            if enemy.weapon:
+                if enemy.weapon.rect.colliderect(self.player):
+                    self.player.health - 1
+                if hasattr(enemy.weapon, "bullet_group"):
+                    if pg.sprite.spritecollide(self.player, enemy.weapon.bullet_group, True):
+                        self.player.health - 1
+        #if pg.sprite.spritecollide(self.player, self.gang, False, pg.sprite.collide_rect_ratio(0.7)):
+        #    self.player.health - 1
 
         self.camera.set_cursor_position(self.cursor.rect.center)
         self.camera.render_group(self.zero_gun.bullet_group)
