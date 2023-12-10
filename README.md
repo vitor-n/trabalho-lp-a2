@@ -1,9 +1,3 @@
----
-runme:
-  id: 01HH9N9BC3FX76SVKDJNNSG4AY
-  version: v2.0
----
-
 # Guerreiros Integrais
 
 ![A screenshot showing the game title](https://raw.githubusercontent.com/vito0182/trabalho-lp-a2/main/titlescreen_screenshot.png)

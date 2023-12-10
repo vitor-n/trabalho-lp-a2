@@ -83,4 +83,14 @@ module having his own "theme" of clases. It is possible to acess the documentati
 of each module (and by so, each class) using the below reference, or navigating
 through the tree of contens in the left of the pages.
 
+Sources
+--------
+
+All the sprites were created by us.
+
+The sounds effects were generated using the website `JSFXR <https://sfxr.me/>`_
+
+The music was taken from `Iron Main - Black Sabbath free MIDI <https://www.midis101.com/free-midi/40824-black-sabbath-iron-man>`_ and converted to wav using GXSCC and audacity
+
+
 * :ref:`modindex`
