@@ -2,12 +2,22 @@ import pygame
 from settings import PX_SCALE, SHOOT_SOUND
 from utils import load_image
 import math
-import random
 
 class Weapon(pygame.sprite.Sprite):
-    def __init__(self, image_path, target_pos):
+    """
+    Class representing a generic weapon in the game. This class is responsible
+    for implementing the weapon rotation based on the target position.
+
+    Parameters
+    ----------
+    image_path: tuple
+        The path leading to the weapon image
+    target_pos:
+        The initial position to target.
+    """
+    def __init__(self, image_path: tuple, target_pos: tuple):
         super().__init__()
-        self.target_pos = target_pos
+        self._target_pos = target_pos
         self.image = load_image(image_path, 3)
         self.orig_image = self.image
         self.inventory_image = self.image
@@ -15,20 +25,41 @@ class Weapon(pygame.sprite.Sprite):
         self.facing_r = True
         self.angle_radians = 0
         self.angle_degrees = 0
+        self._entity = None
 
-    def set_entity(self, entity):
-        self.entity = entity
-        self.rect.center = entity.rect.center
+    @property
+    def entity(self):
+        """
+        The entity associated with the weapon. The weapon will orbit this entity.
+        """
+        return self._entity
 
-    def set_target(self, target_pos):
-        self.target_pos = target_pos
+    @entity.setter
+    def entity(self, entity):
+        self._entity = entity
+        self.rect.center = self._entity.rect.center
 
-    def get_angles(self):
-        self.angle_radians = math.atan2(self.entity.rect.centery-self.target_pos[1], self.target_pos[0]-self.entity.rect.centerx)
+    def update_target_position(self, target_pos: tuple):
+        """
+        Updates the position that the weapon should target.
+
+        Parameters
+        ----------
+        target_pos:
+            The new position to target.
+
+        Returns
+        -------
+        None
+        """
+        self._target_pos = target_pos
+
+    def _get_angles(self):
+        self.angle_radians = math.atan2(self.entity.rect.centery-self._target_pos[1], self._target_pos[0]-self.entity.rect.centerx)
         self.angle_degrees = math.degrees(self.angle_radians)
 
-    def rotate(self):
-        self.get_angles()
+    def _rotate(self):
+        self._get_angles()
         self.image = pygame.transform.rotate(self.orig_image, self.angle_degrees)
 
         self.rect = self.image.get_rect(
@@ -48,11 +79,26 @@ class Weapon(pygame.sprite.Sprite):
             self.facing_r = True
 
     def update(self):
-        self.rotate()
+        """
+        Updates the weapon. In this basic weapon, it just rotates it acordingly
+        to the target.
+        """
+        self._rotate()
 
 class EnemyWeapon(Weapon):
-    def rotate(self):
-        self.get_angles()
+    """
+    Class representing an enemy's weapon. It changes the rotation implementation
+    so it doesn't flip the enemy's image.
+
+    Parameters
+    ----------
+    image_path: tuple
+        The path leading to the weapon image
+    target_pos:
+        The initial position to target.
+    """
+    def _rotate(self):
+        self._get_angles()
         self.image = pygame.transform.rotate(self.orig_image, self.angle_degrees)
 
         self.rect = self.image.get_rect(
