@@ -14,8 +14,8 @@
     ],
     "APACHE_HEALTH": [
         5,
-        20,
-        50
+        10,
+        15
     ],
     "APACHE_IMAGE": [
         "apache_singleint.png",
@@ -57,8 +57,8 @@
     ],
     "ROMAN_HEALTH": [
         5,
-        20,
-        50
+        10,
+        15
     ],
     "ROMAN_IMAGE": [
         "roman_singleint.png",
@@ -77,8 +77,8 @@
     ],
     "SAMURAI_HEALTH": [
         5,
-        20,
-        50
+        10,
+        15
     ],
     "SAMURAI_IMAGE": [
         "samurai_singleint.png",
@@ -104,8 +104,8 @@
     ],
     "VIKING_HEALTH": [
         5,
-        20,
-        50
+        10,
+        15
     ],
     "VIKING_IMAGE": [
         "viking_singleint.png",

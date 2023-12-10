@@ -120,7 +120,7 @@ class Enemy(Entity):
                 self.weapon.shoot()
 
         if self.health == 0:
-            self.kill
+            self.kill()
     
     def remove_overlapping(self, integral_gang): 
         """

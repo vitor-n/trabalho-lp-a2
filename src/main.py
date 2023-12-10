@@ -11,7 +11,9 @@ from cursor import Cursor
 from enemies import Apache, Roman, Samurai, Viking, IntegralGang
 #from inventory import Inventory
 from text import Font
+from menu import Menu
 import math
+from os.path import join
 
 map_thing = [[str(divmod(50, 4)[1]) for i in range(400)] for i in range(400)]
 
@@ -48,7 +50,9 @@ clock = pg.time.Clock()
 pg.display.set_caption("Guerreiros Integrais")
 screen = pg.display.set_mode(SCREEN_DIMENSIONS)
 
-map_layout = load_map("maps/map.json")["tiles"]
+menu = Menu(screen)
+click = False
+map_layout = load_map(join("maps","map.json"))["tiles"]
 map = Map(map_thing)
 teste = RepeatMap(map_layout)
 font = Font(("font", "pixel_font_black.png"))
@@ -71,12 +75,24 @@ bullet_group = pg.sprite.Group()
 
 inventory = Inventory()
 while True:
-    curr_time = pg.time.get_ticks()
+    click = False
 
     for event in pg.event.get():
         if event.type == pg.QUIT or pg.key.get_pressed()[K_ESCAPE]:
             pg.quit()
             sys.exit()
+        elif event.type == pg.MOUSEBUTTONDOWN:
+            click = True
+
+    menu.update(click)
+    cursor.update()
+
+    if menu.on_menu:
+        screen.blit(cursor.image, cursor.rect)
+        pg.display.update()
+        continue
+
+    curr_time = pg.time.get_ticks()
 
     screen.fill("white")
 
@@ -88,7 +104,7 @@ while True:
     camera.update()
     player.update((cursor.rect.centerx+camera.rect.topleft[0],cursor.rect.centery+camera.rect.topleft[1]))
     gang.update(delta_time, gang)
-    cursor.update()
+    #cursor.update()
     teste.expand(camera.rect)
     camera.render_map()
     font.render(screen, f"dash using space", (player.rect.centerx-camera.rect.topleft[0]-50, player.rect.top - camera.rect.topleft[1] - 50))
