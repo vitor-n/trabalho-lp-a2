@@ -56,7 +56,7 @@ class Game:
         elif self._dificulty is GameDificulty.HARD:
             initial_player_health = 4
             SINE_GUN_STATS["reload_cooldown"] = 4000
-        self._player = Player(("Sprites", "Player", "player.png"), (0,0), Inventory(), initial_player_health)
+        self._player = Player(("Sprites", "Player", "player.png"), (0,0), Inventory(), 6)
         self._cursor = Cursor(("Sprites", "cursors", "cursor2.png"), (TILE_SIZE* 9.5, TILE_SIZE*5.5))
 
         self._gang = IntegralGang()
