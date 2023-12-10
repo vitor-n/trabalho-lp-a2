@@ -15,6 +15,8 @@ Guerreiros Integrais
    enemies_doc
    game_doc
    health_doc
+   map_doc
+   menu_doc
 
 by Anne Cardoso, Larissa Lemos, Pedro Tokar and Vitor Nascimento.
 

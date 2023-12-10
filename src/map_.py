@@ -1,7 +1,6 @@
 import pygame as pg
 from settings import TILE_SIZE
 from utils import load_tile_image
-import random
 
 class BackgroundTile(pg.sprite.Sprite):
     """
@@ -10,9 +9,9 @@ class BackgroundTile(pg.sprite.Sprite):
 
     Parameters
     ----------
-    image:
+    image: pg.surface.Surface
         A pygame image object. It should be previously scaled to tile size.
-    position:
+    position: tuple
         The position of the tile in the world.
     """
     def __init__(self, image, position):
@@ -26,7 +25,7 @@ class Map:
 
     Parameters
     ----------
-    layout:
+    layout: list
         An matrix representing the tile placement in the map.
     """
     def __init__(self, layout):
@@ -36,7 +35,7 @@ class Map:
         self._create_map_background()
 
     @property
-    def layout(self):
+    def layout(self) -> list:
         """
         The layout the map needs to follow. Overriding it will automatically
         update the `background` property.
@@ -49,7 +48,7 @@ class Map:
         self._create_map_background()
 
     @property
-    def dimensions(self):
+    def dimensions(self) -> tuple:
         """
         The dimensions, in pixels, of the background. It's important to notice
         that this isn't the map dimensions in tiles.
@@ -60,7 +59,7 @@ class Map:
         )
 
     @property
-    def rect(self):
+    def rect(self) -> pg.Rect:
         """
         A rectangle representing the map boundaries. It's dimensions represent
         the dimensions of the map in pixels, not in tiles.
@@ -72,7 +71,7 @@ class Map:
         )
 
     @property
-    def background(self):
+    def background(self) -> pg.sprite.Group:
         """
         A pygame group containing multiple tiles. The tiles are made based on
         `layout` and have correct positions.
@@ -114,7 +113,7 @@ class RepeatMap(Map):
 
     Parameters
     ----------
-    layout:
+    layout: list
         An matrix representing the tile placement in the map. Every new part of
         the map will be moved based on that.
     """
@@ -133,7 +132,7 @@ class RepeatMap(Map):
 
         Parameters
         ----------
-        rect:
+        rect: pg.Rect
             The rectangle to use to move the map
 
         Returns
@@ -174,7 +173,7 @@ class RepeatMap(Map):
                 self._bottom -= TILE_SIZE
 
     @property
-    def rect(self):
+    def rect(self) -> pg.Rect:
         """
         A rectangle representing the map boundaries. It's dimensions represent
         the dimensions of the map in pixels, not in tiles.
