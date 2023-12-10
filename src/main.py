@@ -11,7 +11,7 @@ pygame.init()
 pygame.font.init()
 pygame.mixer.init()
 pygame.mixer.music.set_volume(0.2)
-pygame.mixer.music.load("sounds/ironmain.mp3")
+pygame.mixer.music.load("sounds/ironmain.wav")
 pygame.mixer.music.play(-1)
 
 clock = pygame.time.Clock()
