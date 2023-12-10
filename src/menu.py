@@ -4,6 +4,7 @@ utility functions to handle buttons and their events.
 """
 from settings import FONT, SCREEN_DIMENSIONS
 from utils import load_image, draw_text
+from game import GameDificulty
 
 import pygame
 
@@ -33,7 +34,7 @@ class Menu:
         self.normal_button = pygame.Rect(SCREEN_DIMENSIONS[0] // 2 - 100, SCREEN_DIMENSIONS[1] // 2 + 70, 200, 50)
         self.hard_button = pygame.Rect(SCREEN_DIMENSIONS[0] // 2 - 100, SCREEN_DIMENSIONS[1] // 2 + 140, 200, 50)
 
-        self.selected_difficulty = "normal"
+        self.selected_difficulty = GameDificulty.EASY
         self.on_titlescreen = True
         self.on_config_menu = False
         self.titlescreen_choice = None
@@ -101,15 +102,15 @@ class Menu:
             
             #If click on "X" button, select X mode
             if self.easy_button.collidepoint(mouse_pos):
-                self.selected_difficulty = "easy"
+                self.selected_difficulty = GameDificulty.EASY
                 self.on_config_menu = False
                 self.on_titlescreen = True
             elif self.normal_button.collidepoint(mouse_pos):
-                self.selected_difficulty = "normal"
+                self.selected_difficulty = GameDificulty.MEDIUM
                 self.on_config_menu = False
                 self.on_titlescreen = True
             elif self.hard_button.collidepoint(mouse_pos):
-                self.selected_difficulty = "hard"
+                self.selected_difficulty = GameDificulty.HARD
                 self.on_config_menu = False
                 self.on_titlescreen = True
                 

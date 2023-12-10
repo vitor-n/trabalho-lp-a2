@@ -42,10 +42,12 @@ class Player(Entity):
         The position where the entity should be when created. Defaults to (0, 0).
     inventory: Inventory
         A inventory to hold the player guns.
+    health: int
+        An integer representing how much health the player begins with.
     """
-    def __init__(self, image_path: tuple , initial_position: tuple, inventory):
+    def __init__(self, image_path: tuple , initial_position: tuple, inventory, health = 6):
         super().__init__(image_path, initial_position)
-        self.health = PlayerHealth(6, 2)
+        self.health = PlayerHealth(health, 2)
         self.speed = 7
         
         self.inventory = inventory

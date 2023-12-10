@@ -17,6 +17,15 @@ import pygame as pg
 from pygame.locals import *
 
 from random import randint
+from enum import Enum
+
+class GameDificulty(Enum):
+    """
+    Enum representing the possible game dificulties.
+    """
+    EASY = "Easy",
+    MEDIUM = "Medium",
+    HARD = "Hard"
 
 class Game:
     """
@@ -29,9 +38,10 @@ class Game:
     screen: pg.Surface
         The screen the game should run on.
     """
-    def __init__(self, screen) -> None:
+    def __init__(self, screen, game_dificulty = GameDificulty.EASY) -> None:
 
         self._screen = screen
+        self._dificulty = game_dificulty
 
         map_layout = load_map("maps/map.json")["tiles"]
         self._map = RepeatMap(map_layout)
@@ -39,13 +49,19 @@ class Game:
         self._font = Font(("font", "pixel_font_black.png"))
         self._font2 = Font(("font", "pixel_font_grey.png"))
         self._font3 = Font(("font", "pixel_font_white.png"))
-
-        self._player = Player(("Sprites", "Player", "player.png"), (0,0), Inventory())
+        if self._dificulty is GameDificulty.EASY:
+            initial_player_health = 8
+        elif self._dificulty is GameDificulty.MEDIUM:
+            initial_player_health = 6
+        elif self._dificulty is GameDificulty.HARD:
+            initial_player_health = 4
+            SINE_GUN_STATS["reload_cooldown"] = 4000
+        self._player = Player(("Sprites", "Player", "player.png"), (0,0), Inventory(), initial_player_health)
         self._cursor = Cursor(("Sprites", "cursors", "cursor2.png"), (TILE_SIZE* 9.5, TILE_SIZE*5.5))
 
         self._gang = IntegralGang()
         self._camera = SmoothCamera(screen, self._map, self._player, self._cursor.rect.center)
-        
+
         self._zero_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self._cursor, ZERO_GUN_STATS)
         self._sine_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self._cursor, SINE_GUN_STATS)
         self._line_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self._cursor, LINE_GUN_STATS)
@@ -71,7 +87,12 @@ class Game:
     def _spawn_enemies(self):
         if self._time_now - (self._last_enemy_spawn_time+self.menu_time) > ENEMY_SPAWN_TIME:
             self._last_enemy_spawn_time = self._time_now
-            self._gang.random_group(randint(2,5), randint(2,3), randint(1,2), self._player.rect)
+            if self._dificulty is GameDificulty.EASY:
+                self._gang.random_group(randint(4,6), randint(1,3), randint(0,0), self._player.rect)
+            elif self._dificulty is GameDificulty.MEDIUM:
+                self._gang.random_group(randint(5,8), randint(2,4), randint(0,2), self._player.rect)
+            elif self._dificulty is GameDificulty.HARD:
+                self._gang.random_group(randint(6,9), randint(4,5), randint(1,3), self._player.rect)
             self._gang.set_target_for_all(self._player)
 
     def _update(self, delta_time):
@@ -113,6 +134,7 @@ class Game:
     def _render_hud(self):
         self._screen.blit(self._player.health.bar, (33,30))
         self._font.render(self._screen, f"sobreviveu: {self._survival_time}s", (33,90))
+        self._font.render(self._screen, self._dificulty.value[0], (1150, 33))
 
     def run(self, delta_time):
         """

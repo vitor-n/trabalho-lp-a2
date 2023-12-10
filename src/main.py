@@ -42,12 +42,12 @@ while True:
                 click = True
         menu.update(click)
         if not menu.on_menu:
+            game = Game(screen, menu.selected_difficulty)
             game.on_game = True
             game.menu_time = pygame.time.get_ticks()
     if game.on_game:
         game.run(delta_time)
         if not game.on_game:
-            game = Game(screen)
             menu.on_menu = True
             menu.on_titlescreen = True
             menu.on_config_menu = False

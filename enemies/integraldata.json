@@ -51,7 +51,7 @@
         }
     ],
     "ROMAN_SPEED": [
-        0.2,
+        0.5,
         0.1,
         0.05
     ],
@@ -71,7 +71,7 @@
         "roman_3_espada.png"
     ],
     "SAMURAI_SPEED": [
-        0.2,
+        0.4,
         0.1,
         0.05
     ],
@@ -98,7 +98,7 @@
         "bullet_sprite": ["Sprites", "Jogo_Armas", "samurai_3_lanca.png"]
     },
     "VIKING_SPEED": [
-        0.2,
+        0.45,
         0.1,
         0.05
     ],
