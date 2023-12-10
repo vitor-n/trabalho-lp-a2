@@ -5,17 +5,15 @@ from settings import PX_SCALE
 
 class Font:
     """
-    This class represents a custom font loaded from an image file.
+    This class represents a custom font loaded from an image file. It maps some
+    characters to their corresponding image surfaces.
+
+    Parameters
+    ----------
+    image_path: tuple
+        A tuple with the path to the font image file.
     """
-
     def __init__(self, image_path: str):
-        """
-        Loads the font image and constructs a dictionary mapping characters to their corresponding image surfaces.
-
-        Args:
-            image_path (str): Path to the font image file.
-        """
-
         self.character_order = "abcdefghijklmnopqrstuvwxyz0123456789,.?!:/\<>()-="
         self.characters = {}
         
@@ -53,10 +51,18 @@ class Font:
         """
         Renders the given text onto the provided surface at the specified position.
 
-        Args:
-            surface (pygame.Surface): The surface to render the text on.
-            text (str): The text to render.
-            position (tuple): The position (x, y) to render the text at.
+        Parameters
+        ----------
+        surface: pg.Surface
+            The surface to render the text on.
+        text: str
+            The text to render.
+        position: tuple
+            The position (x, y) to render the text at.
+
+        Returns
+        -------
+        None
         """
         x_offset = 0
         text = text.lower()

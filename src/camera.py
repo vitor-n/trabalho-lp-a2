@@ -1,6 +1,6 @@
 import pygame as pg
-from settings import SCREEN_DIMENSIONS, TILE_SIZE
-import math
+from settings import SCREEN_DIMENSIONS
+from player import Entity
 from text import Font
 
 class Camera:
@@ -31,7 +31,7 @@ class Camera:
         self.font_grey = Font(("font", "pixel_font_grey.png"))
 
     @property
-    def target(self):
+    def target(self) -> Entity:
         """
         The entity that the camera should follow.
         """
@@ -160,6 +160,7 @@ class SmoothCamera(Camera):
     Class representing a camera with smooth movimentation.
     Instead of being always above the target, this camera moves smoothly to
     the target direction.
+
     Parameters
     ----------
     screen:
@@ -168,6 +169,8 @@ class SmoothCamera(Camera):
         The map object with tile data.
     target:
         An entity to set the camera position.
+    cursor_pos:
+        The position of the cursor to follow.
     """
     def __init__(self, screen, map_, target, cursor_pos):
         super().__init__(screen, map_, target)

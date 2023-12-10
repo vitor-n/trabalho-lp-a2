@@ -12,15 +12,19 @@ class Enemy(Entity):
 
     Parameters
     ----------
-    image_path : A tuple containing the directory name leading to the entity image.
-
-    target_position: A tuple indicating the position of the player or another target.
-
-    speed: The speed of the enemy.
-
-    health: The maximum health of the enemy.
+    image_path: tuple
+        A tuple containing the directory name leading to the entity image.
+    target_position: tuple
+        A tuple indicating the position of the player or another target.
+    speed: int
+        The speed of the enemy.
+    health: int
+        The maximum health of the enemy.
+    target: Entity
+        A target the enemy may follow.
+    weapon: EnemyWeapon
+        A weapon the enemy may hold.
     """
-
     def __init__(self, image_path, target_position, speed, health, target = None, weapon = None):
         super().__init__(image_path, self.initial_position(target_position))
         self.image_left = self.image
@@ -34,7 +38,10 @@ class Enemy(Entity):
             self._weapon.entity = self
 
     @property
-    def target(self):
+    def target(self) -> Entity:
+        """
+        The target the enemy is following.
+        """
         return self._target
 
     @target.setter
@@ -42,30 +49,42 @@ class Enemy(Entity):
         self._target = target
 
     @property
-    def weapon(self):
+    def weapon(self) -> EnemyWeapon:
+        """
+        The weapon being held by the enemy.
+        """
         return self._weapon
 
     def move(self, delta_time):
-        """Function to move the enemy.
+        """
+        Function to move the enemy.
 
         Parameters
         ----------
-        delta_time : Time between frames. Used for calculating displacement.
+        delta_time:
+            Time between frames. Used for calculating displacement.
+
+        Returns
+        -------
+        None
         """
         self.direction.normalize_ip()
         self.rect.x += self.direction.x * self.speed * delta_time
         self.rect.y += self.direction.y * self.speed * delta_time
     
     def initial_position(self, target_position):
-        """Creates a random position to spawn an enemy.
+        """
+        Creates a random position to spawn an enemy.
 
         Parameters
         ----------
-        target_position : A tuple indicating the position of the player or another target.
+        target_position:
+            A tuple indicating the position of the player or another target.
 
         Returns
         -------
-        Tuple containing the random position.
+        tuple:
+            A tuple containing the random position.
         """
         pos_x = random.randint(-SCREEN_DIMENSIONS[0]/2, SCREEN_DIMENSIONS[0]/2)
         pos_y = random.randint(-SCREEN_DIMENSIONS[1]/2, SCREEN_DIMENSIONS[1]/2)
@@ -78,15 +97,18 @@ class Enemy(Entity):
      
     def define_direction(self, player_position):
         """
-        Creates a tuple that holds the displacement beetween player and an enemy and its magnetude.
+        Creates a tuple that holds the displacement beetween player and an enemy
+        and its magnetude.
 
         Parameters
         ----------
-        player_position : A tuple indicating the position of the player.
+        player_position:
+            A tuple indicating the position of the player.
 
         Returns
         -------
-        Tuple holding values.
+        tuple:
+            A tuple holding values.
         """
         delta_x = player_position.x - self.rect.x
         delta_y = player_position.y - self.rect.y
@@ -103,9 +125,14 @@ class Enemy(Entity):
 
         Parameters
         ----------
-        delta_time : Time between frames. 
+        delta_time: float
+            Time between frames.
+        integral_gang: IntegralGang
+            Object of type IntegralGang. Represents a group of warrior integrals of the same kind.
 
-        integral_gang : Object of type IntegralGang. Represents a group of warrior integrals of the same kind.
+        Returns
+        -------
+        None
         """
         (self.direction, _) = self.define_direction(self.target.rect)
         self.remove_overlapping(integral_gang)
@@ -124,10 +151,16 @@ class Enemy(Entity):
     
     def remove_overlapping(self, integral_gang): 
         """
-        Make enemies reppel themselves to minimize the overlapping .
+        Make enemies reppel themselves to minimize the overlapping.
+
         Parameters
         ----------
-        integral_gang : Object of type IntegralGang. Represents a group of warrior integrals of the same kind.
+        integral_gang: IntegralGang
+            Object of type IntegralGang. Represents a group of warrior integrals of the same kind.
+
+        Returns
+        -------
+        None
         """
         collide_list = pg.sprite.spritecollide(self, integral_gang, dokill = False)
         for sprite in collide_list:
@@ -142,9 +175,12 @@ class Apache(Enemy):
 
     Parameters
     ----------
-    target_position: A tuple indicating the position of the player or another target.
-
-    integral_type: Integer to indicate a single, double or triple integral.
+    target_position: tuple
+        A tuple indicating the position of the player or another target.
+    integral_type: int
+        Integer to indicate a single, double or triple integral.
+    target:
+        The target for the integral to follow.
     """
     def __init__(self, target_position, integral_type, target):
         speed = st.integrals_info['APACHE_SPEED'][integral_type - 1]
@@ -167,9 +203,12 @@ class Roman(Enemy):
 
     Parameters
     ----------
-    target_position: A tuple indicating the position of the player or another target.
-
-    integral_type: Integer to indicate a single, double or triple integral.
+    target_position: tuple
+        A tuple indicating the position of the player or another target.
+    integral_type: int
+        Integer to indicate a single, double or triple integral.
+    target:
+        The target for the integral to follow.
     """
     def __init__(self, target_position, integral_type, target):
         speed = st.integrals_info['ROMAN_SPEED'][integral_type - 1]
@@ -190,9 +229,12 @@ class Samurai(Enemy):
 
     Parameters
     ----------
-    target_position: A tuple indicating the position of the player or another target.
-
-    integral_type: Integer to indicate a single, double or triple integral.
+    target_position: tuple
+        A tuple indicating the position of the player or another target.
+    integral_type: int
+        Integer to indicate a single, double or triple integral.
+    target:
+        The target for the integral to follow.
     """
     def __init__(self, target_position, integral_type, target):
         speed = st.integrals_info['SAMURAI_SPEED'][integral_type - 1]
@@ -218,9 +260,12 @@ class Viking(Enemy):
 
     Parameters
     ----------
-    target_position: A tuple indicating the position of the player or another target.
-
-    integral_type: Integer to indicate a single, double or triple integral.
+    target_position: tuple
+        A tuple indicating the position of the player or another target.
+    integral_type: int
+        Integer to indicate a single, double or triple integral.
+    target:
+        The target for the integral to follow.
     """
     def __init__(self, target_position, integral_type, target):
         speed = st.integrals_info['VIKING_SPEED'][integral_type-1]
@@ -241,9 +286,9 @@ class IntegralGang(pg.sprite.Group):
 
     Parameters
     ----------
-    *sprites: The group of enemies to create a gang or to be added to an existing one.
+    *sprites: pg.sprite.Sprite
+        The group of enemies to create a gang or to be added to an existing one.
     """
-
     def __init__(self, *sprites):
         super().__init__(*sprites)
 
@@ -255,18 +300,21 @@ class IntegralGang(pg.sprite.Group):
 
         Parameters
         ----------
-        integral_family : The class name of the warrior type.
+        integral_family: Enemy
+            The class name of the warrior type.
+        single_qtt: int
+            Number of single integrals of the choosen type to be added.
+        double_qtt: int
+            Number of double integrals of the choosen type to be added.
+        triple_qtt: int
+            Number of triple integrals of the choosen type to be added.
+        target_position: tuple
+            A tuple indicating the position of the player or another target.
 
-        single_qtt : Number of single integrals of the choosen type to be added.
-        
-        double_qtt : Number of double integrals of the choosen type to be added.
-
-        triple_qtt : Number of triple integrals of the choosen type to be added.
-
-        target_position : A tuple indicating the position of the player or another target.
-
+        Returns
+        -------
+        None
         """
-        
         for num in range(single_qtt):
             enemy_s = integral_family((target_position), 1, target)
             self.add(enemy_s)
@@ -279,23 +327,38 @@ class IntegralGang(pg.sprite.Group):
 
     def random_group(self,single_qtt, double_qtt, triple_qtt, target_position, target = None):
         """
-        Creates a group of a random warrior type. Similar to create_group. 
+        Creates a group of a random warrior type. Similar to create_group.
 
         Parameters
         ----------
-        integral_family : The class name of the warrior type.
+        single_qtt: int
+            Number of single integrals of the choosen type to be added.
+        double_qtt: int
+            Number of double integrals of the choosen type to be added.
+        triple_qtt: int
+            Number of triple integrals of the choosen type to be added.
+        target_position: tuple
+            A tuple indicating the position of the player or another target.
 
-        single_qtt : Number of single integrals of the choosen type to be added.
-        
-        double_qtt : Number of double integrals of the choosen type to be added.
-
-        triple_qtt : Number of triple integrals of the choosen type to be added.
-
-        target_position : A tuple indicating the position of the player or another target.
+        Returns
+        -------
+        None
         """
         self.create_group(self.types[random.randint(0,3)], single_qtt, double_qtt, triple_qtt, target_position, target)
 
     def set_target_for_all(self, target):
+        """
+        Sets a target to all the integrals in the gang.
+
+        Parameters
+        ----------
+        target: Entity
+            The target for the intregrals to follow.
+
+        Returns
+        -------
+        None
+        """
         for integral in self:
             integral.target = target
         

@@ -5,15 +5,13 @@ from utils import load_image, draw_text
 class Menu:
     """
     Contains functions that create the menu and handle user interaction.
-    """
-    
-    def __init__(self, screen) -> None:
-        """
-        Creates menu buttons and game title.
 
-        Args:
-            screen (pygame.display): screen shown to the player
-        """
+    Parameters
+    ----------
+    screen: pygame.display
+        Screen shown to the player
+    """
+    def __init__(self, screen) -> None:
         self.screen = screen
 
         # Load game menu images
@@ -40,6 +38,10 @@ class Menu:
     def handle_quit_event(self):
         """
         Closes the window in case the player presses quit.
+
+        Returns
+        -------
+        None
         """
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -51,8 +53,14 @@ class Menu:
         """
         Process user input during the title screen phase.
 
-        Args:
-            click (bool): Indicates whether a mouse click event occurred.
+        Parameters
+        ----------
+        click: bool
+            Indicates whether a mouse click event occurred.
+
+        Returns
+        -------
+        None
         """
         if click:
             mouse_pos = pygame.mouse.get_pos()
@@ -74,8 +82,14 @@ class Menu:
         """
         Process user input during the configuration menu phase.
 
-        Args:
-            click (bool): Indicates whether a mouse click event occurred.
+        Parameters
+        ----------
+        click: bool
+            Indicates whether a mouse click event occurred.
+
+        Returns
+        -------
+        None
         """
         if click:
             mouse_pos = pygame.mouse.get_pos()
@@ -99,8 +113,14 @@ class Menu:
         """
         Display the title screen elements and handle user interaction.
 
-        Args:
-            click (bool): Indicates whether a mouse click event occurred.
+        Parameters
+        ----------
+        click: bool
+            Indicates whether a mouse click event occurred.
+
+        Returns
+        -------
+        None
         """
         self.screen.fill("black")
         self.screen.blit(self.game_title_image, self.game_title_rect)
@@ -114,8 +134,14 @@ class Menu:
         """
         Renders text prompts for selecting difficulty levels and handle user user interaction.
 
-        Args:
-            click (bool): Indicates whether a mouse click event occurred.
+        Parameters
+        ----------
+        click: bool
+            Indicates whether a mouse click event occurred.
+
+        Returns
+        -------
+        None
         """
         self.screen.fill("black")
         draw_text("Selecione a dificuldade.", FONT, "white", self.screen, SCREEN_DIMENSIONS[0] // 2, SCREEN_DIMENSIONS[1] // 4)
@@ -132,8 +158,14 @@ class Menu:
         """
         Update the game state based on the current screen phase.
 
-        Args:
-            click (bool, optional): Indicates whether a mouse click event occurred. Defaults to False.
+        Parameters
+        ----------
+        click: Optional(bool)
+            Indicates whether a mouse click event occurred. Defaults to False.
+
+        Returns
+        -------
+        None
         """
         if self.on_titlescreen:
             self.titlescreen(click)
