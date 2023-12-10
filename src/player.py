@@ -153,6 +153,13 @@ class Inventory:
     def __len__(self):
         return len(self._weapons)
 
+    def get_weapons(self):
+        weapons = []
+        for weapon in self._weapons:
+            weapons.append(weapon["weapon"])
+
+        return weapons
+
     @property
     def player(self):
         """
