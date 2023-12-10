@@ -57,7 +57,7 @@ class Camera:
         """
         Calculate the screen position of a rectangle, based on camera postion.
 
-    Returns
+        Returns
         -------
         Tuple: A tuple with the coordinates of the rectangle's topleft in screen space.
         """
