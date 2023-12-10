@@ -1,8 +1,10 @@
+from settings import TILE_SIZE, PX_SCALE
+
 import pygame as pg
+
 import math
 import json
 from os.path import join
-from settings import TILE_SIZE, PX_SCALE
 
 def load_tile_image(image_path):
     """

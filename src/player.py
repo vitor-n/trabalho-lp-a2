@@ -1,8 +1,9 @@
-import pygame as pg
 from settings import DASH_SOUND
 from utils import load_image
 from health import PlayerHealth
 from weapons import Weapon
+
+import pygame as pg
 
 class Entity(pg.sprite.Sprite):
     """

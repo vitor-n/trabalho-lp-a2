@@ -1,6 +1,7 @@
-import pygame
-from settings import SHOOT_SOUND
 from utils import load_image
+
+import pygame
+
 import math
 from types import FunctionType
 
