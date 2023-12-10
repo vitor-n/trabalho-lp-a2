@@ -2,16 +2,16 @@
 The module that will call all the necessary classes to make the game start.
 """
 import pygame
-from settings import SCREEN_DIMENSIONS
-from menu import Menu
-from game import Game
-from cursor import Cursor
+from src.settings import SCREEN_DIMENSIONS
+from src.menu import Menu
+from src.game import Game
+from src.cursor import Cursor
 
 pygame.init()
 pygame.font.init()
 pygame.mixer.init()
-pygame.mixer.music.set_volume(0.2)
-pygame.mixer.music.load("sounds/ironmain.mp3")
+pygame.mixer.music.set_volume(0.3)
+pygame.mixer.music.load("sounds/ironmain.wav")
 pygame.mixer.music.play(-1)
 
 clock = pygame.time.Clock()
@@ -42,12 +42,13 @@ while True:
                 click = True
         menu.update(click)
         if not menu.on_menu:
-            game = Game(screen, menu.selected_difficulty)
             game.on_game = True
             game.menu_time = pygame.time.get_ticks()
     if game.on_game:
         game.run(delta_time)
         if not game.on_game:
+            print(game.menu_time)
+            game = Game(screen, menu.selected_difficulty)
             menu.on_menu = True
             menu.on_titlescreen = True
             menu.on_config_menu = False

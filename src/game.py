@@ -85,7 +85,7 @@ class Game:
         self._camera.render_entity(self._player)
 
     def _spawn_enemies(self):
-        if self._time_now - (self._last_enemy_spawn_time+self.menu_time) > ENEMY_SPAWN_TIME:
+        if self._time_now - (self._last_enemy_spawn_time) > ENEMY_SPAWN_TIME:
             self._last_enemy_spawn_time = self._time_now
             if self._dificulty is GameDificulty.EASY:
                 self._gang.random_group(randint(4,6), randint(1,3), randint(0,0), self._player.rect)
