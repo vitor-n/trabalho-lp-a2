@@ -6,13 +6,41 @@ from utils import load_map
 from map_ import Map, RepeatMap
 import sys
 from camera import SmoothCamera
-from weapons import SineShotgun, Gun
+from weapons import Gun
 from cursor import Cursor
 from enemies import Apache, Roman, Samurai, Viking, IntegralGang
 #from inventory import Inventory
 from text import Font
+import math
 
 map_thing = [[str(divmod(50, 4)[1]) for i in range(400)] for i in range(400)]
+
+zero_gun_stats = {
+    "move_function": lambda m: 0,
+    "damage": 10,
+    "mag_size": 1,
+    "reload_cooldown": 500,
+    "bullet_speed": 10,
+    "bullet_sprite": ("Sprites", "bullets", "bullet1.png")
+}
+
+sine_gun_stats = {
+    "move_function": lambda m: math.sin(m) * 40,
+    "damage": 5,
+    "mag_size": 30,
+    "reload_cooldown": 2000,
+    "bullet_speed": 15,
+    "bullet_sprite": ("Sprites", "bullets", "bullet1.png")
+}
+
+line_gun_stats = {
+    "move_function": lambda m: 0,
+    "damage": 2,
+    "mag_size": 40,
+    "reload_cooldown": 1500,
+    "bullet_speed": 20,
+    "bullet_sprite": ("Sprites", "bullets", "bullet1.png")
+}
 
 pg.init()
 pg.mouse.set_visible(False)
@@ -26,17 +54,16 @@ teste = RepeatMap(map_layout)
 font = Font(("Font", "pixel_font_black.png"))
 font2 = Font(("Font", "pixel_font_grey.png"))
 player = Player(("Sprites", "Player", "player.png"), (0,0), Inventory())
-cursor = Cursor(("Sprites", "cursors", "cursor2.png"), (TILE_SIZE* 9.5, TILE_SIZE*5.5), player)
-gun = SineShotgun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor)
-other_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor)
-third_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor)
+cursor = Cursor(("Sprites", "cursors", "cursor2.png"), (TILE_SIZE* 9.5, TILE_SIZE*5.5))
+zero_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor, zero_gun_stats)
+sine_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor, sine_gun_stats)
+line_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), cursor, line_gun_stats)
 gang = IntegralGang()
 gang.create_group(Apache, 5, 3, 1, player.coords)
 camera = SmoothCamera(screen, teste, player, cursor.rect.center)
-player.inventory.add_weapon(gun, "sin(x)")
-player.inventory.add_weapon(other_gun, "k")
-player.inventory.add_weapon(third_gun, "j")
-cursor.set_camera(camera)
+player.inventory.add_weapon(zero_gun, "0")
+player.inventory.add_weapon(sine_gun, "sin(x)")
+player.inventory.add_weapon(line_gun, "cx")
 delta_time = 0
 curr_time = 0
 last_time = 0
@@ -59,7 +86,7 @@ while True:
         gang.random_group(5, 2, 1, player.rect)
  
     camera.update()
-    player.update()
+    player.update((cursor.rect.centerx+camera.rect.topleft[0],cursor.rect.centery+camera.rect.topleft[1]))
     gang.update(player.rect, delta_time, gang)
     cursor.update()
     teste.expand(camera.rect)
@@ -69,9 +96,15 @@ while True:
     camera.render_group(gang)
     camera.render_sprite_no_offset(cursor)
 
-    #camera.render_group(gun.bullet_group)
+    if pg.sprite.spritecollide(player, gang, False, pg.sprite.collide_rect_ratio(0.7)):
+        player.health - 1
+
+    damaged_enemies = pg.sprite.groupcollide(gang, sine_gun.bullet_group, False, True)
+
+    for enemy in damaged_enemies:
+        enemy.health - 1
+
     camera.set_cursor_position(cursor.rect.center)
-    camera.render_group(gun.bullet_group)
 
     screen.blit(player.health.bar, (33,30))
     font.render(screen, "time: 5:00", (33,90))
@@ -81,5 +114,6 @@ while True:
     #pg.draw.line(screen, (255, 0, 0), (0, SCREEN_DIMENSIONS[1] // 2), (SCREEN_DIMENSIONS[0], SCREEN_DIMENSIONS[1] // 2), 1)
     #pg.draw.line(screen, (255, 0, 0), (SCREEN_DIMENSIONS[0] // 2, 0), (SCREEN_DIMENSIONS[0] // 2, SCREEN_DIMENSIONS[1]), 1)
 
+    print(clock.get_fps())
     pg.display.update()
     delta_time = clock.tick(FPS)

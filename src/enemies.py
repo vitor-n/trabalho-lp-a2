@@ -3,13 +3,14 @@ from player import Entity
 import settings as st
 from settings import SCREEN_DIMENSIONS
 import random
+from health import Health
 
 class Enemy(Entity):
 
-    def __init__(self, image_path, target_position, speed, life):
+    def __init__(self, image_path, target_position, speed, health):
         super().__init__(image_path, self.initial_position(target_position))
         self.speed = speed
-        self.life = life
+        self.health = Health(health, 0)
 
     def move(self, delta_time):
         self.direction.normalize_ip()
@@ -37,6 +38,9 @@ class Enemy(Entity):
         self.remove_overlapping(integral_gang)
         if self.direction.magnitude_squared() != 0:
             self.move(delta_time)
+
+        if self.health == 0:
+            self.kill
     
     def remove_overlapping(self, integral_gang): #list containing all Sprites in a Group that intersect with another Sprite
         collide_list = pg.sprite.spritecollide(self, integral_gang, dokill = False)

@@ -1,70 +1,80 @@
-
 from pygame.locals import *
 import pygame as pg
 from settings import SCREEN_DIMENSIONS, TILE_SIZE, FPS, ENEMY_SPAWN_TIME
-from player import Player
+from player import Player, Inventory
 from utils import load_map
 from map_ import Map, RepeatMap
 import sys
 from camera import SmoothCamera
-from weapons import SineShotgun
+from weapons import Gun
 from cursor import Cursor
 from enemies import Apache, Roman, Samurai, Viking, IntegralGang
-from inventory import Inventory
 from text import Font
+from settings import ZERO_GUN_STATS, SINE_GUN_STATS, LINE_GUN_STATS
 
 
 class Game:
     def __init__(self, screen) -> None:
 
-        self._screen = screen
+        self.screen = screen
 
-        self._player = Player(("Sprites", "Player", "player.png"), (0,0), 2)
         map_layout = load_map("maps/map.json")["tiles"]
-        self._map = RepeatMap(map_layout)
+        self.map = RepeatMap(map_layout)
+        self.font = Font(("Font", "pixel_font_black.png"))
+        self.font2 = Font(("Font", "pixel_font_grey.png"))
+        self.player = Player(("Sprites", "Player", "player.png"), (0,0), Inventory())
+        self.cursor = Cursor(("Sprites", "cursors", "cursor2.png"), (TILE_SIZE* 9.5, TILE_SIZE*5.5))
+        self.gang = IntegralGang()
+        self.camera = SmoothCamera(screen, self.map, self.player, self.cursor.rect.center)
+        
+        self.zero_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor, ZERO_GUN_STATS)
+        self.sine_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor, SINE_GUN_STATS)
+        self.line_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor, LINE_GUN_STATS)
+        self.player.inventory.add_weapon(self.zero_gun, "0")
+        self.player.inventory.add_weapon(self.sine_gun, "sin(x)")
+        self.player.inventory.add_weapon(self.line_gun, "cx")
 
-        self._font = Font(("Font", "pixel_font.png"))
-        self._cursor = Cursor(("Sprites", "cursors", "cursor2.png"), (SCREEN_DIMENSIONS[0]//2, SCREEN_DIMENSIONS[1]//2), self._player)
-        self._gun = SineShotgun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self._cursor)
-        self._gang = IntegralGang()
-        self._gang.create_group(Apache, 5, 3, 1, self._player.coords)
-        self._camera = SmoothCamera(screen, self._map, self._player, self._cursor.rect.center)
-        self._player.set_weapon(self._gun)
-        self._cursor.set_camera(self._camera)
-        self._cursor.set_owner(self._player)
-
-        self.__on_game = False
-        self._delta_time = 0
+        self.delta_time = 0
+        self.curr_time = 0
         self.__last_enemy_spawn_time = 0
 
-    def update(self):
-        curr_time = pg.time.get_ticks()
+        self.bullet_group = pg.sprite.Group()
 
+        self.inventory = Inventory()
+
+    @property
+    def on_game(self):
+        return self.__on_game
+
+    def update(self):
+        
+
+        curr_time = pg.time.get_ticks()
         if curr_time - self.__last_enemy_spawn_time > ENEMY_SPAWN_TIME:
             self.__last_enemy_spawn_time = curr_time
-            self._gang.random_group(5, 2, 1, self._player.rect)
+            self.gang.random_group(5, 2, 1, self.player.rect)
+ 
+        self.camera.update()
+        self.player.update((self.cursor.rect.centerx+self.camera.rect.topleft[0],self.cursor.rect.centery+self.camera.rect.topleft[1]))
+        self.gang.update(self.player.rect, self.delta_time)
+        self.cursor.update()
+        self.map.expand(self.camera.rect)
+        self.camera.render_map()
+        self.camera.render_entity(self.player)
+        self.camera.render_group(self.gang)
+        self.camera.render_sprite_no_offset(self.cursor)
 
-        self._camera.update()
-        self._player.update()
-        self._gang.update(self._player.rect, self._delta_time)
-        self._cursor.update()
-        self._map.expand(self._camera.rect)
-        self._camera.render_map()
-        self._font.render(self._screen, f"dash using space", (self._player.rect.centerx-self._camera.rect.topleft[0]-50, self._player.rect.top - self._camera.rect.topleft[1] - 50))
-        self._camera.render_group(self._gang)
-        self._camera.render_entity(self._player)
-        self._camera.render_sprite_no_offset(self._cursor)
+        if pg.sprite.spritecollide(self.player, self.gang, False, pg.sprite.collide_rect_ratio(0.7)):
+            self.player.health - 1
 
-        #camera.render_group(gun.bullet_group)d
-        self._camera.set_cursor_position(self._cursor.rect.center)
-        self._camera.render_group(self._gun.bullet_group)
+        self.camera.set_cursor_position(self.cursor.rect.center)
+        self.camera.render_group(self.zero_gun.bullet_group)
+        self.camera.render_group(self.sine_gun.bullet_group)
+        self.camera.render_group(self.line_gun.bullet_group)
 
-        self._screen.blit(self._player.health.bar, (33,30))
-
-        self._font.render(self._screen, "time: 5:00", (33,90))
-        self._font.render(self._screen, "sin(x)", (33,120))
-        self._screen.blit(self._cursor.image, self._cursor.rect)
-
+        self.screen.blit(self.player.health.bar, (33,30))
+        self.font.render(self.screen, "time: 5:00", (33,90))
+        self.screen.blit(self.cursor.image, self.cursor.rect)
 
     def run(self):
         self.update()

@@ -86,8 +86,11 @@ class Map:
             "3": "tile3",
             "4": "tile4",
             "5": "tile5",
-            "6": "tile1",
-            "7": "tile2"
+            "6": "tile_doodle_1",
+            "7": "tile_doodle_2",
+            "8": "tile_doodle_3",
+            "9": "tile_doodle_4",
+            "10": "tile_doodle_5"
         }
         for tile_identifier, filename in self.background_tiles.items():
             self.background_tiles[tile_identifier] = load_tile_image(("Sprites", "tiles", f"{filename}.png"))
@@ -104,6 +107,17 @@ class Map:
 
 
 class RepeatMap(Map):
+    """
+    Class representing a repeating map. It contains a grid with the tiles of the
+    map. This class is capable of moving some map tiles to other side, creating
+    a illusion of an infinite map
+
+    Parameters
+    ----------
+    layout:
+        An matrix representing the tile placement in the map. Every new part of
+        the map will be moved based on that.
+    """
     def __init__(self, layout):
         super().__init__(layout)
         self._top = 0
