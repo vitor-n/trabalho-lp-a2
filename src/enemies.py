@@ -1,3 +1,9 @@
+"""
+This module implements everything related to enemies. It provides a class
+representing any enemy and classes representing each kind of enemy/integral.
+There is also a class representing a whole group of enemies, that turns the
+process of spawning new enemies more simple.
+"""
 from player import Entity
 import settings as st
 from health import Health

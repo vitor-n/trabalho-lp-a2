@@ -1,3 +1,8 @@
+"""
+This module contains some information that is used along all the other modules,
+like screen dimensions. There is also sound data and gun data being declarated
+here.
+"""
 import pygame
 import os
 import json

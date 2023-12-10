@@ -1,3 +1,10 @@
+"""
+Module that implements all the camera related stuff. The clases here are supposed
+to be used when having necessity of bliting something in the screen. They turn
+possible to blit things when their rects are in global position and not in screen
+position, since the camera does the conversion. What differentiate the two cameras
+is their update function.
+"""
 from settings import SCREEN_DIMENSIONS
 from player import Entity
 from text import Font

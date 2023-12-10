@@ -1,3 +1,7 @@
+"""
+This module is responsible for implementing the needed classes and methods to
+abstract the process of writing text on the screen.
+"""
 from utils import load_image, image_clip
 from settings import PX_SCALE
 

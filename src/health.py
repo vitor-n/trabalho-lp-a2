@@ -1,3 +1,8 @@
+"""
+This module provides classes made to store entitys health. This is useful for
+padronizing the way some entity, be an enemy or be a player, takes damage. It
+also helps putting the player health in the screen.
+"""
 from utils import load_image
 from settings import HIT_SOUND
 
