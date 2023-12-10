@@ -1,9 +1,9 @@
-import pygame
 from settings import SCREEN_DIMENSIONS
 from menu import Menu
 from game import Game
 from cursor import Cursor
-from settings import HIT_SOUND
+
+import pygame
 
 pygame.init()
 pygame.font.init()

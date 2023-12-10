@@ -1,11 +1,12 @@
-import pygame as pg
 from player import Entity
 import settings as st
-from settings import SCREEN_DIMENSIONS
-import random
 from health import Health
 from weapons import EnemyWeapon, EnemyGun
 from utils import load_image
+
+import pygame as pg
+
+import random
 
 class Enemy(Entity):
     """Class with methods for a generic enemy.
@@ -86,12 +87,12 @@ class Enemy(Entity):
         tuple:
             A tuple containing the random position.
         """
-        pos_x = random.randint(-SCREEN_DIMENSIONS[0]/2, SCREEN_DIMENSIONS[0]/2)
-        pos_y = random.randint(-SCREEN_DIMENSIONS[1]/2, SCREEN_DIMENSIONS[1]/2)
-        pos1 = (target_position[0] - SCREEN_DIMENSIONS[0]/2, target_position[1] + pos_y)
-        pos2 = (target_position[0] + SCREEN_DIMENSIONS[0]/2, target_position[1] + pos_y)
-        pos3 = (target_position[0] + pos_x, target_position[1] - SCREEN_DIMENSIONS[1]/2)
-        pos4 = (target_position[0] + pos_x, target_position[1] + SCREEN_DIMENSIONS[1]/2)
+        pos_x = random.randint(-st.SCREEN_DIMENSIONS[0]/2, st.SCREEN_DIMENSIONS[0]/2)
+        pos_y = random.randint(-st.SCREEN_DIMENSIONS[1]/2, st.SCREEN_DIMENSIONS[1]/2)
+        pos1 = (target_position[0] - st.SCREEN_DIMENSIONS[0]/2, target_position[1] + pos_y)
+        pos2 = (target_position[0] + st.SCREEN_DIMENSIONS[0]/2, target_position[1] + pos_y)
+        pos3 = (target_position[0] + pos_x, target_position[1] - st.SCREEN_DIMENSIONS[1]/2)
+        pos4 = (target_position[0] + pos_x, target_position[1] + st.SCREEN_DIMENSIONS[1]/2)
         return random.choice([pos1,pos2, pos3, pos4])
         
      

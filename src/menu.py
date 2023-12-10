@@ -1,6 +1,7 @@
-import pygame 
 from settings import FONT, SCREEN_DIMENSIONS
 from utils import load_image, draw_text
+
+import pygame
 
 class Menu:
     """

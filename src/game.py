@@ -10,7 +10,7 @@ from weapons import Gun
 from cursor import Cursor
 from enemies import Apache, Roman, Samurai, Viking, IntegralGang
 from text import Font
-from settings import ZERO_GUN_STATS, SINE_GUN_STATS, LINE_GUN_STATS
+from settings import ZERO_GUN_STATS, SINE_GUN_STATS, LINE_GUN_STATS, QUADRATIC_GUN_STATS
 from random import randint
 
 
@@ -31,13 +31,15 @@ class Game:
         self._gang = IntegralGang()
         self._camera = SmoothCamera(screen, self._map, self._player, self._cursor.rect.center)
         
-        self._zero_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self._cursor, ZERO_GUN_STATS)
-        self._sine_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self._cursor, SINE_GUN_STATS)
-        self._line_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self._cursor, LINE_GUN_STATS)
+        self.zero_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor, ZERO_GUN_STATS)
+        self.sine_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor, SINE_GUN_STATS)
+        self.line_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor, LINE_GUN_STATS)
+        self.quadratic_gun = Gun(("Sprites", "weapons", "player_weapons", "math_gun.png"), self.cursor, QUADRATIC_GUN_STATS)
 
-        self._player.inventory.add_weapon(self._zero_gun, "0")
-        self._player.inventory.add_weapon(self._sine_gun, "sin(x)")
-        self._player.inventory.add_weapon(self._line_gun, "cx")
+        self.player.inventory.add_weapon(self.zero_gun, "0")
+        self.player.inventory.add_weapon(self.sine_gun, "sin(x)")
+        self.player.inventory.add_weapon(self.line_gun, "cx")
+        self.player.inventory.add_weapon(self.quadratic_gun, "x@")
 
         self._delta_time = 0
         self._time_now = 0

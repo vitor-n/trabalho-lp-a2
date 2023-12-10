@@ -1,7 +1,8 @@
-import pygame as pg
 from settings import SCREEN_DIMENSIONS
 from player import Entity
 from text import Font
+
+import pygame as pg
 
 class Camera:
     """

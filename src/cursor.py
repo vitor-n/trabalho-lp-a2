@@ -1,6 +1,7 @@
-import pygame
 from utils import load_image
-import math
+
+import pygame as pg
+
 
 class Cursor:
     """
@@ -19,20 +20,20 @@ class Cursor:
         self._angle_degrees = 0
 
     @property
-    def image(self) -> pygame.Surface:
+    def image(self) -> pg.Surface:
         """
         Returns the pygame Surface object of the cursor image.
         """
         return self._image
 
     @property
-    def rect(self) -> pygame.Rect:
+    def rect(self) -> pg.Rect:
         """
         Returns the pygame Rect object of the cursor's position and size.
         """
         return self._rect
 
-    def set_image(self, image_path) -> pygame.Surface:
+    def set_image(self, image_path) -> pg.Surface:
         """
         Returns the pygame Surface object of the cursor image.
         """
@@ -46,4 +47,4 @@ class Cursor:
         -------
         None
         """
-        self._rect.center = pygame.mouse.get_pos()
+        self._rect.center = pg.mouse.get_pos()

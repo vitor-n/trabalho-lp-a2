@@ -1,7 +1,7 @@
-import pygame
 from utils import load_image, image_clip
 from settings import PX_SCALE
 
+import pygame
 
 class Font:
     """

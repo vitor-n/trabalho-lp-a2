@@ -1,6 +1,7 @@
-import pygame as pg
 from utils import load_image
 from settings import HIT_SOUND
+
+import pygame as pg
 
 class Health:
     """

@@ -1,6 +1,7 @@
-import pygame as pg
 from settings import TILE_SIZE
 from utils import load_tile_image
+
+import pygame as pg
 
 class BackgroundTile(pg.sprite.Sprite):
     """

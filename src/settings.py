@@ -31,13 +31,13 @@ ZERO_GUN_STATS = {
     "damage": 10,
     "mag_size": 1,
     "reload_cooldown": 500,
-    "bullet_speed": 10,
+    "bullet_speed": 6,
     "bullet_sprite": ("Sprites", "bullets", "bullet1.png")
 }
 
 SINE_GUN_STATS = {
     "move_function": lambda m: -math.cos(m) * 40,
-    "damage": 5,
+    "damage": 3,
     "mag_size": 30,
     "reload_cooldown": 2000,
     "bullet_speed": 15,
@@ -50,5 +50,14 @@ LINE_GUN_STATS = {
     "mag_size": 40,
     "reload_cooldown": 1500,
     "bullet_speed": 20,
+    "bullet_sprite": ("Sprites", "bullets", "bullet1.png")
+}
+
+QUADRATIC_GUN_STATS = {
+    "move_function": lambda m: - (m ** 2) * 0.5,
+    "damage": 7,
+    "mag_size": 25,
+    "reload_cooldown": 3000,
+    "bullet_speed": 15,
     "bullet_sprite": ("Sprites", "bullets", "bullet1.png")
 }
