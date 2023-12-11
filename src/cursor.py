@@ -53,3 +53,23 @@ class Cursor:
         None
         """
         self._rect.center = pg.mouse.get_pos()
+
+class JoystickCursor(Cursor):
+    def __init__(self, image_path, initial_position, joystick, on_game = False):
+        super().__init__(image_path, initial_position)
+        self._joystick = joystick
+        self._on_game = on_game
+
+    def start_game(self):
+        self._on_game = True
+
+    def end_game(self):
+        self._on_game = False
+
+    def update(self, player_position = None):
+        if self._on_game:
+            self.rect.centerx = player_position[0] + self._joystick.get_axis(3) * 170
+            self.rect.centery = player_position[1] + self._joystick.get_axis(2) * 170
+        else:
+            self.rect.centery += self._joystick.get_axis(2)
+            self.rect.centerx += self._joystick.get_axis(3)

@@ -148,6 +148,40 @@ class Player(Entity):
         self.rect.x += self.direction.x * speed
         self.rect.y += self.direction.y * speed
 
+class JoystickPlayer(Player):
+    def __init__(self, image_path: tuple , initial_position: tuple, inventory, joystick, health = 6):
+        super().__init__(image_path, initial_position, inventory, health)
+        self._joystick = joystick
+
+    def _get_input(self):
+        keys = pg.key.get_pressed()
+
+        self.direction.x =  round(self._joystick.get_axis(0), 2)
+        self.direction.y = round(self._joystick.get_axis(1), 2)
+
+        for event in pg.event.get():
+            if event.type == pg.JOYBUTTONDOWN:
+                print(event.button)
+                if event.button == 7:
+                    self.attacking = True
+                elif event.button == 5:
+                    self.inventory.next_weapon()
+                elif event.button == 4:
+                    self.inventory.previous_weapon()
+                elif event.button == 6 and (pg.time.get_ticks() - self.last_dash) > self.dash_cooldown:
+                    self.dashing = True
+                    self.last_dash = pg.time.get_ticks()
+                    DASH_SOUND.play()
+
+            if event.type == pg.JOYBUTTONUP:
+                if event.button == 7:
+                    self.attacking = False
+
+    def _move(self, speed):
+        self.direction = self.direction.normalize()
+        self.rect.x += self.direction.x * speed
+        self.rect.y += self.direction.y * speed
+
 class Inventory:
     """
     Class representing a inventory. It is responsible for holding guns,
