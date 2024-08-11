@@ -40,7 +40,6 @@ while True:
         for event in pygame.event.get(pygame.MOUSEBUTTONUP):
             if event.button == 1:
                 click = True
-        print(menu.selected_difficulty)
         menu.update(click)
         if not menu.on_menu:
             game = Game(screen, menu.selected_difficulty)

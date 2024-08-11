@@ -93,8 +93,8 @@ class Enemy(Entity):
         tuple:
             A tuple containing the random position.
         """
-        pos_x = random.randint(-st.SCREEN_DIMENSIONS[0]/2, st.SCREEN_DIMENSIONS[0]/2)
-        pos_y = random.randint(-st.SCREEN_DIMENSIONS[1]/2, st.SCREEN_DIMENSIONS[1]/2)
+        pos_x = random.randint(-st.SCREEN_DIMENSIONS[0]//2, st.SCREEN_DIMENSIONS[0]//2)
+        pos_y = random.randint(-st.SCREEN_DIMENSIONS[1]//2, st.SCREEN_DIMENSIONS[1]//2)
         pos1 = (target_position[0] - st.SCREEN_DIMENSIONS[0]/2, target_position[1] + pos_y)
         pos2 = (target_position[0] + st.SCREEN_DIMENSIONS[0]/2, target_position[1] + pos_y)
         pos3 = (target_position[0] + pos_x, target_position[1] - st.SCREEN_DIMENSIONS[1]/2)
