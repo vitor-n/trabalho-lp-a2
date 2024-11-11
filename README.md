@@ -54,7 +54,7 @@ $ python main.py
 
 ## Documentation
 
-You can see the documentation at [Guerreiros Integrais](https://vito0182.github.io/trabalho-lp-a2/build/html/index.html).
+You can see the documentation at [Guerreiros Integrais](https://vitor-n.github.io/trabalho-lp-a2/).
 
 # Sources
 
